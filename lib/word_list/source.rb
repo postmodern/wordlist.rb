@@ -44,6 +44,7 @@ module WordList
         end
       end
 
+      destroy_bloomfilter!
       return self
     end
 
@@ -76,6 +77,11 @@ module WordList
     def saw!(word)
       @bloomfilter.insert(word)
       @seen_words += 1
+    end
+
+    def destroy_bloomfilter!
+      @seen_words = 0
+      @bloomfilter = nil
     end
 
   end
