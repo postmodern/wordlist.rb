@@ -38,6 +38,8 @@ module WordList
           break if @seen_words >= @max_words
         end
       end
+
+      return self
     end
 
     def each_mutated(&block)
@@ -47,7 +49,7 @@ module WordList
             saw!(mutated_word)
             block.call(word)
 
-            break if @seen_words >= @max_words
+            return self if @seen_words >= @max_words
           end
         end
       end
