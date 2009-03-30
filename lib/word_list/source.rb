@@ -53,7 +53,7 @@ module WordList
       end
     end
 
-    alias each each_mutation
+    alias each each_mutated
 
     protected
 
