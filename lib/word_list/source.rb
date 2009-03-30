@@ -10,13 +10,16 @@ module WordList
     # Default expected rate of duplicate words
     DUPLICATE_RATE = 0.1
 
+    # Default expected number of words to generate
+    MAX_WORDS = 500
+
     # Maximum number of words to generate
     attr_accessor :max_words
 
     # Acceptible rate of duplicate words
     attr_accessor :duplicate_rate
 
-    def initialize(max_words,duplicate_rate=DUPLICATE_RATE)
+    def initialize(max_words=MAX_WORDS,duplicate_rate=DUPLICATE_RATE)
       @max_words = max_words.to_i
       @seen_words = 0
 
