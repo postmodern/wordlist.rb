@@ -7,20 +7,20 @@ module WordList
     include Mutations
     include Enumerable
 
-    # Default expected bloomfilter false-positive rate
-    FALSE_POSITIVE_RATE = 0.1
+    # Default expected rate of duplicate words
+    DUPLICATE_RATE = 0.1
 
     # Maximum number of words to generate
     attr_accessor :max_words
 
-    # Accepted false-positive rate of the bloomfilter
-    attr_accessor :false_positive_rate
+    # Acceptible rate of duplicate words
+    attr_accessor :duplicate_rate
 
-    def initialize(max_words,false_positive_rate=FALSE_POSITIVE_RATE)
+    def initialize(max_words,duplicate_rate=DUPLICATE_RATE)
       @max_words = max_words.to_i
       @seen_words = 0
 
-      @false_positive_rate = false_positive_rate
+      @duplicate_rate = duplicate_rate
     end
 
     def each_word(&block)
@@ -58,7 +58,7 @@ module WordList
     protected
 
     def setup_bloomfilter!
-      m = (@max_words * Math.log(@false_positive_rate) / Math.log(1.0 / 2 ** Math.log(2)).ceil
+      m = (@max_words * Math.log(@duplicate_rate) / Math.log(1.0 / 2 ** Math.log(2)).ceil
       k = (Math.log(2) * m / @max_words).round
 
       @bloomfilter = BloomFilter.new(m,k,1)
