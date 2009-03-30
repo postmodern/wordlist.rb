@@ -5,6 +5,7 @@ module WordList
   class Source
 
     include Mutations
+    include Enumerable
 
     def initialize(m,k,seed)
       @m = m
