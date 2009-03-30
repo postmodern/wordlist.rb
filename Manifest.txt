@@ -1,0 +1,13 @@
+History.txt
+Manifest.txt
+README.txt
+Rakefile
+lib/word_list.rb
+lib/word_list/exceptions.rb
+lib/word_list/exceptions/not_implemented.rb
+lib/word_list/mutations.rb
+lib/word_list/source.rb
+lib/word_list/version.rb
+tasks/spec.rb
+spec/spec_helper.rb
+spec/word_list_spec.rb
