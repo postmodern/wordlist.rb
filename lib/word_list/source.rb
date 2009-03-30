@@ -1,6 +1,8 @@
 require 'word_list/exceptions/not_implemented'
 require 'word_list/mutations'
 
+require 'bloomfilter'
+
 module WordList
   class Source
 
@@ -11,7 +13,7 @@ module WordList
     DUPLICATE_RATE = 0.1
 
     # Default expected number of words to generate
-    MAX_WORDS = 500
+    MAX_WORDS = 1000
 
     # Maximum number of words to generate
     attr_accessor :max_words
@@ -23,7 +25,7 @@ module WordList
       @max_words = (options[:max_words] || MAX_WORDS).to_i
       @seen_words = 0
 
-      @duplicate_rate = (options[:duplicate_rate] | DUPLICATE_RATE).to_f
+      @duplicate_rate = (options[:duplicate_rate] || DUPLICATE_RATE).to_f
     end
 
     def each_word(&block)
@@ -63,10 +65,7 @@ module WordList
     protected
 
     def setup_bloomfilter!
-      m = (@max_words * Math.log(@duplicate_rate) / Math.log(1.0 / 2 ** Math.log(2)).ceil
-      k = (Math.log(2) * m / @max_words).round
-
-      @bloomfilter = BloomFilter.new(m,k,1)
+      @bloomfilter = BloomFilter.new
       @seen_words = 0
     end
 
