@@ -1,6 +1,7 @@
 History.txt
 Manifest.txt
 README.txt
+TODO.txt
 Rakefile
 lib/word_list.rb
 lib/word_list/exceptions.rb

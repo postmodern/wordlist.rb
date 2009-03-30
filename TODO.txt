@@ -1,0 +1,10 @@
+== TODO:
+
+=== 0.1.0
+
+* Implement pre-defined mutator rules.
+  * Old-school leet speak.
+  * Nu-skool leet speak.
+* Write specs.
+* Perform some benchmarks with really large corpora.
+
