@@ -18,6 +18,11 @@
 
 == EXAMPLES:
 
+== REQUIREMENTS:
+
+* bloomfilters
+* {spidr}[http://spidr.rubyforge.org] >= 0.1.5
+
 == INSTALL:
 
   $ sudo gem install wordlist

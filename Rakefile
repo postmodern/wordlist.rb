@@ -11,7 +11,7 @@ Hoe.new('word', WordList::VERSION) do |p|
   p.remote_rdoc_dir = '/'
   p.extra_deps = [
     'bloomfilter',
-    'spidr'
+    ['spidr', '>=0.1.5']
   ]
 end
 
