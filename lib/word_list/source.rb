@@ -19,11 +19,11 @@ module WordList
     # Acceptible rate of duplicate words
     attr_accessor :duplicate_rate
 
-    def initialize(max_words=MAX_WORDS,duplicate_rate=DUPLICATE_RATE)
-      @max_words = max_words.to_i
+    def initialize(options={})
+      @max_words = (options[:max_words] || MAX_WORDS).to_i
       @seen_words = 0
 
-      @duplicate_rate = duplicate_rate
+      @duplicate_rate = (options[:duplicate_rate] | DUPLICATE_RATE).to_f
     end
 
     def each_word(&block)
