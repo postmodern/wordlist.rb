@@ -5,7 +5,7 @@ require 'hoe'
 require './tasks/spec.rb'
 require './lib/word_list/version.rb'
 
-Hoe.new('word', WordList::VERSION) do |p|
+Hoe.spec('word') do |p|
   p.rubyforge_name = 'wordlist'
   p.developer('Postmodern','postmodern.mod3@gmail.com')
   p.remote_rdoc_dir = '/'
