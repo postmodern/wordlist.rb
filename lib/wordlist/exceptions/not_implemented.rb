@@ -1,4 +1,4 @@
-module WordList
+module Wordlist
   class NotImplemented < RuntimeError
   end
 end

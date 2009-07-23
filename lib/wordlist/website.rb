@@ -1,8 +1,8 @@
-require 'word_list/source'
+require 'wordlist/source'
 
 require 'spidr'
 
-module WordList
+module Wordlist
   class Website < Source
 
     def initialize(host,options={})

@@ -1,9 +1,9 @@
-require 'word_list/exceptions/not_implemented'
-require 'word_list/mutations'
+require 'wordlist/exceptions/not_implemented'
+require 'wordlist/mutations'
 
 require 'bloomfilter'
 
-module WordList
+module Wordlist
   class Source
 
     include Mutations

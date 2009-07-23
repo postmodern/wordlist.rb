@@ -1,6 +1,6 @@
-require 'word_list/source'
+require 'wordlist/source'
 
-module WordList
+module Wordlist
   class File < Source
 
     def initialize(path,options={})

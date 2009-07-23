@@ -1,4 +1,4 @@
-module WordList
+module Wordlist
   module Mutations
     def mutators
       @mutators ||= Hash.new { |hash,key| hash[key] = [] }
