@@ -6,22 +6,20 @@
 
 == DESCRIPTION:
 
+A Ruby library for generating and working with word lists.
+
 == FEATURES:
 
-* Uses BloomFilters to efficiently remove duplicates from word lists.
+* Uses CRC32 Hashes to filter out duplicate words.
 * Provides WordList::Mutations for defining mutations to apply to words.
 * Provides various pre-defined mutators:
   * Old-school leet-speak.
   * Nu-skool leet-speek.
-* Supports generating word-lists from files.
-* Supports generating word-lists from web-sites.
+* Supports generating word-lists from arbitrary text.
 
 == EXAMPLES:
 
 == REQUIREMENTS:
-
-* bloomfilters
-* {spidr}[http://spidr.rubyforge.org] >= 0.1.5
 
 == INSTALL:
 
