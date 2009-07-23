@@ -6,7 +6,7 @@ require 'hoe/signing'
 require './tasks/spec.rb'
 require './lib/word_list/version.rb'
 
-Hoe.spec('word') do
+Hoe.spec('wordlist') do
   self.rubyforge_name = 'wordlist'
   self.developer('Postmodern','postmodern.mod3@gmail.com')
   self.remote_rdoc_dir = '/'
