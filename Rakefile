@@ -10,10 +10,7 @@ Hoe.spec('word') do
   self.rubyforge_name = 'wordlist'
   self.developer('Postmodern','postmodern.mod3@gmail.com')
   self.remote_rdoc_dir = '/'
-  self.extra_deps = [
-    'bloomfilter',
-    ['spidr', '>=0.1.5']
-  ]
+  self.extra_deps = []
 end
 
 # vim: syntax=Ruby
