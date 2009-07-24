@@ -61,7 +61,7 @@ module Wordlist
         end
       end
 
-      @file = File.new(@path,'wa')
+      @file = File.new(@path,'w+')
     end
 
     #
