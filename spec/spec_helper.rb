@@ -1,5 +1,7 @@
 require 'rubygems'
-gem 'rspec', '>=1.1.3'
+gem 'rspec', '>=1.1.12'
 require 'spec'
 
-require 'parameters/version'
+require 'wordlist/version'
+
+include Wordlist
