@@ -1,7 +1,10 @@
 require 'wordlist/unique_filter'
+require 'wordlist/parsers'
 
 module Wordlist
   class Builder
+
+    include Parsers
 
     # Path of the wordlist
     attr_reader :path
@@ -15,6 +18,8 @@ module Wordlist
     # Builder object.
     #
     def initialize(path,&block)
+      super()
+
       @path = File.expand_path(path)
       @file = nil
       @filter = nil
@@ -71,6 +76,18 @@ module Wordlist
       end
 
       return self
+    end
+
+    def parse_sentence(sentence)
+      super(sentence).each do |word|
+        self << word
+      end
+    end
+
+    def parse_text(text)
+      super(text).each do |sentence|
+        parse_sentence(sentence)
+      end
     end
 
     #
