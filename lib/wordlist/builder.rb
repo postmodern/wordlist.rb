@@ -64,8 +64,10 @@ module Wordlist
     # been previously seen.
     #
     def <<(word)
-      @filter.pass(word) do |unique|
-        @file.puts unique
+      if @file
+        @filter.pass(word) do |unique|
+          @file.puts unique
+        end
       end
 
       return self
