@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(File.expand_path(File.join(File.dirname(__FILE__),'..','lib')
 require 'wordlist/builder'
 require 'benchmark'
 
-path = File.join(Dir.pwd,'shakespeare_wordlist.txt')
+path = File.expand_path(File.join(File.dirname(__FILE__),'shakespeare_wordlist.txt'))
 
 Benchmark.bm do |bm|
   bm.report('build:') do
