@@ -4,7 +4,7 @@ require 'rubygems'
 require 'hoe'
 require 'hoe/signing'
 require './tasks/spec.rb'
-require './lib/word_list/version.rb'
+require './lib/wordlist/version.rb'
 
 Hoe.spec('wordlist') do
   self.rubyforge_name = 'wordlist'
