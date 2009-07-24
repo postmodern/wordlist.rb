@@ -71,7 +71,7 @@ module Wordlist
     def <<(word)
       if @file
         @filter.pass(word) do |unique|
-          @file.puts(unique)
+          @file.puts unique
         end
       end
 
