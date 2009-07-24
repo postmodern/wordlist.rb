@@ -21,7 +21,7 @@ module Wordlist
 
     def initialize
       @ignore_case = false
-      @ignore_punctuation = false
+      @ignore_punctuation = true
       @ignore_urls = true
       @ignore_phone_numbers = false
       @ignore_references = false
