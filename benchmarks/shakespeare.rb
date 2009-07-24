@@ -1,5 +1,12 @@
-require 'wordlist/builder'
+$LOAD_PATH.unshift(File.expand_path(File.join(File.dirname(__FILE__),'..','lib')))
 
-Wordlist::Builder.build('shakespeare_wordlist.txt') do |wordlist|
-  wordlist.parse_file(File.join('text','comedy_of_errors.txt'))
+require 'wordlist/builder'
+require 'benchmark'
+
+Benchmark.bm do |bm|
+  bm.report('build shakespeare_wordlist.txt') do
+    Wordlist::Builder.build('shakespeare_wordlist.txt') do |wordlist|
+      wordlist.parse_file('/home/hal/shaks12.txt')
+    end
+  end
 end
