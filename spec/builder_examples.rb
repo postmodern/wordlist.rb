@@ -19,7 +19,7 @@ shared_examples_for "a wordlist Builder" do
 
   it "should build a unique wordlist from a sentence" do
     Builder.build(@path) do |wordlist|
-      wordlist.parse_sentense(@sentense)
+      wordlist.parse_sentence(@sentence)
     end
 
     should_contain_words(@path,@expected)
