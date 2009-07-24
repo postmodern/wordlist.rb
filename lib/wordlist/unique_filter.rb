@@ -1,3 +1,5 @@
+require 'set'
+
 module Wordlist
   class UniqueFilter
 
@@ -33,7 +35,7 @@ module Wordlist
         return false if @seen[length].include?(crc)
         @seen[length] << crc
       else
-        @seen[length] = [crc]
+        @seen[length] = SortedSet[crc]
       end
 
       return true
