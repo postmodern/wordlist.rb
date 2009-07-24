@@ -6,6 +6,7 @@ lib/wordlist.rb
 lib/wordlist/exceptions.rb
 lib/wordlist/exceptions/not_implemented.rb
 lib/wordlist/unique_filter.rb
+lib/wordlist/builder.rb
 lib/wordlist/mutations.rb
 lib/wordlist/source.rb
 lib/wordlist/version.rb
