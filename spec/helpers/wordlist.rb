@@ -1,4 +1,4 @@
-def should_be_unique(path)
+def should_contain_words(path,expected)
   words = []
 
   File.open(path) do |file|
@@ -7,5 +7,5 @@ def should_be_unique(path)
     end
   end
 
-  words.should == words.uniq
+  words.sort.should == expected.sort
 end

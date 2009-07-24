@@ -12,6 +12,9 @@ lib/wordlist/mutations.rb
 lib/wordlist/source.rb
 lib/wordlist/version.rb
 tasks/spec.rb
+spec/classes/parser_class.rb
 spec/spec_helper.rb
 spec/unique_filter_spec.rb
+spec/parsers_spec.rb
+spec/builder_spec.rb
 spec/wordlist_spec.rb
