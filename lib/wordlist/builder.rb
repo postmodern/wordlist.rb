@@ -61,7 +61,7 @@ module Wordlist
         end
       end
 
-      @file = File.new(@path,'w+')
+      @file = File.new(@path,File::RDWR | File::CREAT | File::APPEND)
     end
 
     #
@@ -71,7 +71,7 @@ module Wordlist
     def <<(word)
       if @file
         @filter.pass(word) do |unique|
-          @file.puts unique
+          @file.puts(unique)
         end
       end
 

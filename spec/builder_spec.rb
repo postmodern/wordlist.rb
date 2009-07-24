@@ -1,6 +1,7 @@
 require 'wordlist/builder'
 
 require 'spec_helper'
+require 'helpers/text'
 require 'builder_examples'
 
 require 'tempfile'
@@ -22,7 +23,14 @@ describe Builder do
   describe "existing wordlist" do
     before(:all) do
       @path = '/tmp/bla'
-      @expected = ['dog', 'cat', 'catx', 'dat']
+      @expected = ['dog', 'cat', 'log', 'catx', 'dat']
     end
+
+    before(:each) do
+      @path = Tempfile.new('wordlist').path
+      FileUtils.cp(PREVIOUS_WORDLIST,@path)
+    end
+
+    it_should_behave_like "a wordlist Builder"
   end
 end
