@@ -78,6 +78,5 @@ module Wordlist
 
       return text.scan(/[^\s\.\?!][^\.\?!]*[\.\?\!]/)
     end
-
   end
 end
