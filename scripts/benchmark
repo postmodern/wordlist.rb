@@ -3,8 +3,11 @@ $LOAD_PATH.unshift(File.expand_path(File.join(File.dirname(__FILE__),'..','lib')
 
 require 'wordlist/builder'
 require 'benchmark'
+require 'fileutils'
 
 path = File.expand_path(File.join(File.dirname(__FILE__),'shakespeare_wordlist.txt'))
+
+FileUtils.rm_f(path)
 
 Benchmark.bm do |bm|
   bm.report('build:') do
