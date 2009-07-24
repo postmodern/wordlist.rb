@@ -99,6 +99,18 @@ module Wordlist
     end
 
     #
+    # Parses the contents of the file at the specified _path_, adding
+    # each unique word to the wordlist file.
+    #
+    def parse_file(path)
+      File.open(path) do |file|
+        file.each_line do |line|
+          parse_text(line)
+        end
+      end
+    end
+
+    #
     # Closes the wordlist file.
     #
     def close!
