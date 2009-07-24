@@ -78,12 +78,20 @@ module Wordlist
       return self
     end
 
+    #
+    # Parses the specified _sentence_ adding each unique word to the
+    # wordlist file.
+    #
     def parse_sentence(sentence)
       super(sentence).each do |word|
         self << word
       end
     end
 
+    #
+    # Parses the specified _text_ adding each unique word to the wordlist
+    # file.
+    #
     def parse_text(text)
       super(text).each do |sentence|
         parse_sentence(sentence)
