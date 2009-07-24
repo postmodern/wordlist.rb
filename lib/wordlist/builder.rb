@@ -79,6 +79,14 @@ module Wordlist
     end
 
     #
+    # Add the specified _words_ to the wordlist.
+    #
+    def +(words)
+      words.each { |word| self << word }
+      return self
+    end
+
+    #
     # Parses the specified _sentence_ adding each unique word to the
     # wordlist file.
     #
