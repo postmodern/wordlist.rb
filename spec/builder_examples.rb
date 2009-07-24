@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'helpers/text'
 require 'helpers/wordlist'
 
 shared_examples_for "a wordlist Builder" do
@@ -6,7 +7,7 @@ shared_examples_for "a wordlist Builder" do
     @words = ['dog', 'cat', 'catx', 'dat', 'dog', 'cat']
     @sentence = 'dog cat catx, dog dat.'
     @text = 'dog cat: catx. dog cat dat dog.'
-    @file = File.expand_path(File.join(File.dirname(__FILE__),'text','sample.txt'))
+    @file = SAMPLE_TEXT
   end
 
   it "should build a unique wordlist from words" do
