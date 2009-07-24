@@ -29,11 +29,15 @@ shared_examples_for "a wordlist Builder" do
     Builder.build(@path) do |wordlist|
       wordlist.parse_text(@text)
     end
+
+    should_contain_words(@path,@expected)
   end
 
   it "should build a unique wordlist from a file" do
     Builder.build(@path) do |wordlist|
       wordlist.parse_file(@file)
     end
+
+    should_contain_words(@path,@expected)
   end
 end
