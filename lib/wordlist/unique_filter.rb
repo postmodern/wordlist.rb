@@ -8,7 +8,7 @@ module Wordlist
     # Creates a new UniqueFilter object.
     #
     def initialize
-      @seen = []
+      @seen = {}
     end
 
     #
@@ -16,7 +16,9 @@ module Wordlist
     # +false+ otherwise.
     #
     def seen?(word)
-      @seen.include?(crc32(word))
+      length = word.length
+
+      return (@seen.has_key?(length) && @seen[length].include?(crc32(word)))
     end
 
     #
@@ -24,11 +26,16 @@ module Wordlist
     # has been previously been seen, +false+ will be returned.
     #
     def saw!(word)
+      length = word.length
       crc = crc32(word)
 
-      return false if @seen.include?(crc)
+      if @seen.has_key?(length)
+        return false if @seen[length].include?(crc)
+        @seen[length] << crc
+      else
+        @seen[length] = [crc]
+      end
 
-      @seen << crc
       return true
     end
 
