@@ -1,6 +1,7 @@
 doc
 pkg
 tmp/*
+benchmarks/*_wordlist.txt
 .DS_Store
 *.db
 *.log
