@@ -12,14 +12,24 @@ module Wordlist
     end
 
     #
+    # Marks the specified _word_ as seen and returns +true+. If the _word_
+    # has been previously been seen, +false+ will be returned.
+    #
+    def seen!(word)
+      crc = crc32(word)
+
+      return false if @seen.include?(crc)
+
+      @seen << crc
+      return true
+    end
+
+    #
     # Passes the specified _word_ through the unique filter, if the
     # _word_ has not yet been seen, it will be passed to the given _block_.
     #
     def pass(word,&block)
-      crc = crc32(word)
-
-      unless @seen.include?(crc)
-        @seen << crc
+      if saw(word)
         block.call(word)
       end
 
