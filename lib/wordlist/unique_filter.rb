@@ -15,7 +15,7 @@ module Wordlist
     # Returns +true+ if the _word_ has been previously seen, returns
     # +false+ otherwise.
     #
-    def saw?(word)
+    def seen?(word)
       @seen.include?(crc32(word))
     end
 
@@ -23,7 +23,7 @@ module Wordlist
     # Marks the specified _word_ as seen and returns +true+. If the _word_
     # has been previously been seen, +false+ will be returned.
     #
-    def seen!(word)
+    def saw!(word)
       crc = crc32(word)
 
       return false if @seen.include?(crc)
@@ -37,7 +37,7 @@ module Wordlist
     # _word_ has not yet been seen, it will be passed to the given _block_.
     #
     def pass(word,&block)
-      if saw(word)
+      if saw!(word)
         block.call(word)
       end
 
