@@ -12,6 +12,14 @@ module Wordlist
     end
 
     #
+    # Returns +true+ if the _word_ has been previously seen, returns
+    # +false+ otherwise.
+    #
+    def saw?(word)
+      @seen.include?(crc32(word))
+    end
+
+    #
     # Marks the specified _word_ as seen and returns +true+. If the _word_
     # has been previously been seen, +false+ will be returned.
     #
