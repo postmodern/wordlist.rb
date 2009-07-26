@@ -4,7 +4,6 @@ COPYING.txt
 README.txt
 Rakefile
 lib/wordlist.rb
-lib/wordlist/exceptions.rb
 lib/wordlist/unique_filter.rb
 lib/wordlist/parsers.rb
 lib/wordlist/builder.rb
