@@ -5,7 +5,6 @@ README.txt
 Rakefile
 lib/wordlist.rb
 lib/wordlist/exceptions.rb
-lib/wordlist/exceptions/not_implemented.rb
 lib/wordlist/unique_filter.rb
 lib/wordlist/parsers.rb
 lib/wordlist/builder.rb
