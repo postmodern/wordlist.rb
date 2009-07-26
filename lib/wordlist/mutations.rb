@@ -8,10 +8,10 @@ module Wordlist
       mutators[pattern] += substitutes
     end
 
-    def each_mutation(word,&block)
+    def each_mutation(word)
       mutators.each do |pattern,substitutes|
         substitutes.each do |substitute|
-          block.call(pattern.sub(pattern,substitute))
+          yield pattern.sub(pattern,substitute)
         end
       end
     end
