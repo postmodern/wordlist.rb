@@ -1,7 +1,5 @@
-require 'wordlist/exceptions/not_implemented'
+require 'wordlist/unique_filter'
 require 'wordlist/mutations'
-
-require 'bloomfilter'
 
 module Wordlist
   class Source
@@ -9,43 +7,23 @@ module Wordlist
     include Mutations
     include Enumerable
 
-    # Default expected rate of duplicate words
-    DUPLICATE_RATE = 0.1
-
-    # Default expected number of words to generate
-    MAX_WORDS = 1000
-
-    # Maximum number of words to generate
-    attr_accessor :max_words
-
-    # Acceptible rate of duplicate words
-    attr_accessor :duplicate_rate
-
     def initialize(options={})
-      @max_words = (options[:max_words] || MAX_WORDS).to_i
-      @seen_words = 0
-
-      @duplicate_rate = (options[:duplicate_rate] || DUPLICATE_RATE).to_f
+      @filter = nil
     end
 
-    def each_word(&block)
-      raise(NotImplemented,"the each_word method must be implemented",caller)
+    def each_word
     end
 
-    def each_unique(&block)
-      setup_bloomfilter!
+    def each_unique
+      @filter = UniqueFilter.new()
 
       each_word do |word|
-        unless seen?(word)
-          saw!(word)
-
-          block.call(word)
-          break if @seen_words >= @max_words
+        if @filter.saw!(word)
+          yield word
         end
       end
 
-      destroy_bloomfilter!
-      return self
+      @filter = nil
     end
 
     def each_mutated(&block)
@@ -62,27 +40,6 @@ module Wordlist
     end
 
     alias each each_mutated
-
-    protected
-
-    def setup_bloomfilter!
-      @bloomfilter = BloomFilter.new
-      @seen_words = 0
-    end
-
-    def seen?(word)
-      @bloomfilter.include?(word)
-    end
-
-    def saw!(word)
-      @bloomfilter.insert(word)
-      @seen_words += 1
-    end
-
-    def destroy_bloomfilter!
-      @seen_words = 0
-      @bloomfilter = nil
-    end
 
   end
 end
