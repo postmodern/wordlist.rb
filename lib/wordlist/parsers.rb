@@ -50,55 +50,42 @@ module Wordlist
     end
 
     #
-    # Parses the specified _sentence_ and returns an Array of tokens.
+    # Parses the specified _text_ and returns an Array of tokens.
     #
-    def parse_sentence(sentence)
-      sentence = sentence.to_s
+    def parse(text)
+      text = text.to_s
 
       if @ignore_punctuation
         # eat tailing punctuation
-        sentence.gsub!(/[\.\?!]*$/,'')
+        text.gsub!(/[\.\?!]*$/,'')
       end
 
       if @ignore_case
         # downcase the sentence
-        sentence.downcase!
+        text.downcase!
       end
-
-      if @ignore_urls
-        sentence.gsub!(/\s*\w+:\/\/[\w\/\+_\-,:%\d\.\-\?&=]*\s*/,' ')
-      end
-
-      if @ignore_phone_numbers
-        # remove phone numbers
-        sentence.gsub!(/\s*(\d-)?(\d{3}-)?\d{3}-\d{4}\s*/,' ')
-      end
-
-      if @ignore_references
-        # remove RFC style references
-        sentence.gsub!(/\s*[\(\{\[]\d+[\)\}\]]\s*/,' ')
-      end
-
-      if @ignore_punctuation
-        # split and ignore punctuation characters
-        return sentence.scan(/\w+[\-_\.:']\w+|\w+/)
-      else
-        # split and accept punctuation characters
-        return sentence.scan(/[\w\-_,:;\.\?\!'"\\\/]+/)
-      end
-    end
-
-    #
-    # Parses the specified _text_ and returns an Array of sentences.
-    #
-    def parse_text(text)
-      text = text.to_s
 
       if @ignore_urls
         text.gsub!(/\s*\w+:\/\/[\w\/\+_\-,:%\d\.\-\?&=]*\s*/,' ')
       end
 
-      return text.scan(/[^\s\.\?!][^\.\?!]*[\.\?\!]/)
+      if @ignore_phone_numbers
+        # remove phone numbers
+        text.gsub!(/\s*(\d-)?(\d{3}-)?\d{3}-\d{4}\s*/,' ')
+      end
+
+      if @ignore_references
+        # remove RFC style references
+        text.gsub!(/\s*[\(\{\[]\d+[\)\}\]]\s*/,' ')
+      end
+
+      if @ignore_punctuation
+        # split and ignore punctuation characters
+        return text.scan(/\w+[\-_\.:']\w+|\w+/)
+      else
+        # split and accept punctuation characters
+        return text.scan(/[\w\-_,:;\.\?\!'"\\\/]+/)
+      end
     end
   end
 end

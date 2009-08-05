@@ -20,7 +20,7 @@ shared_examples_for "a wordlist Builder" do
 
   it "should build a unique wordlist from a sentence" do
     Builder.build(@path) do |wordlist|
-      wordlist.parse_sentence(@sentence)
+      wordlist.parse(@sentence)
     end
 
     should_contain_words(@path,@expected)
@@ -28,7 +28,7 @@ shared_examples_for "a wordlist Builder" do
 
   it "should build a unique wordlist from text" do
     Builder.build(@path) do |wordlist|
-      wordlist.parse_text(@text)
+      wordlist.parse(@text)
     end
 
     should_contain_words(@path,@expected)

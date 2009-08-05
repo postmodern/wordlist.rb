@@ -55,7 +55,7 @@ module Wordlist
     # has returned, the wordlist will be closed.
     #
     #   Builder.build('some/path') do |builder|
-    #     builder.parse_text(readline)
+    #     builder.parse(readline)
     #   end
     #
     def Builder.build(path,&block)
@@ -109,23 +109,11 @@ module Wordlist
     end
 
     #
-    # Parses the specified _sentence_ adding each unique word to the
-    # wordlist file.
-    #
-    def parse_sentence(sentence)
-      super(sentence).each do |word|
-        self << word
-      end
-    end
-
-    #
     # Parses the specified _text_ adding each unique word to the wordlist
     # file.
     #
-    def parse_text(text)
-      super(text).each do |sentence|
-        parse_sentence(sentence)
-      end
+    def parse(text)
+      super(text).each { |word| self << word }
     end
 
     #
@@ -135,7 +123,7 @@ module Wordlist
     def parse_file(path)
       File.open(path) do |file|
         file.each_line do |line|
-          parse_text(line)
+          parse(line)
         end
       end
     end
