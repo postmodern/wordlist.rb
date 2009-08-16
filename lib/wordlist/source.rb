@@ -21,7 +21,7 @@
 #
 
 require 'wordlist/unique_filter'
-require 'wordlist/mutators'
+require 'wordlist/mutator'
 
 module Wordlist
   class Source
