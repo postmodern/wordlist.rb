@@ -82,7 +82,7 @@ module Wordlist
     end
 
     def inspect
-      "#{@pattern.inspect} -> #{@replacement.inspect}"
+      "#{@pattern.inspect} -> #{@substitute.inspect}"
     end
 
   end
