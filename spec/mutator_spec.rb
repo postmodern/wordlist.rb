@@ -30,10 +30,13 @@ describe Mutator do
   end
 
   it "should iterate over the original word, if no matches were found" do
+    mutations = []
     mutator = Mutator.new('x','0')
 
-    mutator.each('hello') do |word|
-      word.should == 'hello'
+    mutator.each('hello') do |mutant|
+      mutations << mutant
     end
+
+    mutations.should == ['hello']
   end
 end
