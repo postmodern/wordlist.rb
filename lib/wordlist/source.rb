@@ -21,16 +21,30 @@
 #
 
 require 'wordlist/unique_filter'
-require 'wordlist/mutations'
+require 'wordlist/mutators'
 
 module Wordlist
   class Source
 
-    include Mutations
     include Enumerable
 
+    # Maximum length of words
+    attr_accessor :max_length
+
+    # Minimum length of words
+    attr_accessor :min_length
+
     def initialize(options={})
+      @mutators = []
+
+      @max_length = nil
+      @min_length = 0
+
       @filter = nil
+    end
+
+    def mutate(pattern,substitute)
+      @mutators << Mutator.new(pattern,substitute)
     end
 
     def each_word
@@ -48,20 +62,29 @@ module Wordlist
       @filter = nil
     end
 
-    def each_mutated(&block)
-      each_unique do |word|
-        each_mutation(word) do |mutated_word|
-          unless seen?(mutated_word)
-            saw!(mutated_word)
-            block.call(word)
+    def each_mutation(&block)
+      next_mutator = lambda { |word|
+        # skip words shorter than the minimum length
+        next if mutated_word.length < @min_length
 
-            return self if @seen_words >= @max_words
-          end
+        # truncate words longer than the maximum length
+        mutated_word = mutated_word[0,@max_length] if @max_length
+
+        if @filter.saw!(mutated_word)
+          yield mutated_word
         end
+      }
+
+      @mutators.reverse_each do |prev_mutator|
+        next_mutator = lambda { |word|
+          prev_mutator.each(&next_mutator)
+        }
       end
+
+      each_unique(&next_mutator)
     end
 
-    alias each each_mutated
+    alias each each_mutation
 
   end
 end
