@@ -52,7 +52,7 @@ module Wordlist
       return result
     end
 
-    def each(word,&block)
+    def each(word)
       choices = 0
 
       # first iteration
@@ -67,7 +67,7 @@ module Wordlist
         bits = iteration
 
         yield(word.gsub(@pattern) { |matched|
-          result = if (bits & 0x1) == 0x1
+          result = if ((bits & 0x1) == 0x1)
                      replace(matched)
                    else
                      matched
