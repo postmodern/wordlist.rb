@@ -21,7 +21,7 @@
 #
 
 module Wordlist
-  module Mutator
+  class Mutator
 
     include Enumerable
 
