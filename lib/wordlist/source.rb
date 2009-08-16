@@ -77,7 +77,7 @@ module Wordlist
 
       @mutators.reverse_each do |prev_mutator|
         next_mutator = lambda { |word|
-          prev_mutator.each(&next_mutator)
+          prev_mutator.each(word,&next_mutator)
         }
       end
 
