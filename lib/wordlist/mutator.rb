@@ -53,23 +53,27 @@ module Wordlist
     end
 
     def each(word,&block)
-      n = 0
+      choices = 0
 
       # first iteration
       yield(word.gsub(@pattern) { |matched|
-        n += 1 # find maximum replacements done
+        # determine how many possible choices there are
+        choices = ((choices << 1) | 0x1)
+
         replace(matched)
       })
 
-      (n - 1).downto(0) do |iteration|
+      (choices - 1).downto(0) do |iteration|
+        bits = iteration
+
         yield(word.gsub(@pattern) { |matched|
-          result = if (iteration & 0x1)
+          result = if (bits & 0x1) == 0x1
                      replace(matched)
                    else
                      matched
                    end
 
-          iteration >>= 1
+          bits >>= 1
           result
         })
       end
