@@ -63,7 +63,7 @@ module Wordlist
     end
 
     def each_mutation(&block)
-      next_mutator = lambda { |word|
+      mutator_stack = [lambda { |mutated_word|
         # skip words shorter than the minimum length
         next if mutated_word.length < @min_length
 
@@ -73,15 +73,18 @@ module Wordlist
         if @filter.saw!(mutated_word)
           yield mutated_word
         end
-      }
+      }]
 
-      @mutators.reverse_each do |prev_mutator|
-        next_mutator = lambda { |word|
+      (@mutators.length-1).downto(0) do |index|
+        mutator_stack.unshift(lambda { |word|
+          prev_mutator = @mutators[index]
+          next_mutator = mutator_stack[index+1]
+
           prev_mutator.each(word,&next_mutator)
-        }
+        })
       end
 
-      each_unique(&next_mutator)
+      each_unique(&(mutator_stack.first))
     end
 
     alias each each_mutation
