@@ -23,6 +23,7 @@ describe Mutator do
 
     mutator = Mutator.new(/o/,'0')
     mutator.each('lolol') do |mutation|
+      remaining.include?(mutation).should == true
       remaining.delete(mutation)
     end
 
