@@ -23,7 +23,7 @@
 require 'wordlist/source'
 
 module Wordlist
-  class File < Source
+  class FileSource < Source
 
     def initialize(path,options={})
       @path = path
