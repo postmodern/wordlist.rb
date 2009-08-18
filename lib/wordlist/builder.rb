@@ -61,9 +61,7 @@ module Wordlist
     def Builder.build(path,&block)
       self.new(path) do |builder|
         builder.open!
-
-        block.call(builder)
-
+        builder.build!(&block)
         builder.close!
       end
     end
@@ -84,6 +82,14 @@ module Wordlist
       end
 
       @file = File.new(@path,File::RDWR | File::CREAT | File::APPEND)
+    end
+
+    #
+    # Default to be called when the wordlist is to be built, simply
+    # calls the given _block_.
+    #
+    def build!(&block)
+      block.call(self) if block
     end
 
     #
