@@ -39,8 +39,6 @@ module Wordlist
 
       @max_length = nil
       @min_length = 0
-
-      @filter = nil
     end
 
     def mutate(pattern,substitute)
@@ -51,18 +49,20 @@ module Wordlist
     end
 
     def each_unique
-      @filter = UniqueFilter.new()
+      unique_filter = UniqueFilter.new()
 
       each_word do |word|
-        if @filter.saw!(word)
+        if unique_filter.saw!(word)
           yield word
         end
       end
 
-      @filter = nil
+      unique_filter = nil
     end
 
     def each_mutation(&block)
+      mutation_filter = UniqueFilter.new()
+
       mutator_stack = [lambda { |mutated_word|
         # skip words shorter than the minimum length
         next if mutated_word.length < @min_length
@@ -70,7 +70,7 @@ module Wordlist
         # truncate words longer than the maximum length
         mutated_word = mutated_word[0,@max_length] if @max_length
 
-        if @filter.saw!(mutated_word)
+        if mutation_filter.saw!(mutated_word)
           yield mutated_word
         end
       }]
