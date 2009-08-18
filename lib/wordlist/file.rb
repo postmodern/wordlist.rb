@@ -34,7 +34,7 @@ module Wordlist
     def each_word(&block)
       ::File.open(@path) do |file|
         file.each_line do |line|
-          line.split.each(&block)
+          yield line.chomp
         end
       end
     end
