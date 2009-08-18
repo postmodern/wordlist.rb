@@ -3,7 +3,7 @@ require 'wordlist/source'
 class TestSource < Wordlist::Source
 
   def each_word
-    yield 'lolol'
+    yield 'omg.hackers'
   end
 
 end

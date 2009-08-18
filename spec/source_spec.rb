@@ -6,8 +6,10 @@ require 'classes/test_source'
 describe Source do
   before(:all) do
     @source = TestSource.new
-    @source.mutate /o/, 'O'
-    @source.mutate /l/, '1'
+    @source.mutate 'o', '0'
+    @source.mutate 'a', 'A'
+    @source.mutate 'e', '3'
+    @source.mutate 's', '5'
   end
 
   it "should iterate over each word" do
@@ -15,7 +17,7 @@ describe Source do
 
     @source.each_word { |word| words << word }
 
-    words.should == ['lolol']
+    words.should == ['omg.hackers']
   end
 
   it "should iterate over each unique word" do
@@ -23,42 +25,27 @@ describe Source do
 
     @source.each_unique { |word| words << word }
 
-    words.should == ['lolol']
+    words.should == ['omg.hackers']
   end
 
   it "should iterate over every possible mutated word" do
     mutations = %w{
-      lO1O1
-      1OlO1
-      lOlO1
-      1O1Ol
-      lO1Ol
-      1OlOl
-      lOlOl
-      1o1O1
-      lo1O1
-      1olO1
-      lolO1
-      1o1Ol
-      lo1Ol
-      1olOl
-      lolOl
-      1O1o1
-      lO1o1
-      1Olo1
-      lOlo1
-      1O1ol
-      lO1ol
-      1Olol
-      lOlol
-      1o1o1
-      lo1o1
-      1olo1
-      lolo1
-      1o1ol
-      lo1ol
-      1olol
-      lolol
+      0mg.hAck3r5
+      0mg.hAck3rs
+      0mg.hAcker5
+      0mg.hAckers
+      0mg.hack3r5
+      0mg.hack3rs
+      0mg.hacker5
+      0mg.hackers
+      omg.hAck3r5
+      omg.hAck3rs
+      omg.hAcker5
+      omg.hAckers
+      omg.hack3r5
+      omg.hack3rs
+      omg.hacker5
+      omg.hackers
     }
 
     @source.each_mutation do |mutation|
