@@ -7,6 +7,8 @@ lib/wordlist.rb
 lib/wordlist/unique_filter.rb
 lib/wordlist/parsers.rb
 lib/wordlist/builder.rb
+lib/wordlist/builders.rb
+lib/wordlist/builders/website.rb
 lib/wordlist/mutator.rb
 lib/wordlist/source.rb
 lib/wordlist/file_source.rb
