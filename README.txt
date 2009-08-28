@@ -1,4 +1,4 @@
-= WordList
+= Wordlist
 
 * http://wordlist.rubyforge.org/
 * http://github.com/postmodern/wordlist/
@@ -6,16 +6,16 @@
 
 == DESCRIPTION:
 
-A Ruby library for generating and working with word lists.
+A Ruby library for generating and working with wordlists.
 
 == FEATURES:
 
-* Uses CRC32 Hashes to filter out duplicate words.
-* Provides WordList::Mutations for defining mutations to apply to words.
-* Provides various pre-defined mutators:
-  * Old-school leet-speak.
-  * Nu-skool leet-speek.
-* Supports generating word-lists from arbitrary text.
+* Uses a bucket system of CRC32 hashes for efficient filtering of duplicate
+  words.
+* Provides Wordlist::Mutations for defining mutations to apply to words.
+* Supports building wordlists from arbitrary text.
+* Supports custom builders:
+  * Wordlist::Builders::Website: Build word lists from web-site content.
 
 == EXAMPLES:
 
