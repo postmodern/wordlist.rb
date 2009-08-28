@@ -1,7 +1,7 @@
 = Wordlist
 
 * http://wordlist.rubyforge.org/
-* http://github.com/postmodern/wordlist/
+* http://github.com/sophsec/wordlist/
 * Postmodern (postmodern.mod3 at gmail.com)
 
 == DESCRIPTION:
