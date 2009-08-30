@@ -21,7 +21,7 @@ module Wordlist
 
     #
     # Replaces the specified _matched_ data using the +substitute+, which
-    # may be either a String, Integer or a Proc.
+    # may be either a String, Integer or Proc.
     #
     def replace(matched)
       result = if @substitute.kind_of?(Proc)
