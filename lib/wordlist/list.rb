@@ -41,7 +41,9 @@ module Wordlist
 
     #
     # Adds a mutation rule for the specified _pattern_, to be replaced
-    # using the specified _substitute_.
+    # using the specified _substitute_. If a _block_ is given, and the
+    # _substitute_ data omitted, then the _block_ will be used to
+    # replace data matched by the _pattern_.
     #
     #   list.mutate 'o', '0'
     #
