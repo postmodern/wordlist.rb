@@ -61,7 +61,7 @@ module Wordlist
     #     puts word
     #   end
     #
-    def each_word
+    def each_word(&block)
     end
 
     #
