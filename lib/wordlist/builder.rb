@@ -36,7 +36,7 @@ module Wordlist
     #     builder.parse(readline)
     #   end
     #
-    def Builder.build(path,&block)
+    def self.build(path,&block)
       self.new(path) do |builder|
         builder.open!
         builder.build!(&block)
