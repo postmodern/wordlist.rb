@@ -6,7 +6,11 @@
 
 == DESCRIPTION:
 
-A Ruby library for generating and working with wordlists.
+A Ruby library for generating and working with wordlists. Wordlist allows
+one to efficiently generate unique wordlists from arbitrary text or
+other sources, such as website content. Wordlist can also quickly enumerate
+through words within an existing wordlist, applying mutation rules to each
+word.
 
 == FEATURES:
 
@@ -16,10 +20,59 @@ A Ruby library for generating and working with wordlists.
 * Supports building wordlists from arbitrary text.
 * Supports custom builders:
   * Wordlist::Builders::Website: Build word lists from web-site content.
+* Supports custom wordlist formats:
+  * Wordlist::Formats::FlatFile: Enumerates through the words in a flat-file
+    wordlist.
 
 == EXAMPLES:
 
+* Build a wordlist from arbitrary text:
+
+    Wordlist::Builder.build('list.txt') do |builder|
+      builder.parse(some_text)
+    end
+
+* Build a wordlist from another file:
+
+    Wordlist::Builder.build('list.txt') do |builder|
+      builder.parse_file('some/file.txt')
+    end
+
+* Build a wordlist from content off a website:
+
+    require 'wordlist/builders/website'
+
+    Wordlist::Builders::Website.build('list.txt', :host => 'www.example.com')
+
+* Enumerate through each word in a flat-file wordlist:
+
+    require 'wordlist/formats/flat_file'
+
+    list = Wordlist::Formats::FlatFile.new('list.txt')
+    list.each_word do |word|
+      puts word
+    end
+
+* Enumerate through each unique word in a flat-file wordlist:
+
+    list.each_unique do |word|
+      puts word
+    end
+
+* Define mutation rules, and enumerate through each unique mutation of each
+  unique word in the word-list:
+
+    list.mutate 'o', '0'
+    list.mutate 'a', 0x41
+    list.mutate /[hax]/i, lambda { |match| match.swapcase }
+
+    list.each_mutation do |word|
+      puts word
+    end
+
 == REQUIREMENTS:
+
+* {spidr}[http://spidr.rubyforge.org] >= 0.1.9
 
 == INSTALL:
 
