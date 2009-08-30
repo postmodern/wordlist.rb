@@ -1,11 +1,11 @@
-require 'wordlist/formats/flat_file'
+require 'wordlist/flat_file'
 
 require 'spec_helper'
 
-describe Formats::FlatFile do
+describe FlatFile do
   before(:all) do
-    @path = File.join(File.dirname(__FILE__),'files','flat_file.txt')
-    @list = Formats::FlatFile.new(@path)
+    @path = File.join(File.dirname(__FILE__),'text','flat_file.txt')
+    @list = FlatFile.new(@path)
   end
 
   it "should have a path it reads from" do
