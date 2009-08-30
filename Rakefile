@@ -13,6 +13,10 @@ Hoe.spec('wordlist') do
   self.extra_deps = [
     ['spidr', '>=0.1.9']
   ]
+
+  self.extra_dev_deps = [
+    ['rspec', '>=1.1.12']
+  ]
 end
 
 # vim: syntax=Ruby
