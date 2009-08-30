@@ -64,7 +64,7 @@ word.
 
     list.mutate 'o', '0'
     list.mutate 'a', 0x41
-    list.mutate /[hax]/i, lambda { |match| match.swapcase }
+    list.mutate(/[hax]/i) { |match| match.swapcase }
 
     list.each_mutation do |word|
       puts word
