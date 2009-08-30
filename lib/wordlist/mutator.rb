@@ -9,9 +9,9 @@ module Wordlist
     # The data to substitute matched text with
     attr_accessor :substitute
 
-    def initialize(pattern,substitute)
+    def initialize(pattern,substitute=nil,&block)
       @pattern = pattern
-      @substitute = substitute
+      @substitute = (substitute || block)
     end
 
     def replace(matched)

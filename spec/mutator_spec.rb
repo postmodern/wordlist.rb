@@ -14,7 +14,7 @@ describe Mutator do
   end
 
   it "should replace matched text using a proc" do
-    mutator = Mutator.new('o',proc { |match| match * 2 })
+    mutator = Mutator.new('o') { |match| match * 2 }
     mutator.replace('o').should == 'oo'
   end
 

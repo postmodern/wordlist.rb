@@ -47,12 +47,12 @@ module Wordlist
     #
     #   list.mutate '0', 0x41
     #
-    #   list.mutate /[oO]/, lambda { |match|
+    #   list.mutate(/[oO]/) do |match|
     #     match.swapcase
-    #   }
+    #   end
     #
-    def mutate(pattern,substitute)
-      @mutators << Mutator.new(pattern,substitute)
+    def mutate(pattern,substitute=nil,&block)
+      @mutators << Mutator.new(pattern,substitute,&block)
     end
 
     #
