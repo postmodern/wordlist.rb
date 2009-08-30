@@ -26,6 +26,14 @@ module Wordlist
 
       @max_length = nil
       @min_length = 0
+
+      if options[:max_length]
+        @max_length = options[:max_length]
+      end
+
+      if options[:min_length]
+        @min_length = options[:min_length]
+      end
     end
 
     #
