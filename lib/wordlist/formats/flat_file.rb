@@ -4,6 +4,9 @@ module Wordlist
   module Formats
     class FlatFile < List
 
+      # The path to the flat-file
+      attr_accessor :path
+
       def initialize(path,options={})
         @path = path
 
