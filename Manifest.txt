@@ -22,4 +22,6 @@ spec/parsers_spec.rb
 spec/mutator_spec.rb
 spec/builder_spec.rb
 spec/list_spec.rb
+spec/formats/files/flat_file.txt
+spec/formats/flat_file_spec.rb
 spec/wordlist_spec.rb
