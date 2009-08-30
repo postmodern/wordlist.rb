@@ -15,7 +15,7 @@ lib/wordlist/formats/flat_file.rb
 lib/wordlist/version.rb
 tasks/spec.rb
 spec/classes/parser_class.rb
-spec/classes/test_source.rb
+spec/classes/test_list.rb
 spec/spec_helper.rb
 spec/unique_filter_spec.rb
 spec/parsers_spec.rb
