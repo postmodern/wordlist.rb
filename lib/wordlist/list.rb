@@ -12,6 +12,15 @@ module Wordlist
     # Minimum length of words
     attr_accessor :min_length
 
+    #
+    # Creates a new List object with the given _options_.
+    #
+    # _options_ may include the following keys:
+    # <tt>:max_length</tt>:: The maximum length of words produced by the
+    #                        list.
+    # <tt>:min_length</tt>:: The minimum length of words produced by the
+    #                        list.
+    #
     def initialize(options={})
       @mutators = []
 
@@ -19,13 +28,42 @@ module Wordlist
       @min_length = 0
     end
 
+    #
+    # Adds a mutation rule for the specified _pattern_, to be replaced
+    # using the specified _substitute_.
+    #
+    #   list.mutate 'o', '0'
+    #
+    #   list.mutate '0', 0x41
+    #
+    #   list.mutate /[oO]/, lambda { |match|
+    #     match.swapcase
+    #   }
+    #
     def mutate(pattern,substitute)
       @mutators << Mutator.new(pattern,substitute)
     end
 
+    #
+    # Enumerate through every word in the list, passing each word to
+    # the given block. By default this method passes nothing to the given
+    # _block_.
+    #
+    #   list.each_word do |word|
+    #     puts word
+    #   end
+    #
     def each_word
     end
 
+    #
+    # Enumerates through every unique word in the list, passing each
+    # unique word to the given block.
+    #
+    #   list.each_unique do |word|
+    #     puts word
+    #   end
+    #
     def each_unique
       unique_filter = UniqueFilter.new()
 
@@ -38,6 +76,15 @@ module Wordlist
       unique_filter = nil
     end
 
+    #
+    # Enumerates through every unique mutation, of every unique word, using
+    # the mutator rules define for the list. Every possible unique mutation
+    # will be passed to the given _block_.
+    #
+    #   list.each_mutation do |word|
+    #     puts word
+    #   end
+    #
     def each_mutation(&block)
       mutation_filter = UniqueFilter.new()
 
