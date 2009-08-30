@@ -11,10 +11,10 @@ module Wordlist
       # Creates a new FlatFile list with the specified _path_ and given
       # _options_.
       #
-      def initialize(path,options={})
+      def initialize(path,options={},&block)
         @path = path
 
-        super(options)
+        super(options,&block)
       end
 
       #

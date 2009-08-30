@@ -13,7 +13,8 @@ module Wordlist
     attr_accessor :min_length
 
     #
-    # Creates a new List object with the given _options_.
+    # Creates a new List object with the given _options_. If a _block_
+    # is given, it will be passed the newly created List object.
     #
     # _options_ may include the following keys:
     # <tt>:max_length</tt>:: The maximum length of words produced by the
@@ -21,7 +22,7 @@ module Wordlist
     # <tt>:min_length</tt>:: The minimum length of words produced by the
     #                        list.
     #
-    def initialize(options={})
+    def initialize(options={},&block)
       @mutators = []
 
       @max_length = nil
@@ -34,6 +35,8 @@ module Wordlist
       if options[:min_length]
         @min_length = options[:min_length]
       end
+
+      block.call(self) if block
     end
 
     #
