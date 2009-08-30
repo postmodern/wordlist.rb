@@ -1,11 +1,11 @@
-require 'wordlist/source'
+require 'wordlist/list'
 
 require 'spec_helper'
-require 'classes/test_source'
+require 'classes/test_list'
 
-describe Source do
+describe List do
   before(:all) do
-    @source = TestSource.new
+    @source = TestList.new
     @source.mutate 'o', '0'
     @source.mutate 'a', 'A'
     @source.mutate 'e', '3'

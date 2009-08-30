@@ -2,7 +2,7 @@ require 'wordlist/unique_filter'
 require 'wordlist/mutator'
 
 module Wordlist
-  class Source
+  class List
 
     include Enumerable
 

@@ -10,7 +10,7 @@ lib/wordlist/builder.rb
 lib/wordlist/builders.rb
 lib/wordlist/builders/website.rb
 lib/wordlist/mutator.rb
-lib/wordlist/source.rb
+lib/wordlist/list.rb
 lib/wordlist/file_source.rb
 lib/wordlist/version.rb
 tasks/spec.rb
@@ -21,5 +21,5 @@ spec/unique_filter_spec.rb
 spec/parsers_spec.rb
 spec/mutator_spec.rb
 spec/builder_spec.rb
-spec/source_spec.rb
+spec/list_spec.rb
 spec/wordlist_spec.rb
