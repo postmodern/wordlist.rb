@@ -11,7 +11,8 @@ lib/wordlist/builders.rb
 lib/wordlist/builders/website.rb
 lib/wordlist/mutator.rb
 lib/wordlist/list.rb
-lib/wordlist/file_source.rb
+lib/wordlist/formats.rb
+lib/wordlist/formats/flat_file.rb
 lib/wordlist/version.rb
 tasks/spec.rb
 spec/classes/parser_class.rb
