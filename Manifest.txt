@@ -13,6 +13,8 @@ lib/wordlist/list.rb
 lib/wordlist/flat_file.rb
 lib/wordlist/version.rb
 tasks/spec.rb
+scripts/benchmark
+scripts/text/comedy_of_errors.txt
 spec/classes/parser_class.rb
 spec/classes/test_list.rb
 spec/text/previous_wordlist.txt
