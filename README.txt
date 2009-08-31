@@ -42,7 +42,7 @@ word.
 
     require 'wordlist/builders/website'
 
-    Wordlist::Builders::Website.build('list.txt', :host => 'www.example.com')
+    Wordlist::Builders::Website.build('list.txt','www.example.com')
 
 * Enumerate through each word in a flat-file wordlist:
 
