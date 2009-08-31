@@ -11,14 +11,11 @@ module Wordlist
 
       #
       # Creates a new Website builder object with the specified _path_
-      # and the given _options_. If a _block_ is given, it will be passed
-      # the new created Website builder object.
+      # and _host_. If a _block_ is given, it will be passed the new created
+      # Website builder object.
       #
-      # _options_ may contain the following keys:
-      # <tt>:host</tt>:: The host to spider.
-      #
-      def initialize(path,options={},&block)
-        @host = options[:host]
+      def initialize(path,host,&block)
+        @host = host
 
         super(path,&block)
       end
