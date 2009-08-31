@@ -26,9 +26,11 @@ module Wordlist
       #
       # Builds the wordlist file by spidering the +host+ and parsing the
       # inner-text from all HTML pages. If a _block_ is given, it will be
-      # called after all HTML pages on the +host+ have been parsed.
+      # called before all HTML pages on the +host+ have been parsed.
       #
       def build!(&block)
+        super(&block)
+
         Spidr.host(@host) do |spidr|
           spidr.every_page do |page|
             if page.html?
@@ -38,8 +40,6 @@ module Wordlist
             end
           end
         end
-
-        super(&block)
       end
 
     end
