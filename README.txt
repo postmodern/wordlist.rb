@@ -27,32 +27,32 @@ rules to each word in the list.
 
 == EXAMPLES:
 
-* Build a wordlist from arbitrary text:
+* Build a word-list from arbitrary text:
 
     Wordlist::Builder.build('list.txt') do |builder|
       builder.parse(some_text)
     end
 
-* Build a wordlist from another file:
+* Build a word-list from another file:
 
     Wordlist::Builder.build('list.txt') do |builder|
       builder.parse_file('some/file.txt')
     end
 
-* Build a wordlist from content off a website:
+* Build a word-list from content off a website:
 
     require 'wordlist/builders/website'
 
     Wordlist::Builders::Website.build('list.txt','www.example.com')
 
-* Enumerate through each word in a flat-file wordlist:
+* Enumerate through each word in a flat-file word-list:
 
     list = Wordlist::FlatFile.new('list.txt')
     list.each_word do |word|
       puts word
     end
 
-* Enumerate through each unique word in a flat-file wordlist:
+* Enumerate through each unique word in a flat-file word-list:
 
     list.each_unique do |word|
       puts word
@@ -79,7 +79,7 @@ rules to each word in the list.
 
 == LICENSE:
 
-Wordlist - A Ruby library for generating and working with wordlists.
+Wordlist - A Ruby library for generating and working with word-lists.
 
 Copyright (c) 2009 Hal Brodigan
 

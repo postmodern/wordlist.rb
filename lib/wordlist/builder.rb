@@ -6,14 +6,14 @@ module Wordlist
 
     include Parsers
 
-    # Path of the wordlist
+    # Path of the word-list
     attr_reader :path
 
-    # File for the wordlist
+    # File for the word-list
     attr_reader :file
 
     #
-    # Creates a new wordlist Builder object with the specified _path_.
+    # Creates a new word-list Builder object with the specified _path_.
     # If a _block_ is given, it will be passed the newly created
     # Builder object.
     #
@@ -29,8 +29,8 @@ module Wordlist
 
     #
     # Creates a new Builder object with the given _arguments_, opens the
-    # wordlist file, passes the builder object to the given _block_
-    # then finally closes the wordlist file.
+    # word-list file, passes the builder object to the given _block_
+    # then finally closes the word-list file.
     #
     #   Builder.build('some/path') do |builder|
     #     builder.parse(readline)
@@ -45,7 +45,7 @@ module Wordlist
     end
 
     #
-    # Opens the wordlist file for writing. If the file already exists, the
+    # Opens the word-list file for writing. If the file already exists, the
     # previous words will be used to filter future duplicate words.
     #
     def open!
@@ -63,7 +63,7 @@ module Wordlist
     end
 
     #
-    # Default to be called when the wordlist is to be built, simply
+    # Default to be called when the word-list is to be built, simply
     # calls the given _block_.
     #
     def build!(&block)
@@ -71,7 +71,7 @@ module Wordlist
     end
 
     #
-    # Appends the specified _word_ to the wordlist file, only if it has not
+    # Appends the specified _word_ to the word-list file, only if it has not
     # been previously seen.
     #
     def <<(word)
@@ -85,7 +85,7 @@ module Wordlist
     end
 
     #
-    # Add the specified _words_ to the wordlist.
+    # Add the specified _words_ to the word-list.
     #
     def +(words)
       words.each { |word| self << word }
@@ -93,7 +93,7 @@ module Wordlist
     end
 
     #
-    # Parses the specified _text_ adding each unique word to the wordlist
+    # Parses the specified _text_ adding each unique word to the word-list
     # file.
     #
     def parse(text)
@@ -102,7 +102,7 @@ module Wordlist
 
     #
     # Parses the contents of the file at the specified _path_, adding
-    # each unique word to the wordlist file.
+    # each unique word to the word-list file.
     #
     def parse_file(path)
       File.open(path) do |file|
@@ -113,7 +113,7 @@ module Wordlist
     end
 
     #
-    # Closes the wordlist file.
+    # Closes the word-list file.
     #
     def close!
       if @file

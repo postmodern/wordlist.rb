@@ -21,7 +21,7 @@ module Wordlist
       end
 
       #
-      # Builds the wordlist file by spidering the +host+ and parsing the
+      # Builds the word-list file by spidering the +host+ and parsing the
       # inner-text from all HTML pages. If a _block_ is given, it will be
       # called before all HTML pages on the +host+ have been parsed.
       #
