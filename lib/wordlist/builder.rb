@@ -28,16 +28,16 @@ module Wordlist
     end
 
     #
-    # Starts building a new wordlist at the specified _path_, passing
-    # a new Builder object to the given _block_. After the given _block_
-    # has returned, the wordlist will be closed.
+    # Creates a new Builder object with the given _arguments_, opens the
+    # wordlist file, passes the builder object to the given _block_
+    # then finally closes the wordlist file.
     #
     #   Builder.build('some/path') do |builder|
     #     builder.parse(readline)
     #   end
     #
-    def self.build(path,&block)
-      self.new(path) do |builder|
+    def self.build(*arguments,&block)
+      self.new(*arguments) do |builder|
         builder.open!
         builder.build!(&block)
         builder.close!
