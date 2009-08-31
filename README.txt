@@ -6,23 +6,24 @@
 
 == DESCRIPTION:
 
-A Ruby library for generating and working with wordlists. Wordlist allows
-one to efficiently generate unique wordlists from arbitrary text or
+A Ruby library for generating and working with word-lists. Wordlist allows
+one to efficiently generate unique word-lists from arbitrary text or
 other sources, such as website content. Wordlist can also quickly enumerate
-through words within an existing wordlist, applying mutation rules to each
-word.
+through words within an existing word-list, applying multiple mutation
+rules to each word in the list.
 
 == FEATURES:
 
 * Uses a bucket system of CRC32 hashes for efficient filtering of duplicate
   words.
-* Provides Wordlist::Mutations for defining mutations to apply to words.
-* Supports building wordlists from arbitrary text.
-* Supports custom builders:
-  * Wordlist::Builders::Website: Build word lists from web-site content.
-* Supports custom wordlist formats:
-  * Wordlist::Formats::FlatFile: Enumerates through the words in a flat-file
-    wordlist.
+* Supports adding mutation rules to a word-list, which are applied to
+  words as the list is enumerated.
+* Supports building word-lists from arbitrary text.
+* Supports custom word-list builders:
+  * Wordlist::Builders::Website: Build word-lists from website content.
+* Supports custom word-list formats:
+  * Wordlist::FlatFile: Enumerates through the words in a flat-file
+    word-list.
 
 == EXAMPLES:
 
