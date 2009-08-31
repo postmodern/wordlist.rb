@@ -62,7 +62,7 @@ rules to each word in the list.
   unique word in the word-list:
 
     list.mutate 'o', '0'
-    list.mutate 'a', 0x41
+    list.mutate '@', 0x41
     list.mutate(/[hax]/i) { |match| match.swapcase }
 
     list.each_mutation do |word|
