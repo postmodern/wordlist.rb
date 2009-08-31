@@ -46,8 +46,6 @@ word.
 
 * Enumerate through each word in a flat-file wordlist:
 
-    require 'wordlist/flat_file'
-
     list = Wordlist::FlatFile.new('list.txt')
     list.each_word do |word|
       puts word
