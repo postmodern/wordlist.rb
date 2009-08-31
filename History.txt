@@ -1,9 +1,9 @@
 === 0.1.0 / 2009-08-31
 
 * Initial release:
-  * Supports building wordlists from arbitrary text.
-  * Supports building wordlists from files.
-  * Supports building wordlists from websites.
-  * Supports enumerating through flat-file wordlists.
-  * Supports applying multiple mutation rules to each word in a wordlist.
+  * Supports building word-lists from arbitrary text.
+  * Supports building word-lists from files.
+  * Supports building word-lists from websites.
+  * Supports enumerating through flat-file word-lists.
+  * Supports applying multiple mutation rules to each word in a word-list.
 
