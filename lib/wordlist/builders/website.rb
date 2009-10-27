@@ -34,6 +34,10 @@ module Wordlist
               page.doc.search('//meta/@content|//title|//h1|//h2|//h3|//h4|//h5|//p|//span|//img/@alt').each do |element|
                 parse(element.inner_text)
               end
+
+              page.doc.traverse do |element|
+                parse(element.inner_text) if element.comment?
+              end
             end
           end
         end
