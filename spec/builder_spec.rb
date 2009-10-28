@@ -8,6 +8,8 @@ require 'tempfile'
 require 'fileutils'
 
 describe Builder do
+  include Helpers
+
   describe "new wordlist" do
     before(:all) do
       @expected = ['dog', 'cat', 'catx', 'dat']
@@ -28,7 +30,7 @@ describe Builder do
 
     before(:each) do
       @path = Tempfile.new('wordlist').path
-      FileUtils.cp(PREVIOUS_WORDLIST,@path)
+      FileUtils.cp(Helpers::PREVIOUS_WORDLIST,@path)
     end
 
     it_should_behave_like "a wordlist Builder"

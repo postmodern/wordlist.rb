@@ -3,11 +3,13 @@ require 'helpers/text'
 require 'helpers/wordlist'
 
 shared_examples_for "a wordlist Builder" do
+  include Helpers
+
   before(:all) do
     @words = ['dog', 'cat', 'catx', 'dat', 'dog', 'cat']
     @sentence = 'dog cat catx, dog dat.'
     @text = 'dog cat: catx. dog cat dat dog.'
-    @file = SAMPLE_TEXT
+    @file = Helpers::SAMPLE_TEXT
   end
 
   it "should build a unique wordlist from words" do

@@ -1,11 +1,13 @@
-def should_contain_words(path,expected)
-  words = []
+module Helpers
+  def should_contain_words(path,expected)
+    words = []
 
-  File.open(path) do |file|
-    file.each_line do |line|
-      words << line.chomp
+    File.open(path) do |file|
+      file.each_line do |line|
+        words << line.chomp
+      end
     end
-  end
 
-  words.sort.should == expected.sort
+    words.sort.should == expected.sort
+  end
 end
