@@ -12,17 +12,27 @@ module Wordlist
     # File for the word-list
     attr_reader :file
 
+    # Minimum number of words
+    attr_reader :min_words
+
+    # Maximum number of words
+    attr_reader :max_words
+
     #
     # Creates a new word-list Builder object with the specified _path_.
     # If a _block_ is given, it will be passed the newly created
     # Builder object.
     #
-    def initialize(path,&block)
+    def initialize(path,options={},&block)
       super()
 
       @path = File.expand_path(path)
       @file = nil
       @filter = nil
+      @word_queue = nil
+
+      @min_words = (options[:min_words] || 1)
+      @max_words = (options[:max_words] || @min_words)
 
       block.call(self) if block
     end
@@ -50,6 +60,7 @@ module Wordlist
     #
     def open!
       @filter = UniqueFilter.new
+      @word_queue = []
 
       if File.file?(@path)
         File.open(@path) do |file|
@@ -76,8 +87,26 @@ module Wordlist
     #
     def <<(word)
       if @file
-        @filter.pass(word) do |unique|
-          @file.puts unique
+        pass = lambda { |word|
+          @filter.pass(word) { |unique| @file.puts unique }
+        }
+
+        if @max_words == 1
+          pass.call(word)
+        else
+          @word_queue << word
+
+          currnet_words = @word_queue.length
+
+          if current_words >= @min_words
+            if current_words >= @max_words
+              (@min_words..@max_words).each do |i|
+                pass.call(@word_queue[0,i].join(' '))
+              end
+
+              @word_queue.shift
+            end
+          end
         end
       end
 
@@ -121,6 +150,7 @@ module Wordlist
 
         @file = nil
         @filter = nil
+        @word_queue = nil
       end
     end
 
