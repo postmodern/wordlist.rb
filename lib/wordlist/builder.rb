@@ -110,7 +110,7 @@ module Wordlist
     #
     def word_combinations
       if @max_words == 1
-        yield @word_queue.last
+        yield @word_queue[0]
       else
         currnet_words = @word_queue.length
 
