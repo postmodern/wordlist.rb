@@ -82,31 +82,42 @@ module Wordlist
     end
 
     #
+    # Enumerates over the word combination ending in the given _word_,
+    # passing each to the given _block_.
+    #
+    def word_combinations(word)
+      if @max_words == 1
+        yield word
+        return
+      end
+
+      # enqueue the word
+      @word_queue << word
+
+      currnet_words = @word_queue.length
+
+      # we must have atleast the minimum amount of words
+      if current_words >= @min_words
+        # make sure we don't go over the maximum amount of words
+        if current_words > @max_words
+          @word_queue.shift
+        end
+
+        # combine the words
+        (current_words - 1).downto(0) do |i|
+          yield @word_queue[i..-1].join(' ')
+        end
+      end
+    end
+
+    #
     # Appends the specified _word_ to the word-list file, only if it has not
     # been previously seen.
     #
     def <<(word)
       if @file
-        pass = lambda { |word|
-          @filter.pass(word) { |unique| @file.puts unique }
-        }
-
-        if @max_words == 1
-          pass.call(word)
-        else
-          @word_queue << word
-
-          currnet_words = @word_queue.length
-
-          if current_words >= @min_words
-            if current_words >= @max_words
-              (@min_words..@max_words).each do |i|
-                pass.call(@word_queue[0,i].join(' '))
-              end
-
-              @word_queue.shift
-            end
-          end
+        word_combinations(word) do |words|
+          @filter.pass(words) { |unique| @file.puts unique }
         end
       end
 
