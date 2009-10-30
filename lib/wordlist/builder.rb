@@ -9,14 +9,17 @@ module Wordlist
     # Path of the word-list
     attr_reader :path
 
-    # File for the word-list
-    attr_reader :file
-
     # Minimum number of words
     attr_reader :min_words
 
     # Maximum number of words
     attr_reader :max_words
+
+    # File for the word-list
+    attr_reader :file
+
+    # The unique word filter
+    attr_reader :filter
 
     # The queue of words awaiting processing
     attr_reader :word_queue
