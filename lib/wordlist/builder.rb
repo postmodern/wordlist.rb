@@ -25,9 +25,18 @@ module Wordlist
     attr_reader :word_queue
 
     #
-    # Creates a new word-list Builder object with the specified _path_.
+    # Creates a new word-list Builder object with the specified _path_
+    # and given _options_.
     # If a _block_ is given, it will be passed the newly created
     # Builder object.
+    #
+    # _options_ may include the following keys:
+    # <tt>:min_words</tt>:: The minimum number of words each line of the
+    #                       wordlist must contain. Defaults to 1, if not
+    #                       given.
+    # <tt>:max_words</tt>:: The maximum number of words each line of the
+    #                       wordlist may contain. Defaults to the value of
+    #                       +:min_words+, if not given.
     #
     def initialize(path,options={},&block)
       super()
