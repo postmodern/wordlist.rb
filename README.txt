@@ -42,6 +42,13 @@ rules to each word in the list.
       builder.parse_file('some/file.txt')
     end
 
+* Build a word-list of phrases containing at most three words, from the
+  arbitrary text:
+
+    Wordlist::Builder.build('list.txt', :max_words => 3) do |builder|
+      builder.parse(some_text)
+    end
+
 * Build a word-list from content off a website:
 
     require 'wordlist/builders/website'
