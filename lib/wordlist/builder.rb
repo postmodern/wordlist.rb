@@ -116,8 +116,10 @@ module Wordlist
 
         # we must have atleast the minimum amount of words
         if current_words >= @min_words
+          upper_bound = (current_words - @min_words)
+
           # combine the words
-          (current_words - 1).downto(0) do |i|
+          upper_bound.downto(0) do |i|
             yield @word_queue[i..-1].join(' ')
           end
         end
