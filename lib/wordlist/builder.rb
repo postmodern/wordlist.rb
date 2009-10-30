@@ -125,7 +125,9 @@ module Wordlist
     def <<(word)
       if @file
         word_combinations(word) do |words|
-          @filter.pass(words) { |unique| @file.puts unique }
+          @filter.pass(words) do |unique|
+            @file.puts unique
+          end
         end
       end
 
