@@ -118,9 +118,9 @@ describe Builder do
       end
 
       combinations.should == [
-        ['dat'],
-        ['cat dat'],
-        ['dog cat dat']
+        'dat',
+        'cat dat',
+        'dog cat dat'
       ]
     end
   end
