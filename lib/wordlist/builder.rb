@@ -36,7 +36,7 @@ module Wordlist
 
       @file = nil
       @filter = nil
-      @word_queue = nil
+      @word_queue = []
 
       block.call(self) if block
     end
@@ -64,7 +64,6 @@ module Wordlist
     #
     def open!
       @filter = UniqueFilter.new
-      @word_queue = []
 
       if File.file?(@path)
         File.open(@path) do |file|
@@ -172,7 +171,7 @@ module Wordlist
 
         @file = nil
         @filter = nil
-        @word_queue = nil
+        @word_queue.clear
       end
     end
 
