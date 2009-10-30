@@ -53,6 +53,14 @@ module Wordlist
       return nil
     end
 
+    #
+    # Clears the unique filter.
+    #
+    def clear
+      @seen.clear
+      return self
+    end
+
     protected
 
     #
