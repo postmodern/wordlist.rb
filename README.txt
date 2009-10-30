@@ -16,6 +16,9 @@ rules to each word in the list.
 
 * Uses a bucket system of CRC32 hashes for efficient filtering of duplicate
   words.
+* Can build wordlists containing multi-word phrases.
+* Can build wordlists containing phrases containing a minimum and maximum
+  number of words.
 * Supports adding mutation rules to a word-list, which are applied to
   words as the list is enumerated.
 * Supports building word-lists from arbitrary text.
