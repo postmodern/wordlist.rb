@@ -18,6 +18,9 @@ module Wordlist
     # Maximum number of words
     attr_reader :max_words
 
+    # The queue of words awaiting processing
+    attr_reader :word_queue
+
     #
     # Creates a new word-list Builder object with the specified _path_.
     # If a _block_ is given, it will be passed the newly created
@@ -27,12 +30,13 @@ module Wordlist
       super()
 
       @path = File.expand_path(path)
-      @file = nil
-      @filter = nil
-      @word_queue = nil
 
       @min_words = (options[:min_words] || 1)
       @max_words = (options[:max_words] || @min_words)
+
+      @file = nil
+      @filter = nil
+      @word_queue = nil
 
       block.call(self) if block
     end
@@ -106,18 +110,10 @@ module Wordlist
         return
       end
 
-      # enqueue the word
-      @word_queue << word
-
       currnet_words = @word_queue.length
 
       # we must have atleast the minimum amount of words
       if current_words >= @min_words
-        # make sure we don't go over the maximum amount of words
-        if current_words > @max_words
-          @word_queue.shift
-        end
-
         # combine the words
         (current_words - 1).downto(0) do |i|
           yield @word_queue[i..-1].join(' ')
