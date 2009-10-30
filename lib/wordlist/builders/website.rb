@@ -43,6 +43,9 @@ module Wordlist
       # Specifies whether HTML comment tags will be parsed
       attr_accessor :parse_comments
 
+      # Additional XPath expressions to use to parse spidered pages
+      attr_reader :xpaths
+
       #
       # Creates a new Website builder object with the specified _path_
       # and the given _options_. If a _block_ is given, it will be passed
@@ -75,6 +78,8 @@ module Wordlist
       # <tt>:parse_comments</tt>:: Specifies whether HTML comment tags will
       #                            be parsed. Defaults to +false+ if not
       #                            given.
+      # <tt>:xpaths</tt>:: Additional list of XPath expressions, to use
+      #                    when parsing spidered pages.
       #
       def initialize(path,options={},&block)
         @host = options[:host]
@@ -129,6 +134,12 @@ module Wordlist
 
         if options.has_key?(:parse_comments)
           @parse_comments = options[:parse_comments]
+        end
+
+        @xpaths = []
+
+        if options[:xpaths]
+          @xpaths += options[:xpaths]
         end
 
         super(path,options,&block)
@@ -187,6 +198,10 @@ module Wordlist
 
               if @parse_alt
                 search.call(page,'//img/@alt')
+              end
+
+              @xpaths.each do |xpath|
+                search.call(page,xpath)
               end
 
               if @parse_comments
