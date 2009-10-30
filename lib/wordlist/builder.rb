@@ -90,11 +90,15 @@ module Wordlist
     #
     def enqueue(word)
       # enqueue the word
-      @word_queue << word.to_s
+      if @max_words == 1
+        @word_queue[0] = word.to_s
+      else
+        @word_queue << word.to_s
 
-      # make sure the queue does not overflow
-      if @word_queue.length > @max_words
-        @word_queue.shift
+        # make sure the queue does not overflow
+        if @word_queue.length > @max_words
+          @word_queue.shift
+        end
       end
 
       return word
