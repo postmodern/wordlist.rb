@@ -2,10 +2,8 @@ require 'wordlist/builder'
 
 require 'spec_helper'
 require 'helpers/text'
+require 'helpers/wordlist'
 require 'builder_examples'
-
-require 'tempfile'
-require 'fileutils'
 
 describe Builder do
   include Helpers
@@ -16,7 +14,7 @@ describe Builder do
     end
 
     before(:each) do
-      @path = Tempfile.new('wordlist').path
+      @path = wordlist_tempfile
     end
 
     it_should_behave_like "a wordlist Builder"
@@ -29,8 +27,7 @@ describe Builder do
     end
 
     before(:each) do
-      @path = Tempfile.new('wordlist').path
-      FileUtils.cp(Helpers::PREVIOUS_WORDLIST,@path)
+      @path = wordlist_tempfile(Helpers::PREVIOUS_WORDLIST)
     end
 
     it_should_behave_like "a wordlist Builder"
