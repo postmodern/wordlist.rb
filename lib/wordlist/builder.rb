@@ -101,22 +101,21 @@ module Wordlist
     end
 
     #
-    # Enumerates over the word combination ending in the given _word_,
+    # Enumerates over the combinations of previously seen words,
     # passing each to the given _block_.
     #
-    def word_combinations(word)
+    def word_combinations
       if @max_words == 1
-        yield word
-        return
-      end
+        yield @word_queue.last
+      else
+        currnet_words = @word_queue.length
 
-      currnet_words = @word_queue.length
-
-      # we must have atleast the minimum amount of words
-      if current_words >= @min_words
-        # combine the words
-        (current_words - 1).downto(0) do |i|
-          yield @word_queue[i..-1].join(' ')
+        # we must have atleast the minimum amount of words
+        if current_words >= @min_words
+          # combine the words
+          (current_words - 1).downto(0) do |i|
+            yield @word_queue[i..-1].join(' ')
+          end
         end
       end
     end
@@ -127,7 +126,7 @@ module Wordlist
     #
     def <<(word)
       if @file
-        word_combinations(word) do |words|
+        word_combinations do |words|
           @filter.pass(words) do |unique|
             @file.puts unique
           end
