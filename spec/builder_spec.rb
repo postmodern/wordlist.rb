@@ -32,4 +32,29 @@ describe Builder do
 
     it_should_behave_like "a wordlist Builder"
   end
+
+  describe "word queue" do
+    before(:all) do
+      @path = wordlist_tempfile
+    end
+
+    before(:each) do
+      @builder = Builder.new(@path, :max_words => 2)
+    end
+
+    it "should act like a queue" do
+      @builder.enqueue('dog')
+      @builder.enqueue('cat')
+
+      @builder.word_queue.should == ['dog', 'cat']
+    end
+
+    it "should have a maximum length of the queue" do
+      @builder.enqueue('dog')
+      @builder.enqueue('cat')
+      @builder.enqueue('log')
+
+      @builder.word_queue.should == ['cat', 'log']
+    end
+  end
 end
