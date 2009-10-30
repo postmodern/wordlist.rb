@@ -35,7 +35,7 @@ module Wordlist
       @max_words = (options[:max_words] || @min_words)
 
       @file = nil
-      @filter = nil
+      @filter = UniqueFilter.new
       @word_queue = []
 
       block.call(self) if block
@@ -63,8 +63,6 @@ module Wordlist
     # previous words will be used to filter future duplicate words.
     #
     def open!
-      @filter = UniqueFilter.new
-
       if File.file?(@path)
         File.open(@path) do |file|
           file.each_line do |line|
@@ -168,9 +166,9 @@ module Wordlist
     def close!
       if @file
         @file.close
-
         @file = nil
-        @filter = nil
+
+        @filter.clear
         @word_queue.clear
       end
     end
