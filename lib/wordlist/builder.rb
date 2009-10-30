@@ -82,6 +82,21 @@ module Wordlist
     end
 
     #
+    # Enqueues the given _word_ for processing.
+    #
+    def enqueue(word)
+      # enqueue the word
+      @word_queue << word.to_s
+
+      # make sure the queue does not overflow
+      if @word_queue.length > @max_words
+        @word_queue.shift
+      end
+
+      return word
+    end
+
+    #
     # Enumerates over the word combination ending in the given _word_,
     # passing each to the given _block_.
     #
