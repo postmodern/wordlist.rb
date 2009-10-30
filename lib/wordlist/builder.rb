@@ -129,6 +129,8 @@ module Wordlist
     # been previously seen.
     #
     def <<(word)
+      enqueue(word)
+
       if @file
         word_combinations do |words|
           @filter.pass(words) do |unique|
