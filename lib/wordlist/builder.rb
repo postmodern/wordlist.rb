@@ -112,7 +112,7 @@ module Wordlist
       if @max_words == 1
         yield @word_queue[0]
       else
-        currnet_words = @word_queue.length
+        current_words = @word_queue.length
 
         # we must have atleast the minimum amount of words
         if current_words >= @min_words
