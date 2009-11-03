@@ -2,6 +2,7 @@ History.txt
 Manifest.txt
 README.txt
 Rakefile
+bin/wordlist
 lib/wordlist.rb
 lib/wordlist/unique_filter.rb
 lib/wordlist/parsers.rb
@@ -11,6 +12,9 @@ lib/wordlist/builders/website.rb
 lib/wordlist/mutator.rb
 lib/wordlist/list.rb
 lib/wordlist/flat_file.rb
+lib/wordlist/runners.rb
+lib/wordlist/runners/runner.rb
+lib/wordlist/runners/list.rb
 lib/wordlist/version.rb
 tasks/spec.rb
 scripts/benchmark
