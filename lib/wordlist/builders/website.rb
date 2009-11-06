@@ -6,6 +6,15 @@ module Wordlist
   module Builders
     class Website < Builder
 
+      # Proxy to use
+      attr_accessor :proxy
+
+      # User-Agent to use
+      attr_accessor :user_agent
+
+      # Referer URL to use
+      attr_accessor :referer
+
       # Host to spider
       attr_accessor :host
 
@@ -58,6 +67,10 @@ module Wordlist
       # the new created Website builder object.
       #
       # _options_ may include the following keys:
+      # <tt>:proxy</tt>:: The Hash of proxy information to use.
+      # <tt>:user_agent</tt>:: The User-Agent string to send with each
+      #                        request.
+      # <tt>:referer</tt>:: The Referer URL to send with each request.
       # <tt>:host</tt>:: The host to spider and build the wordlist from.
       # <tt>:hosts</tt>:: Additional hosts that can be spidered.
       # <tt>:ignore_links</tt>:: Links to ignore while spidering.
@@ -90,6 +103,10 @@ module Wordlist
       #                    when parsing spidered pages.
       #
       def initialize(path,options={},&block)
+        @proxy = options[:proxy]
+        @user_agent = options[:user_agent]
+        @referer = options[:referer]
+
         @host = options[:host]
         @hosts = []
         
@@ -179,6 +196,9 @@ module Wordlist
         }
 
         options = {
+          :proxy => @proxy,
+          :user_agent => @user_agent,
+          :referer => @referer,
           :hosts => @hosts,
           :ignore_links => @ignore_links
         }
