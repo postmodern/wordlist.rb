@@ -12,6 +12,9 @@ module Wordlist
       # Additional hosts that can be spidered
       attr_reader :hosts
 
+      # Links to ignore while spidering
+      attr_reader :ignore_links
+
       # Specifies whether the +content+ attribute of +meta+ tags will be
       # parsed
       attr_accessor :parse_meta
@@ -57,6 +60,7 @@ module Wordlist
       # _options_ may include the following keys:
       # <tt>:host</tt>:: The host to spider and build the wordlist from.
       # <tt>:hosts</tt>:: Additional hosts that can be spidered.
+      # <tt>:ignore_links</tt>:: Links to ignore while spidering.
       # <tt>:parse_meta</tt>:: Specifies whether the +content+ attribute of
       #                        +meta+ tags will be parsed. Defaults to
       #                        +true+ if not given.
@@ -91,6 +95,12 @@ module Wordlist
         
         if options[:hosts]
           @hosts += options[:hosts]
+        end
+
+        @ignore_links = []
+
+        if options[:ignore_links]
+          @ignore_links += options[:ignore_links]
         end
 
         @parse_meta = true
@@ -168,7 +178,12 @@ module Wordlist
           }
         }
 
-        Spidr.host(@host,:hosts => @hosts) do |spidr|
+        options = {
+          :hosts => @hosts,
+          :ignore_links => @ignore_links
+        }
+
+        Spidr.host(@host,options) do |spidr|
           spidr.every_page do |page|
             if page.html?
               if @parse_meta
