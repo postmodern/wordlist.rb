@@ -9,6 +9,9 @@ module Wordlist
       # Host to spider
       attr_accessor :host
 
+      # Additional hosts that can be spidered
+      attr_reader :hosts
+
       # Specifies whether the +content+ attribute of +meta+ tags will be
       # parsed
       attr_accessor :parse_meta
@@ -53,6 +56,7 @@ module Wordlist
       #
       # _options_ may include the following keys:
       # <tt>:host</tt>:: The host to spider and build the wordlist from.
+      # <tt>:hosts</tt>:: Additional hosts that can be spidered.
       # <tt>:parse_meta</tt>:: Specifies whether the +content+ attribute of
       #                        +meta+ tags will be parsed. Defaults to
       #                        +true+ if not given.
@@ -83,6 +87,11 @@ module Wordlist
       #
       def initialize(path,options={},&block)
         @host = options[:host]
+        @hosts = []
+        
+        if options[:hosts]
+          @hosts += options[:hosts]
+        end
 
         @parse_meta = true
         @parse_title = true
@@ -159,7 +168,7 @@ module Wordlist
           }
         }
 
-        Spidr.host(@host) do |spidr|
+        Spidr.host(@host,:hosts => @hosts) do |spidr|
           spidr.every_page do |page|
             if page.html?
               if @parse_meta
