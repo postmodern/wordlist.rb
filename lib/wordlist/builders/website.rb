@@ -154,7 +154,9 @@ module Wordlist
         super(&block)
 
         search = lambda { |page,xpath|
-          page.doc.search(xpath).each { |element| parse(element.inner_text) }
+          page.doc.search(xpath).each { |element|
+            parse(element.inner_text)
+          }
         }
 
         Spidr.host(@host) do |spidr|
