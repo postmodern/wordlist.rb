@@ -190,9 +190,11 @@ module Wordlist
         super(&block)
 
         search = lambda { |page,xpath|
-          page.doc.search(xpath).each { |element|
-            parse(element.inner_text)
-          }
+          if page.doc
+            page.doc.search(xpath).each do |element|
+              parse(element.inner_text)
+            end
+          end
         }
 
         options = {
