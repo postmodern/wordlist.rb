@@ -15,6 +15,8 @@ module Wordlist
 
         @words = false
         @unique_words = false
+
+        @output = nil
       end
 
       #
@@ -38,12 +40,22 @@ module Wordlist
           list.mutate(pattern,substitute)
         end
 
-        if @unique_words
-          list.each_unique(&output)
-        elsif @words
-          list.each_word(&output)
+        words = lambda { |output|
+          puts = output.method(:puts)
+
+          if @unique_words
+            list.each_unique(&puts)
+          elsif @words
+            list.each_word(&puts)
+          else
+            list.each(&puts)
+          end
+        }
+
+        if @output
+          File.open(@output,'w+',&words)
         else
-          list.each(&output)
+          words.call(Kernel)
         end
       end
 
@@ -84,6 +96,10 @@ module Wordlist
 
           opts.on('-u','--unique','Only print the unique words in the wordlist') do
             @unique_words = true
+          end
+
+          opts.on('-o','--output FILE','Optional file to output the wordlist to') do |file|
+            @output = File.expand_path(file)
           end
         end
       end
