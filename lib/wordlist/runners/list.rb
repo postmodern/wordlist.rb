@@ -1,4 +1,5 @@
 require 'wordlist/runners/runner'
+require 'wordlist/flat_file'
 
 module Wordlist
   module Runners
