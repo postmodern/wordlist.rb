@@ -257,7 +257,7 @@ module Wordlist
                 search.call(page,xpath)
               end
 
-              if @parse_comments
+              if (@parse_comments && page.doc)
                 page.doc.traverse do |element|
                   parse(element.inner_text) if element.comment?
                 end
