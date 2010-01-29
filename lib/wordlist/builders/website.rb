@@ -18,6 +18,9 @@ module Wordlist
       # Host to spider
       attr_accessor :host
 
+      # HTTP Host Header to use in all requests.
+      attr_accessor :host_header
+
       # Additional hosts that can be spidered
       attr_reader :hosts
 
@@ -72,6 +75,7 @@ module Wordlist
       #                        request.
       # <tt>:referer</tt>:: The Referer URL to send with each request.
       # <tt>:host</tt>:: The host to spider and build the wordlist from.
+      # <tt>:host_header</tt>:: The HTTP Host header to use in all requests.
       # <tt>:hosts</tt>:: Additional hosts that can be spidered.
       # <tt>:ignore_links</tt>:: Links to ignore while spidering.
       # <tt>:parse_meta</tt>:: Specifies whether the +content+ attribute of
@@ -108,6 +112,7 @@ module Wordlist
         @referer = options[:referer]
 
         @host = options[:host]
+        @host_header = options[:host_header]
         @hosts = []
         
         if options[:hosts]
