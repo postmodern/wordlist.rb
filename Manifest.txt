@@ -16,7 +16,6 @@ lib/wordlist/runners.rb
 lib/wordlist/runners/runner.rb
 lib/wordlist/runners/list.rb
 lib/wordlist/version.rb
-tasks/spec.rb
 scripts/benchmark
 scripts/text/comedy_of_errors.txt
 spec/classes/parser_class.rb
