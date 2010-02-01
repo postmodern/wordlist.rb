@@ -5,13 +5,17 @@ require 'hoe'
 require 'hoe/signing'
 require './lib/wordlist/version.rb'
 
+Hoe.plugin :yard
+
 Hoe.spec('wordlist') do
   self.rubyforge_name = 'wordlist'
   self.developer('Postmodern','postmodern.mod3@gmail.com')
 
   self.rspec_options += ['--colour', '--format', 'specdoc']
 
-  self.remote_rdoc_dir = '/'
+  self.yard_options += ['--protected']
+  self.remote_yard_dir = '/'
+
   self.extra_deps = [
     ['spidr', '>=0.1.9']
   ]
