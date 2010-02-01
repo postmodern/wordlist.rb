@@ -1,4 +1,4 @@
-=== 0.1.0 / 2009-08-31
+### 0.1.0 / 2009-08-31
 
 * Initial release:
   * Supports building word-lists from arbitrary text.

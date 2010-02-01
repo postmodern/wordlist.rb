@@ -1,6 +1,6 @@
-History.txt
+History.md
 Manifest.txt
-README.txt
+README.md
 Rakefile
 bin/wordlist
 lib/wordlist.rb

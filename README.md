@@ -1,10 +1,10 @@
-= Wordlist
+# Wordlist
 
 * http://wordlist.rubyforge.org/
 * http://github.com/sophsec/wordlist/
 * Postmodern (postmodern.mod3 at gmail.com)
 
-== DESCRIPTION:
+## DESCRIPTION:
 
 A Ruby library for generating and working with word-lists. Wordlist allows
 one to efficiently generate unique word-lists from arbitrary text or
@@ -12,7 +12,7 @@ other sources, such as website content. Wordlist can also quickly enumerate
 through words within an existing word-list, applying multiple mutation
 rules to each word in the list.
 
-== FEATURES:
+## FEATURES:
 
 * Uses a bucket system of CRC32 hashes for efficient filtering of duplicate
   words.
@@ -28,28 +28,28 @@ rules to each word in the list.
   * Wordlist::FlatFile: Enumerates through the words in a flat-file
     word-list.
 
-== EXAMPLES:
+## EXAMPLES:
 
-* Build a word-list from arbitrary text:
+Build a word-list from arbitrary text:
 
     Wordlist::Builder.build('list.txt') do |builder|
       builder.parse(some_text)
     end
 
-* Build a word-list from another file:
+Build a word-list from another file:
 
     Wordlist::Builder.build('list.txt') do |builder|
       builder.parse_file('some/file.txt')
     end
 
-* Build a word-list of phrases containing at most three words, from the
-  arbitrary text:
+Build a word-list of phrases containing at most three words, from the
+arbitrary text:
 
     Wordlist::Builder.build('list.txt', :max_words => 3) do |builder|
       builder.parse(some_text)
     end
 
-* Build a word-list from content off a website:
+Build a word-list from content off a website:
 
     require 'wordlist/builders/website'
 
@@ -58,21 +58,21 @@ rules to each word in the list.
       :host => 'www.example.com'
     )
 
-* Enumerate through each word in a flat-file word-list:
+Enumerate through each word in a flat-file word-list:
 
     list = Wordlist::FlatFile.new('list.txt')
     list.each_word do |word|
       puts word
     end
 
-* Enumerate through each unique word in a flat-file word-list:
+Enumerate through each unique word in a flat-file word-list:
 
     list.each_unique do |word|
       puts word
     end
 
-* Define mutation rules, and enumerate through each unique mutation of each
-  unique word in the word-list:
+Define mutation rules, and enumerate through each unique mutation of each
+unique word in the word-list:
 
     list.mutate 'o', '0'
     list.mutate '@', 0x41
@@ -82,15 +82,15 @@ rules to each word in the list.
       puts word
     end
 
-== REQUIREMENTS:
+## REQUIREMENTS:
 
-* {spidr}[http://spidr.rubyforge.org] >= 0.1.9
+* [spidr](http://spidr.rubyforge.org) >= 0.1.9
 
-== INSTALL:
+## INSTALL:
 
-  $ sudo gem install wordlist
+    $ sudo gem install wordlist
 
-== LICENSE:
+## LICENSE:
 
 Wordlist - A Ruby library for generating and working with word-lists.
 
