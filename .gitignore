@@ -3,6 +3,7 @@ pkg
 tmp/*
 scripts/*_wordlist.txt
 .DS_Store
+.yardoc
 *.db
 *.log
 *.swp
