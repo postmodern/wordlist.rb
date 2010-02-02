@@ -56,7 +56,7 @@ module Wordlist
     end
 
     #
-    # Creates a new Builder object with the given _arguments_, opens the
+    # Creates a new Builder object with the given arguments, opens the
     # word-list file, passes the builder object to the given block
     # then finally closes the word-list file.
     #

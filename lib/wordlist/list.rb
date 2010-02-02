@@ -48,10 +48,8 @@ module Wordlist
     end
 
     #
-    # Adds a mutation rule for the specified _pattern_, to be replaced
-    # using the specified _substitute_. If a _block_ is given, and the
-    # _substitute_ data omitted, then the _block_ will be used to
-    # replace data matched by the _pattern_.
+    # Adds a mutation rule for the specified pattern, to be replaced
+    # using the specified substitute.
     #
     # @param [String, Regexp] pattern
     #   The pattern to recognize text to mutate.
