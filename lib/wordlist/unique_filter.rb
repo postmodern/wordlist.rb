@@ -14,8 +14,13 @@ module Wordlist
     end
 
     #
-    # Returns +true+ if the _word_ has been previously seen, returns
-    # +false+ otherwise.
+    # Determines if the given word has been previously seen.
+    #
+    # @param [String] word
+    #   The word to check for.
+    #
+    # @return [Boolean]
+    #   Specifies whether the word has been previously seen.
     #
     def seen?(word)
       length = word.length
@@ -24,8 +29,14 @@ module Wordlist
     end
 
     #
-    # Marks the specified _word_ as seen and returns +true+. If the _word_
-    # has been previously been seen, +false+ will be returned.
+    # Marks the given word as previously seen.
+    #
+    # @param [String] word
+    #   The word to mark as previously seen.
+    #
+    # @return [Boolean]
+    #   Specifies whether or not the word has not been previously seen
+    #   until now.
     #
     def saw!(word)
       length = word.length
@@ -42,8 +53,19 @@ module Wordlist
     end
 
     #
-    # Passes the specified _word_ through the unique filter, if the
-    # _word_ has not yet been seen, it will be passed to the given _block_.
+    # Passes the given word through the unique filter.
+    #
+    # @param [String] word
+    #   The word to pass through the unique filter.
+    #
+    # @yield [word]
+    #   The given block will be passed the word, if the word has not been
+    #   previously seen by the filter.
+    #
+    # @yieldparam [String] word
+    #   A unique word that has not been previously seen by the filter.
+    #
+    # @return [nil]
     #
     def pass(word)
       if saw!(word)
@@ -56,6 +78,9 @@ module Wordlist
     #
     # Clears the unique filter.
     #
+    # @return [UniqueFilter]
+    #   The cleared filter.
+    #
     def clear
       @seen.clear
       return self
@@ -64,7 +89,13 @@ module Wordlist
     protected
 
     #
-    # Returns the CRC32 checksum of the specified _word_.
+    # Returns the CRC32 checksum of the given word.
+    #
+    # @param [String] word
+    #   The word to calculate a CRC32 checksum for.
+    #
+    # @return [Integer]
+    #   The CRC32 checksum for the given word.
     #
     def crc32(word)
       r = 0xffffffff

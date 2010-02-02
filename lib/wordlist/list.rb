@@ -13,14 +13,22 @@ module Wordlist
     attr_accessor :min_length
 
     #
-    # Creates a new List object with the given _options_. If a _block_
-    # is given, it will be passed the newly created List object.
+    # Creates a new List object.
     #
-    # _options_ may include the following keys:
-    # <tt>:max_length</tt>:: The maximum length of words produced by the
-    #                        list.
-    # <tt>:min_length</tt>:: The minimum length of words produced by the
-    #                        list.
+    # @param [Hash] options
+    #   Additional options.
+    #
+    # @option options [Integer] :max_length
+    #   The maximum length of words produced by the list.
+    #
+    # @option options [Integer] :min_length
+    #   The minimum length of words produced by the list.
+    #
+    # @yield [list]
+    #   If a block is given, it will be passed the new list object.
+    #
+    # @yieldparam [List] list
+    #   The new list object.
     #
     def initialize(options={},&block)
       @mutators = []
@@ -45,10 +53,25 @@ module Wordlist
     # _substitute_ data omitted, then the _block_ will be used to
     # replace data matched by the _pattern_.
     #
+    # @param [String, Regexp] pattern
+    #   The pattern to recognize text to mutate.
+    #
+    # @param [String, Integer, nil] substitute
+    #   The optional text to replace recognized text.
+    #
+    # @yield [match]
+    #   If a block is given, it will be passed the recognized text to be
+    #   mutated. The return value of the block will be used to replace
+    #   the recognized text.
+    #
+    # @yieldparam [String] match
+    #   The recognized text to be mutated.
+    #
+    # @example
     #   list.mutate 'o', '0'
-    #
+    #   
     #   list.mutate '0', 0x41
-    #
+    #   
     #   list.mutate(/[oO]/) do |match|
     #     match.swapcase
     #   end
@@ -58,10 +81,15 @@ module Wordlist
     end
 
     #
-    # Enumerate through every word in the list, passing each word to
-    # the given block. By default this method passes nothing to the given
-    # _block_.
+    # Enumerate through every word in the list.
     #
+    # @yield [word]
+    #   The given block will be passed each word in the list.
+    #
+    # @yieldparam [String] word
+    #   A word from the list.
+    #
+    # @example
     #   list.each_word do |word|
     #     puts word
     #   end
@@ -70,9 +98,15 @@ module Wordlist
     end
 
     #
-    # Enumerates through every unique word in the list, passing each
-    # unique word to the given block.
+    # Enumerates through every unique word in the list.
     #
+    # @yield [word]
+    #   The given block will be passed each unique word in the list.
+    #
+    # @yieldparam [String] word
+    #   A unique word from the list.
+    #
+    # @example
     #   list.each_unique do |word|
     #     puts word
     #   end
@@ -91,9 +125,16 @@ module Wordlist
 
     #
     # Enumerates through every unique mutation, of every unique word, using
-    # the mutator rules define for the list. Every possible unique mutation
-    # will be passed to the given _block_.
+    # the mutator rules define for the list.
     #
+    # @yield [word]
+    #   The given block will be passed every mutation of every unique
+    #   word in the list.
+    #
+    # @yieldparam [String] word
+    #   A mutation of a unique word from the list.
+    #
+    # @example
     #   list.each_mutation do |word|
     #     puts word
     #   end

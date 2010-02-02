@@ -27,35 +27,35 @@ module Wordlist
       # Links to ignore while spidering
       attr_reader :ignore_links
 
-      # Specifies whether the +content+ attribute of +meta+ tags will be
+      # Specifies whether the `content` attribute of `meta` tags will be
       # parsed
       attr_accessor :parse_meta
 
-      # Specifies whether +title+ tags will be parsed
+      # Specifies whether `title` tags will be parsed
       attr_accessor :parse_title
 
-      # Specifies whether +h1+ tags will be parsed
+      # Specifies whether `h1` tags will be parsed
       attr_accessor :parse_h1
 
-      # Specifies whether +h2+ tags will be parsed
+      # Specifies whether `h2` tags will be parsed
       attr_accessor :parse_h2
 
-      # Specifies whether +h3+ tags will be parsed
+      # Specifies whether `h3` tags will be parsed
       attr_accessor :parse_h3
 
-      # Specifies whether +h4+ tags will be parsed
+      # Specifies whether `h4` tags will be parsed
       attr_accessor :parse_h4
 
-      # Specifies whether +h5+ tags will be parsed
+      # Specifies whether `h5` tags will be parsed
       attr_accessor :parse_h5
 
-      # Specifies whether +p+ tags will be parsed
+      # Specifies whether `p` tags will be parsed
       attr_accessor :parse_p
 
-      # Specifies whether +span+ tags will be parsed
+      # Specifies whether `span` tags will be parsed
       attr_accessor :parse_span
 
-      # Specifies whether the +alt+ attributes of +img+ tags will be parsed
+      # Specifies whether the `alt` attributes of `img` tags will be parsed
       attr_accessor :parse_alt
 
       # Specifies whether HTML comment tags will be parsed
@@ -65,46 +65,67 @@ module Wordlist
       attr_reader :xpaths
 
       #
-      # Creates a new Website builder object with the specified _path_
-      # and the given _options_. If a _block_ is given, it will be passed
-      # the new created Website builder object.
+      # Creates a new Website builder object.
       #
-      # _options_ may include the following keys:
-      # <tt>:proxy</tt>:: The Hash of proxy information to use.
-      # <tt>:user_agent</tt>:: The User-Agent string to send with each
-      #                        request.
-      # <tt>:referer</tt>:: The Referer URL to send with each request.
-      # <tt>:host</tt>:: The host to spider and build the wordlist from.
-      # <tt>:host_header</tt>:: The HTTP Host header to use in all requests.
-      # <tt>:hosts</tt>:: Additional hosts that can be spidered.
-      # <tt>:ignore_links</tt>:: Links to ignore while spidering.
-      # <tt>:parse_meta</tt>:: Specifies whether the +content+ attribute of
-      #                        +meta+ tags will be parsed. Defaults to
-      #                        +true+ if not given.
-      # <tt>:parse_title</tt>:: Specifies whether +title+ tags will be
-      #                         parsed. Defaults to +true+ if not given.
-      # <tt>:parse_h1</tt>:: Specifies whether +h1+ tags will be parsed.
-      #                      Defaults to +true+ if not given.
-      # <tt>:parse_h2</tt>:: Specifies whether +h2+ tags will be parsed.
-      #                      Defaults to +true+ if not given.
-      # <tt>:parse_h3</tt>:: Specifies whether +h3+ tags will be parsed.
-      #                      Defaults to +true+ if not given.
-      # <tt>:parse_h4</tt>:: Specifies whether +h4+ tags will be parsed.
-      #                      Defaults to +true+ if not given.
-      # <tt>:parse_h5</tt>:: Specifies whether +h5+ tags will be parsed.
-      #                      Defaults to +true+ if not given.
-      # <tt>:parse_p</tt>:: Specifies whether +p+ tags will be parsed.
-      #                      Defaults to +true+ if not given.
-      # <tt>:parse_span</tt>:: Specifies whether +span+ tags will be parsed.
-      #                      Defaults to +true+ if not given.
-      # <tt>:parse_alt</tt>:: Specifies whether the +alt+ attributes of
-      #                       +img+ tags will be parsed. Defaults to +true+
-      #                       if not given.
-      # <tt>:parse_comments</tt>:: Specifies whether HTML comment tags will
-      #                            be parsed. Defaults to +false+ if not
-      #                            given.
-      # <tt>:xpaths</tt>:: Additional list of XPath expressions, to use
-      #                    when parsing spidered pages.
+      # @param [String] path
+      #   The path to the word-list to build.
+      #
+      # @param [Hash] options
+      #   Additional options.
+      #
+      # @option options [Hash] :proxy
+      #   The Hash of proxy information to use.
+      #
+      # @option options [String] :user_agent
+      #   The User-Agent string to send with each request.
+      #
+      # @option options [String] :referer
+      #   The Referer URL to send with each request.
+      #
+      # @option options [String] :host_header
+      #   The HTTP Host header to use in all requests.
+      #
+      # @option options [Array<String, Regexp, Proc>] :ignore_links
+      #   Links to ignore while spidering.
+      #
+      # @option options [Boolean] :parse_meta (true)
+      #   Specifies whether the `content` attribute of `meta` tags will be
+      #   parsed.
+      #
+      # @option options [Boolean] :parse_title (true)
+      #   Specifies whether `title` tags will be parsed.
+      #
+      # @option options [Boolean] :parse_h1 (true)
+      #   Specifies whether `h1` tags will be parsed.
+      #
+      # @option options [Boolean] :parse_h2 (true)
+      #   Specifies whether `h2` tags will be parsed.
+      #
+      # @option options [Boolean] :parse_h3 (true)
+      #   Specifies whether `h3` tags will be parsed.
+      #
+      # @option options [Boolean] :parse_h4 (true)
+      #   Specifies whether `h4` tags will be parsed.
+      #
+      # @option options [Boolean] :parse_h5 (true)
+      #   Specifies whether `h5` tags will be parsed.
+      #
+      # @option options [Boolean] :parse_p (true)
+      #   Specifies whether `p` tags will be parsed.
+      #
+      # @option options [Boolean] :parse_span (true)
+      #   Specifies whether `span` tags will be parsed.
+      #
+      # @option options [Boolean] :parse_alt (true)
+      #   Specifies whether the `alt` attributes of `img` tags will be
+      #   parsed.
+      #
+      # @option options [Boolean] :parse_comments (false)
+      #   Specifies whether HTML comment tags will be parsed.
+      #
+      # @option options [Array<String>] :xpaths
+      #   Additional list of XPath expressions, to use when parsing
+      #   spidered pages.
       #
       def initialize(path,options={},&block)
         @proxy = options[:proxy]
@@ -187,9 +208,15 @@ module Wordlist
       end
 
       #
-      # Builds the word-list file by spidering the +host+ and parsing the
-      # inner-text from all HTML pages. If a _block_ is given, it will be
-      # called before all HTML pages on the +host+ have been parsed.
+      # Builds the word-list file by spidering the `host` and parsing the
+      # inner-text from all HTML pages.
+      #
+      # @yield [builder]
+      #   If a block is given, it will be called before all HTML pages on
+      #   the `host` have been parsed.
+      #
+      # @yieldparam [Website] builder
+      #   The website word-list builder.
       #
       def build!(&block)
         super(&block)

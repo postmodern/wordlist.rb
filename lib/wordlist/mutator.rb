@@ -10,9 +10,19 @@ module Wordlist
     attr_accessor :substitute
 
     #
-    # Creates a new Mutator with the specified _pattern_ and _substitute_
-    # data. If a _block_ is given, and the _substitute_ data is omitted, then
-    # the _block_ will be used to replace data matched by the _pattern_.
+    # Creates a new Mutator object.
+    #
+    # @param [String, Regexp] pattern
+    #   The pattern which recognizes text to mutate.
+    #
+    # @param [String, Integer] substitute
+    #   The optional text to replace recognized text.
+    #
+    # @yield [match]
+    #   If a block is given, it will be used to mutate recognized text.
+    #
+    # @yieldparam [String] match
+    #   The match text to mutate.
     #
     def initialize(pattern,substitute=nil,&block)
       @pattern = pattern
@@ -20,8 +30,13 @@ module Wordlist
     end
 
     #
-    # Replaces the specified _matched_ data using the +substitute+, which
-    # may be either a String, Integer or Proc.
+    # Mutates the given text.
+    #
+    # @param [String] matched
+    #   The recognized text to be mutated.
+    #
+    # @return [String]
+    #   The mutated text.
     #
     def replace(matched)
       result = if @substitute.kind_of?(Proc)
@@ -40,9 +55,20 @@ module Wordlist
     end
 
     #
-    # Performs every possible replacement of data, which matches the
-    # mutators +pattern+ using the replace method, on the specified _word_
-    # passing each variation to the given _block_.
+    # Enumerates over every possible mutation of the given word.
+    #
+    # @param [String] word
+    #   The word to mutate.
+    #
+    # @yield [mutation]
+    #   The given block will be passed every possible mutation of the
+    #   given word.
+    #
+    # @yieldparam [String] mutation
+    #   One possible mutation of the given word.
+    #
+    # @return [String]
+    #   The original word.
     #
     def each(word)
       choices = 0
@@ -75,6 +101,9 @@ module Wordlist
 
     #
     # Inspects the mutator.
+    #
+    # @return [String]
+    #   The inspected mutator.
     #
     def inspect
       "#{@pattern.inspect} -> #{@substitute.inspect}"

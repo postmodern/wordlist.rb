@@ -4,7 +4,10 @@ module Wordlist
   module Runners
     class Runner
       #
-      # Creates and runs the runner with the given _args_.
+      # Creates and runs the runner with the given arguments.
+      #
+      # @param [Array<String>] args
+      #   Arguments to parse.
       #
       def self.run(*args)
         runner = self.new
@@ -12,7 +15,10 @@ module Wordlist
       end
 
       #
-      # Runs the runner with the given _args_.
+      # Runs the runner with the given arguments.
+      #
+      # @param [Array<String>] args
+      #   Arguments to run the runner with.
       #
       def run(*args)
         optparse(*args)
@@ -21,14 +27,27 @@ module Wordlist
       protected
 
       #
-      # Prints the specified error _message_.
+      # Prints the given error message.
+      #
+      # @param [String] message
+      #   The error message to print.
       #
       def print_error(message)
         STDERR.puts "#{$0}: #{message}"
       end
 
       #
-      # Parses the given _args_.
+      # Parses the given arguments.
+      #
+      # @param [Array<String>] args
+      #   Arguments to parse.
+      #
+      # @yield [opts]
+      #   If a block is given, it will be passed the option parse to be
+      #   configured.
+      #
+      # @yieldparam [OptionParser] opts
+      #   The option parser to be configured.
       #
       def optparse(*args,&block)
         opts = OptionParser.new

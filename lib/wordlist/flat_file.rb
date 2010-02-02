@@ -7,8 +7,13 @@ module Wordlist
     attr_accessor :path
 
     #
-    # Creates a new FlatFile list with the specified _path_ and given
-    # _options_.
+    # Opens a new FlatFile list.
+    #
+    # @param [String] path
+    #   The path to the flat file word-list read from.
+    #
+    # @param [Hash] options
+    #   Additional options.
     #
     def initialize(path,options={},&block)
       @path = path
@@ -17,9 +22,15 @@ module Wordlist
     end
 
     #
-    # Enumerates through every word in the flat-file, passing each
-    # word to the given _block_.
+    # Enumerates through every word in the flat-file.
     #
+    # @yield [word]
+    #   The given block will be passed every word from the word-list.
+    #
+    # @yieldparam [String] word
+    #   A word from the word-list.
+    #
+    # @example
     #   flat_file.each_word do |word|
     #     puts word
     #   end

@@ -25,18 +25,20 @@ module Wordlist
     attr_reader :word_queue
 
     #
-    # Creates a new word-list Builder object with the specified _path_
-    # and given _options_.
-    # If a _block_ is given, it will be passed the newly created
-    # Builder object.
+    # Creates a new word-list Builder object.
     #
-    # _options_ may include the following keys:
-    # <tt>:min_words</tt>:: The minimum number of words each line of the
-    #                       wordlist must contain. Defaults to 1, if not
-    #                       given.
-    # <tt>:max_words</tt>:: The maximum number of words each line of the
-    #                       wordlist may contain. Defaults to the value of
-    #                       +:min_words+, if not given.
+    # @param [String] path
+    #   The path of the word-list file.
+    #
+    # @param [Hash] options
+    #   Additional options.
+    #
+    # @option options [Integer] :min_words (1)
+    #   The minimum number of words each line of the word-list must contain.
+    #
+    # @option options [Integer] :max_words
+    #   The maximum number of words each line of the word-list may contain.
+    #   Defaults to the value of `:min_words`, if not given.
     #
     def initialize(path,options={},&block)
       super()
@@ -55,9 +57,22 @@ module Wordlist
 
     #
     # Creates a new Builder object with the given _arguments_, opens the
-    # word-list file, passes the builder object to the given _block_
+    # word-list file, passes the builder object to the given block
     # then finally closes the word-list file.
     #
+    # @param [Array] arguments
+    #   Additional arguments to pass to {Builder.new}.
+    #
+    # @yield [builder]
+    #   If a block is given, it will be passed the new builder.
+    #
+    # @yieldparam [Builder] builder
+    #   The newly created builer object.
+    #
+    # @return [Builder]
+    #   The newly created builder object.
+    #
+    # @example
     #   Builder.build('some/path') do |builder|
     #     builder.parse(readline)
     #   end
@@ -74,6 +89,9 @@ module Wordlist
     # Opens the word-list file for writing. If the file already exists, the
     # previous words will be used to filter future duplicate words.
     #
+    # @return [File]
+    #   The open word-list file.
+    #
     def open!
       if File.file?(@path)
         File.open(@path) do |file|
@@ -87,15 +105,23 @@ module Wordlist
     end
 
     #
-    # Default to be called when the word-list is to be built, simply
-    # calls the given _block_.
+    # Default to be called when the word-list is to be built.
+    #
+    # @yield [builder]
+    #   If a block is given, it will be passed the new builder object.
     #
     def build!(&block)
       block.call(self) if block
     end
 
     #
-    # Enqueues the given _word_ for processing.
+    # Enqueues a given word for processing.
+    #
+    # @param [String] word
+    #   The word to enqueue.
+    #
+    # @return [String]
+    #   The enqueued word.
     #
     def enqueue(word)
       # enqueue the word
@@ -114,8 +140,14 @@ module Wordlist
     end
 
     #
-    # Enumerates over the combinations of previously seen words,
-    # passing each to the given _block_.
+    # Enumerates over the combinations of previously seen words.
+    #
+    # @yield [combination]
+    #   The given block will be passed the combinations of previously
+    #   seen words.
+    #
+    # @yieldparam [String] combination
+    #   A combination of one or more space-separated words.
     #
     def word_combinations
       if @max_words == 1
@@ -136,8 +168,14 @@ module Wordlist
     end
 
     #
-    # Appends the specified _word_ to the word-list file, only if it has not
+    # Appends the given word to the word-list file, only if it has not
     # been previously seen.
+    #
+    # @param [String] word
+    #   The word to append.
+    #
+    # @return [Builder]
+    #   The builder object.
     #
     def <<(word)
       enqueue(word)
@@ -154,7 +192,13 @@ module Wordlist
     end
 
     #
-    # Add the specified _words_ to the word-list.
+    # Add the given words to the word-list.
+    #
+    # @param [Array<String>] words
+    #   The words to add to the list.
+    #
+    # @return [Builder]
+    #   The builder object.
     #
     def +(words)
       words.each { |word| self << word }
@@ -162,16 +206,21 @@ module Wordlist
     end
 
     #
-    # Parses the specified _text_ adding each unique word to the word-list
-    # file.
+    # Parses the given text, adding each unique word to the word-list file.
+    #
+    # @param [String] text
+    #   The text to parse.
     #
     def parse(text)
       super(text).each { |word| self << word }
     end
 
     #
-    # Parses the contents of the file at the specified _path_, adding
-    # each unique word to the word-list file.
+    # Parses the contents of the file at the given path, adding each unique
+    # word to the word-list file.
+    #
+    # @param [String] path
+    #   The path of the file to parse.
     #
     def parse_file(path)
       File.open(path) do |file|

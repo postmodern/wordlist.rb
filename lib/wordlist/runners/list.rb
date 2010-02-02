@@ -21,7 +21,10 @@ module Wordlist
       end
 
       #
-      # Runs the list runner with the given _args_.
+      # Runs the list runner.
+      #
+      # @param [Array<String>] args
+      #   Arguments to run the runner with.
       #
       def run(*args)
         super(*args)
@@ -63,7 +66,10 @@ module Wordlist
       protected
 
       #
-      # Parses the given _args_.
+      # Parses the given arguments.
+      #
+      # @param [Array<String>] args
+      #   Arguments to parse.
       #
       def optparse(*args)
         super(*args) do |opts|

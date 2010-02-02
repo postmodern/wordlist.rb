@@ -19,6 +19,9 @@ module Wordlist
       end
     end
 
+    #
+    # Initializes the parsers settings.
+    #
     def initialize
       @ignore_case = false
       @ignore_punctuation = true
@@ -28,7 +31,13 @@ module Wordlist
     end
 
     #
-    # Parses the specified _text_ and returns an Array of tokens.
+    # Parses the given text.
+    #
+    # @param [String] text
+    #   The text to parse.
+    #
+    # @return [Array<String>]
+    #   The Array of parsed tokens.
     #
     def parse(text)
       text = text.to_s
