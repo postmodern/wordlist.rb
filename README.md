@@ -94,7 +94,7 @@ unique word in the word-list:
 
 Wordlist - A Ruby library for generating and working with word-lists.
 
-Copyright (c) 2009 Hal Brodigan (postmodern.mod3 at gmail.com)
+Copyright (c) 2009-2010 Hal Brodigan (postmodern.mod3 at gmail.com)
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
