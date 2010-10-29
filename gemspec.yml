@@ -1,0 +1,23 @@
+name: wordlist
+summary: A Ruby library for generating and working with word-lists.
+description:
+  A Ruby library for generating and working with word-lists. Wordlist
+  allows one to efficiently generate unique word-lists from arbitrary text
+  or other sources, such as website content. Wordlist can also quickly
+  enumerate through words within an existing word-list, applying multiple
+  mutation rules to each word in the list.
+
+license: MIT
+authors: Postmodern
+email: postmodern.mod3@gmail.com
+homepage: http://github.com/sophsec/wordlist
+has_yard: true
+
+runtime_dependencies:
+  spidr: >= 0.1.9
+
+development_dependencies:
+  ore: ~> 0.2.0
+  ore-tasks: ~> 0.1.2
+  rspec: ~> 2.0.0
+  yard: ~> 0.6.0
