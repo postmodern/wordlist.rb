@@ -1,15 +1,5 @@
-require 'rubygems'
-require 'bundler'
+gem 'rspec', '~> 2.4'
+require 'rspec'
 
-begin
-  Bundler.setup(:runtime, :test)
-rescue Bundler::BundlerError => e
-  STDERR.puts e.message
-  STDERR.puts "Run `bundle install` to install missing gems"
-  exit e.status_code
-end
-
-require 'spec'
 require 'wordlist/version'
-
 include Wordlist
