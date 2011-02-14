@@ -17,6 +17,6 @@ runtime_dependencies:
   spidr: >= 0.1.9
 
 development_dependencies:
-  ore-tasks: ~> 0.2.0
+  ore-tasks: ~> 0.4
   rspec: ~> 2.0.0
   yard: ~> 0.6.0
