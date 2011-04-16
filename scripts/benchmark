@@ -49,3 +49,11 @@ Benchmark.bm do |bm|
     end
   end
 end
+
+Benchmark.bm do |bm|
+  mutator = Wordlist::Mutator.new(/o/i, '0')
+
+  bm.report('Mutator#each') do
+    mutator.each('lololololoLOLOLOLOLO') { |word| }
+  end
+end
