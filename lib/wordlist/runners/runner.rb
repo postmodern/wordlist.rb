@@ -33,7 +33,7 @@ module Wordlist
       #   The error message to print.
       #
       def print_error(message)
-        STDERR.puts "#{$0}: #{message}"
+        $stderr.puts "#{$0}: #{message}"
       end
 
       #
@@ -56,8 +56,8 @@ module Wordlist
         begin
           opts.parse!(args)
         rescue OptionParser::InvalidOption => e
-          STDERR.puts e.message
-          STDERR.puts opts
+          $stderr.puts e.message
+          $stderr.puts opts
           exit -1
         end
       end
