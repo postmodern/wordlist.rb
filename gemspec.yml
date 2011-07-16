@@ -14,7 +14,7 @@ homepage: http://github.com/sophsec/wordlist
 has_yard: true
 
 runtime_dependencies:
-  spidr: >= 0.1.9
+  spidr: ~> 0.2
 
 development_dependencies:
   ore-tasks: ~> 0.4
