@@ -128,81 +128,29 @@ module Wordlist
       #   spidered pages.
       #
       def initialize(path,options={},&block)
-        @proxy = options[:proxy]
+        @proxy      = options[:proxy]
         @user_agent = options[:user_agent]
-        @referer = options[:referer]
+        @referer    = options[:referer]
 
-        @host = options[:host]
+        @host        = options[:host]
         @host_header = options[:host_header]
-        @hosts = []
-        
-        if options[:hosts]
-          @hosts += options[:hosts]
-        end
+        @hosts       = Array(options[:hosts])
 
-        @ignore_links = []
+        @ignore_links = Array(options[:ignore_links])
 
-        if options[:ignore_links]
-          @ignore_links += options[:ignore_links]
-        end
+        @parse_meta     = options.fetch(:parse_meta,true)
+        @parse_title    = options.fetch(:parse_title,true)
+        @parse_h1       = options.fetch(:parse_h1,true)
+        @parse_h2       = options.fetch(:parse_h2,true)
+        @parse_h3       = options.fetch(:parse_h3,true)
+        @parse_h4       = options.fetch(:parse_h4,true)
+        @parse_h5       = options.fetch(:parse_h5,true)
+        @parse_p        = options.fetch(:parse_p,true)
+        @parse_span     = options.fetch(:parse_span,true)
+        @parse_alt      = options.fetch(:parse_alt,true)
+        @parse_comments = options.fetch(:parse_comments,false)
 
-        @parse_meta = true
-        @parse_title = true
-        @parse_h1 = true
-        @parse_h2 = true
-        @parse_h3 = true
-        @parse_h4 = true
-        @parse_h5 = true
-        @parse_p = true
-        @parse_span = true
-        @parse_alt = true
-        @parse_comments = false
-
-        if options.has_key?(:parse_meta)
-          @parse_meta = options[:parse_meta]
-        end
-
-        if options.has_key?(:parse_title)
-          @parse_title = options[:parse_title]
-        end
-
-        if options.has_key?(:parse_h1)
-          @parse_h1 = options[:parse_h1]
-        end
-
-        if options.has_key?(:parse_h2)
-          @parse_h2 = options[:parse_h2]
-        end
-
-        if options.has_key?(:parse_h3)
-          @parse_h3 = options[:parse_h3]
-        end
-
-        if options.has_key?(:parse_h4)
-          @parse_h4 = options[:parse_h4]
-        end
-
-        if options.has_key?(:parse_h5)
-          @parse_h5 = options[:parse_h5]
-        end
-
-        if options.has_key?(:parse_p)
-          @parse_p = options[:parse_p]
-        end
-
-        if options.has_key?(:parse_span)
-          @parse_span = options[:parse_span]
-        end
-
-        if options.has_key?(:parse_comments)
-          @parse_comments = options[:parse_comments]
-        end
-
-        @xpaths = []
-
-        if options[:xpaths]
-          @xpaths += options[:xpaths]
-        end
+        @xpaths = Array(options[:xpaths])
 
         super(path,options,&block)
       end
