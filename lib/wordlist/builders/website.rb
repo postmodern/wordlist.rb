@@ -169,67 +169,36 @@ module Wordlist
       def build!(&block)
         super(&block)
 
-        search = lambda { |page,xpath|
-          if page.doc
-            page.doc.search(xpath).each do |element|
-              parse(element.inner_text)
-            end
-          end
-        }
-
         options = {
-          :proxy => @proxy,
-          :user_agent => @user_agent,
-          :referer => @referer,
-          :hosts => @hosts,
+          :proxy        => @proxy,
+          :user_agent   => @user_agent,
+          :referer      => @referer,
+          :hosts        => @hosts,
           :ignore_links => @ignore_links
         }
+
+        xpaths = []
+        xpaths << '//meta/@content' if @parse_meta
+        xpaths << '//title'         if @parse_title
+        xpaths << '//h1'            if @parse_h1
+        xpaths << '//h2'            if @parse_h2
+        xpaths << '//h3'            if @parse_h3
+        xpaths << '//h4'            if @parse_h4
+        xpaths << '//h5'            if @parse_h5
+        xpaths << '//p'             if @parse_p
+        xpaths << '//span'          if @parse_span
+        xpaths << '//img/@alt'      if @parse_alt
+        xpaths += @xpaths
 
         Spidr.host(@host,options) do |spidr|
           spidr.every_page do |page|
             if page.html?
-              if @parse_meta
-                search.call(page,'//meta/@content')
-              end
-
-              if @parse_title
-                search.call(page,'//title')
-              end
-
-              if @parse_h1
-                search.call(page,'//h1')
-              end
-
-              if @parse_h2
-                search.call(page,'//h2')
-              end
-
-              if @parse_h3
-                search.call(page,'//h3')
-              end
-
-              if @parse_h4
-                search.call(page,'//h4')
-              end
-
-              if @parse_h5
-                search.call(page,'//h5')
-              end
-
-              if @parse_p
-                search.call(page,'//p')
-              end
-
-              if @parse_span
-                search.call(page,'//span')
-              end
-
-              if @parse_alt
-                search.call(page,'//img/@alt')
-              end
-
-              @xpaths.each do |xpath|
-                search.call(page,xpath)
+              if page.doc
+                xpaths.each do |xpath|
+                  page.doc.search(xpath).each do |element|
+                    parse(element.inner_text)
+                  end
+                end
               end
 
               if (@parse_comments && page.doc)
