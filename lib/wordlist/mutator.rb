@@ -25,7 +25,7 @@ module Wordlist
     #   The match text to mutate.
     #
     def initialize(pattern,substitute=nil,&block)
-      @pattern = pattern
+      @pattern    = pattern
       @substitute = (substitute || block)
     end
 

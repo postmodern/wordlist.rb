@@ -10,7 +10,7 @@ module Wordlist
       #   Arguments to parse.
       #
       def self.run(*args)
-        runner = self.new
+        runner = new()
         runner.run(*args)
       end
 
@@ -49,9 +49,10 @@ module Wordlist
       # @yieldparam [OptionParser] opts
       #   The option parser to be configured.
       #
-      def optparse(*args,&block)
-        opts = OptionParser.new
-        block.call(opts) if block
+      def optparse(*args)
+        opts = OptionParser.new()
+
+        yield opts if block_given?
 
         begin
           opts.parse!(args)

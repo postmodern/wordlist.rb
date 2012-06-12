@@ -1,33 +1,29 @@
 module Wordlist
   module Parsers
-    def self.included(base)
-      base.module_eval do
-        # Ignore case of parsed text
-        attr_accessor :ignore_case
+    # Ignore case of parsed text
+    attr_accessor :ignore_case
 
-        # Ignore the punctuation of parsed text
-        attr_accessor :ignore_punctuation
+    # Ignore the punctuation of parsed text
+    attr_accessor :ignore_punctuation
 
-        # Ignore URLs
-        attr_accessor :ignore_urls
+    # Ignore URLs
+    attr_accessor :ignore_urls
 
-        # Ignore Phone numbers
-        attr_accessor :ignore_phone_numbers
+    # Ignore Phone numbers
+    attr_accessor :ignore_phone_numbers
 
-        # Ignore References
-        attr_accessor :ignore_references
-      end
-    end
+    # Ignore References
+    attr_accessor :ignore_references
 
     #
     # Initializes the parsers settings.
     #
     def initialize
-      @ignore_case = false
-      @ignore_punctuation = true
-      @ignore_urls = true
+      @ignore_case          = false
+      @ignore_punctuation   = true
+      @ignore_urls          = true
       @ignore_phone_numbers = false
-      @ignore_references = false
+      @ignore_references    = false
     end
 
     #

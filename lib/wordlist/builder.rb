@@ -40,19 +40,19 @@ module Wordlist
     #   The maximum number of words each line of the word-list may contain.
     #   Defaults to the value of `:min_words`, if not given.
     #
-    def initialize(path,options={},&block)
+    def initialize(path,options={})
       super()
 
       @path = File.expand_path(path)
 
-      @min_words = (options[:min_words] || 1)
-      @max_words = (options[:max_words] || @min_words)
+      @min_words = options.fetch(:min_words,1)
+      @max_words = options.fetch(:max_words,@min_words)
 
-      @file = nil
-      @filter = UniqueFilter.new
+      @file       = nil
+      @filter     = UniqueFilter.new
       @word_queue = []
 
-      block.call(self) if block
+      yield self if block_given?
     end
 
     #
@@ -110,8 +110,8 @@ module Wordlist
     # @yield [builder]
     #   If a block is given, it will be passed the new builder object.
     #
-    def build!(&block)
-      block.call(self) if block
+    def build!
+      yield self if block_given?
     end
 
     #

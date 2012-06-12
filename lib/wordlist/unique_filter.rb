@@ -40,7 +40,7 @@ module Wordlist
     #
     def saw!(word)
       length = word.length
-      crc = crc32(word)
+      crc    = crc32(word)
 
       if @seen.has_key?(length)
         return false if @seen[length].include?(crc)
