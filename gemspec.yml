@@ -10,7 +10,7 @@ description:
 license: MIT
 authors: Postmodern
 email: postmodern.mod3@gmail.com
-homepage: http://github.com/sophsec/wordlist
+homepage: https://github.com/sophsec/wordlist
 has_yard: true
 
 dependencies:
@@ -19,4 +19,4 @@ dependencies:
 development_dependencies:
   rubygems-tasks: ~> 0.1
   rspec: ~> 2.4
-  yard: ~> 0.6.0
+  yard: ~> 0.8
