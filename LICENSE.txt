@@ -1,6 +1,6 @@
 Wordlist - A Ruby library for generating and working with word-lists.
 
-Copyright (c) 2009-2010 Hal Brodigan
+Copyright (c) 2009-2012 Hal Brodigan
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
