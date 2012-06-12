@@ -128,7 +128,7 @@ module Wordlist
       #   spidered pages.
       #
       def initialize(path,options={},&block)
-        @proxy      = options[:proxy]
+        @proxy      = options.fetch(:proxy,Spidr.proxy)
         @user_agent = options[:user_agent]
         @referer    = options[:referer]
 
