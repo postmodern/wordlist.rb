@@ -1,8 +1,8 @@
 # Wordlist
 
-* [wordlist.rubyforge.org](http://wordlist.rubyforge.org/)
-* [github.com/sophsec/wordlist](http://github.com/sophsec/wordlist/)
-* Postmodern (postmodern.mod3 at gmail.com)
+* [Source](https://github.com/sophsec/wordlist#readme)
+* [Issues](https://github.com/sophsec/wordlist/issues)
+* [Email](mailto:postmodern.mod3 at gmail.com)
 
 ## Description
 
@@ -88,7 +88,7 @@ unique word in the word-list:
 
 ## Install
 
-    $ sudo gem install wordlist
+    $ gem install wordlist
 
 ## License
 
