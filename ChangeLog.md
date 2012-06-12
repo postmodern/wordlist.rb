@@ -1,3 +1,7 @@
+### 0.1.1 / 2012-06-11
+
+* Default {Wordlist::Builders::Website#proxy} to `Spidr.proxy`.
+
 ### 0.1.0 / 2009-08-31
 
 * Initial release:
