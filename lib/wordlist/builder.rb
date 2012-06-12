@@ -61,7 +61,7 @@ module Wordlist
     # then finally closes the word-list file.
     #
     # @param [Array] arguments
-    #   Additional arguments to pass to {Builder.new}.
+    #   Additional arguments to pass to {#initialize}.
     #
     # @yield [builder]
     #   If a block is given, it will be passed the new builder.
