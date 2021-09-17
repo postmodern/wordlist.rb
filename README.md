@@ -92,5 +92,6 @@ unique word in the word-list:
 
 ## License
 
-See {file:LICENSE.txt} for license information.
+Copyright (c) 2009-2021 Hal Brodigan
 
+See {file:LICENSE.txt} for details.
