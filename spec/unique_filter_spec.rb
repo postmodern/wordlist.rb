@@ -1,34 +1,50 @@
+require 'spec_helper'
 require 'wordlist/unique_filter'
 
-require 'spec_helper'
-
 describe UniqueFilter do
-  before(:each) do
-    @filter = UniqueFilter.new
+  describe "#initialize" do
+    it "must initialize #hashes to an empty Set" do
+      expect(subject.hashes).to be_kind_of(Set)
+      expect(subject.hashes).to be_empty
+    end
   end
 
-  it "should have seen words" do
-    @filter.saw!('cat')
+  describe "#<<" do
+    let(:string) { "foo" }
 
-    @filter.seen?('cat').should == true
-    @filter.seen?('dog').should == false
+    before { subject << string }
+
+    it "must add the String's hash to #hashes" do
+      expect(subject.hashes.include?(string.hash)).to be(true)
+    end
+
+    context "when the same string is added twice" do
+      before do
+        subject << string
+        subject << string
+      end
+
+      it "must add the String's hash to #hashes only once" do
+        expect(subject.hashes).to eq(Set[string.hash])
+      end
+    end
   end
 
-  it "should only see a unique word once" do
-    @filter.saw!('cat').should == true
-    @filter.saw!('cat').should == false
-  end
+  describe "#include?" do
+    let(:string) { "foo" }
 
-  it "should pass only unique words through the filter" do
-    input = ['dog', 'cat', 'dog']
-    output = []
+    before { subject << string }
 
-    input.each do |word|
-      @filter.pass(word) do |result|
-        output << result
+    context "when the unique filter contains the String's hash" do
+      it "must return true" do
+        expect(subject.include?(string)).to be(true)
       end
     end
 
-    output.should == ['dog', 'cat']
+    context "when the unqiue filter does not contain the String's hash" do
+      it "must return false" do
+        expect(subject.include?("XXX")).to be(false)
+      end
+    end
   end
 end
