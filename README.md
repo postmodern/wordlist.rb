@@ -90,6 +90,10 @@ unique word in the word-list:
 
     $ gem install wordlist
 
+### gemspec
+
+   gem.add_dependency 'wordlist', '~> 0.1'
+
 ## License
 
 Copyright (c) 2009-2021 Hal Brodigan
