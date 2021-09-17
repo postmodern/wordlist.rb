@@ -11,7 +11,7 @@ module Wordlist
     #
     # Creates a new wordlist object.
     #
-    # @param [Array<String>] words
+    # @param [Array<String>, Enumerable] words
     #   The words for the wordlist.
     #
     def initialize(words=[])
