@@ -2,7 +2,6 @@
 
 * [Source](https://github.com/postmodern/wordlist#readme)
 * [Issues](https://github.com/postmodern/wordlist/issues)
-* [Email](mailto:postmodern.mod3 at gmail.com)
 
 ## Description
 
