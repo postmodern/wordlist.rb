@@ -33,8 +33,14 @@ module Wordlist
     #
     # @param [String] word
     #
-    def <<(word)
-      @hashes << word.hash
+    def add(word)
+      @hashes.add(word.hash)
+    end
+
+    alias << add
+
+    def add?(word)
+      !@hashes.add?(word.hash).nil?
     end
 
   end

@@ -9,10 +9,10 @@ describe UniqueFilter do
     end
   end
 
-  describe "#<<" do
+  describe "#add" do
     let(:string) { "foo" }
 
-    before { subject << string }
+    before { subject.add(string) }
 
     it "must add the String's hash to #hashes" do
       expect(subject.hashes.include?(string.hash)).to be(true)
@@ -20,8 +20,8 @@ describe UniqueFilter do
 
     context "when the same string is added twice" do
       before do
-        subject << string
-        subject << string
+        subject.add(string)
+        subject.add(string)
       end
 
       it "must add the String's hash to #hashes only once" do
@@ -33,7 +33,7 @@ describe UniqueFilter do
   describe "#include?" do
     let(:string) { "foo" }
 
-    before { subject << string }
+    before { subject.add(string) }
 
     context "when the unique filter contains the String's hash" do
       it "must return true" do
@@ -44,6 +44,26 @@ describe UniqueFilter do
     context "when the unqiue filter does not contain the String's hash" do
       it "must return false" do
         expect(subject.include?("XXX")).to be(false)
+      end
+    end
+  end
+
+  describe "#add?" do
+    let(:string) { "foo" }
+
+    before { subject.add(string) }
+
+    context "when the unique filter contains the String's hash" do
+      it "must return nil" do
+        expect(subject.add?(string)).to be(false)
+      end
+    end
+
+    context "when the unqiue filter does not contain the String's hash" do
+      let(:new_string) { "bar" }
+
+      it "must return nil" do
+        expect(subject.add?(new_string)).to be(true)
       end
     end
   end
