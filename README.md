@@ -2,6 +2,7 @@
 
 * [Source](https://github.com/postmodern/wordlist#readme)
 * [Issues](https://github.com/postmodern/wordlist/issues)
+* [Documentation](https://rubydoc.info/gems/wordlist/frames)
 
 ## Description
 
