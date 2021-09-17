@@ -94,6 +94,10 @@ unique word in the word-list:
 
    gem.add_dependency 'wordlist', '~> 0.1'
 
+### Gemfile
+
+    gem 'wordlist', '~> 0.1'
+
 ## License
 
 Copyright (c) 2009-2021 Hal Brodigan
