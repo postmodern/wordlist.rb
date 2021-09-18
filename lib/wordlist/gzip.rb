@@ -29,6 +29,8 @@ module Wordlist
     # @api semipublic
     #
     def each_line(&block)
+      return enum_for(__method__) unless block
+
       IO.popen("zcat #{Shellwords.shellescape(path)}") do |io|
         io.each_line(&block)
       end
