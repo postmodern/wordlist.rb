@@ -1,7 +1,7 @@
 # Wordlist
 
-* [Source](https://github.com/postmodern/wordlist#readme)
-* [Issues](https://github.com/postmodern/wordlist/issues)
+* [Source](https://github.com/postmodern/wordlist.rb#readme)
+* [Issues](https://github.com/postmodern/wordlist.rb/issues)
 * [Documentation](https://rubydoc.info/gems/wordlist/frames)
 
 ## Description
