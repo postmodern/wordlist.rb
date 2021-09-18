@@ -39,6 +39,8 @@ module Wordlist
     # @api semipublic
     #
     def each_line(&block)
+      return enum_for(__method__) unless block
+
       File.open(@path) do |file|
         file.each_line(&block)
       end
