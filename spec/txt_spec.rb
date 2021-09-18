@@ -23,6 +23,14 @@ describe Wordlist::TXT do
     end
   end
 
+  describe ".open" do
+    it "must call new with the given path" do
+      expect(described_class).to receive(:new).with(path)
+
+      described_class.open(path)
+    end
+  end
+
   describe "#each_line" do
     let(:expected_lines) { File.readlines(path) }
 

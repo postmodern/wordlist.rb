@@ -28,6 +28,21 @@ module Wordlist
     end
 
     #
+    # Opens a wordlist file.
+    #
+    # @param [String] path
+    #   The path to the `.txt` file wordlist read from.
+    #
+    # @return [self]
+    #   The newly opened wordlist.
+    #
+    # @see #initialize
+    #
+    def self.open(path)
+      new(path)
+    end
+
+    #
     # Enumerates through each line in the `.txt` file wordlist.
     #
     # @yield [line]
