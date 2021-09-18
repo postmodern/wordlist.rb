@@ -8,6 +8,11 @@ module Wordlist
   #
   class List < AbstractList
 
+    # The words in the wordlist.
+    #
+    # @return [Array<String>, Enumerable]
+    attr_reader :words
+
     #
     # Creates a new wordlist object.
     #
