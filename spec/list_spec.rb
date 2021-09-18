@@ -1,58 +1,41 @@
+require 'spec_helper'
 require 'wordlist/list'
 
-require 'spec_helper'
-require 'classes/test_list'
+describe Wordlist::List do
+  let(:words) { %w[foo bar baz] }
 
-describe List do
-  before(:all) do
-    @source = TestList.new
-    @source.mutate 'o', '0'
-    @source.mutate 'a', 'A'
-    @source.mutate 'e', '3'
-    @source.mutate 's', '5'
+  subject { described_class.new(words) }
+
+  describe "#initialize" do
+    it "must set #words" do
+      expect(subject.words).to eq(words)
+    end
   end
 
-  it "should iterate over each word" do
-    words = []
+  describe ".[]" do
+    subject { described_class[*words] }
 
-    @source.each_word { |word| words << word }
-
-    words.should == ['omg.hackers']
-  end
-
-  it "should iterate over each unique word" do
-    words = []
-
-    @source.each_unique { |word| words << word }
-
-    words.should == ['omg.hackers']
-  end
-
-  it "should iterate over every possible mutated word" do
-    mutations = %w{
-      0mg.hAck3r5
-      0mg.hAck3rs
-      0mg.hAcker5
-      0mg.hAckers
-      0mg.hack3r5
-      0mg.hack3rs
-      0mg.hacker5
-      0mg.hackers
-      omg.hAck3r5
-      omg.hAck3rs
-      omg.hAcker5
-      omg.hAckers
-      omg.hack3r5
-      omg.hack3rs
-      omg.hacker5
-      omg.hackers
-    }
-
-    @source.each_mutation do |mutation|
-      mutations.include?(mutation).should == true
-      mutations.delete(mutation)
+    it "must return a new #{described_class}" do
+      expect(subject).to be_kind_of(described_class)
     end
 
-    mutations.should == []
+    it "must initialize the wordlist with the given words" do
+      expect(subject.words).to eq(words)
+    end
+  end
+
+  describe "#each" do
+    context "when a block is given" do
+      it "must yield each word" do
+        expect { |b| subject.each(&b) }.to yield_successive_args(*words)
+      end
+    end
+
+    context "when no block is given" do
+      it "must return an Enumerator for the words" do
+        expect(subject.each).to be_kind_of(Enumerator)
+        expect(subject.each.to_a).to eq(words)
+      end
+    end
   end
 end
