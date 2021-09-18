@@ -1,0 +1,19 @@
+foo
+bar
+baz
+qux
+# comment1
+quux
+quuz
+corge
+grault
+# comment2
+#
+# comment3
+garply
+waldo
+fred
+plugh
+plugh
+xyzzy
+thud
