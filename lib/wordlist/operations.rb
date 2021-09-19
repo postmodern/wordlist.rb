@@ -1,4 +1,5 @@
 require 'wordlist/operators/concat'
+require 'wordlist/operators/subtract'
 require 'wordlist/operators/product'
 require 'wordlist/operators/power'
 require 'wordlist/operators/intersect'
@@ -11,6 +12,12 @@ module Wordlist
     end
 
     alias + concat
+
+    def subtract(other)
+      Operators::Subtract.new(self,other)
+    end
+
+    alias - subtract
 
     def product(other)
       Operators::Product.new(self,other)
