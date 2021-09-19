@@ -1,8 +1,8 @@
-require 'wordlist/modifiers/mutator'
+require 'wordlist/modifiers/mutate'
 
 module Wordlist
   module Modifiers
-    class MutateCase < Mutator
+    class MutateCase < Mutate
 
       def initialize(wordlist)
         super(wordlist,/[[:alpha:]]/) { |letter| letter.swapcase }
