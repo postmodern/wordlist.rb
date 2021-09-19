@@ -6,6 +6,21 @@ require 'wordlist/list'
 require 'wordlist/version'
 
 module Wordlist
+  # 
+  # Creates an in-memory wordlist from the given words.
+  #
+  # @param [Array<String>] words
+  #   The literal words for the list.
+  #
+  # @return [List]
+  #   The in-memory wordlist.
+  #
+  # @api public
+  #
+  def self.[](*words)
+    List[*words]
+  end
+
   class UnsupportedFileExt < ArgumentError
   end
 
@@ -70,20 +85,5 @@ module Wordlist
     wordlist = wordlist_class.new(path)
     yield wordlist if block_given?
     wordlist
-  end
-
-  # 
-  # Creates an in-memory wordlist from the given words.
-  #
-  # @param [Array<String>] words
-  #   The literal words for the list.
-  #
-  # @return [List]
-  #   The in-memory wordlist.
-  #
-  # @api public
-  #
-  def self.[](*words)
-    List[*words]
   end
 end
