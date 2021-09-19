@@ -2,6 +2,8 @@ module Wordlist
   module Modifiers
     class Modifier
 
+      include Enumerable
+
       #
       # Initializes the modifier.
       #
