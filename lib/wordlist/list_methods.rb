@@ -1,3 +1,6 @@
+require 'wordlist/operators'
+require 'wordlist/modifiers'
+
 module Wordlist
   module ListMethods
     #
@@ -178,7 +181,7 @@ module Wordlist
       MutateCase.new(self)
     end
   end
-end
 
-require 'wordlist/operators'
-require 'wordlist/modifiers'
+  Operators::Operator.send :include, ListMethods
+  Modifiers::Modifier.send :include, ListMethods
+end

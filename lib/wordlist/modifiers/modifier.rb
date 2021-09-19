@@ -1,10 +1,6 @@
-require 'wordlist/list_methods'
-
 module Wordlist
   module Modifiers
     class Modifier
-
-      include ListMethods
 
       #
       # Initializes the modifier.
