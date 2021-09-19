@@ -1,10 +1,12 @@
 require 'wordlist/operations'
+require 'wordlist/modifiers'
 
 module Wordlist
   class AbstractList
 
     include Enumerable
     include Operations
+    include Modifiers
 
     #
     # Place holder method.

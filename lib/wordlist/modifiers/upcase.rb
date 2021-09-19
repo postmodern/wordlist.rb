@@ -1,0 +1,20 @@
+require 'wordlist/modifiers/modifier'
+
+module Wordlist
+  module Modifiers
+    #
+    # Calls `String#upcase` on every word in the wordlist.
+    #
+    class Upcase < Modifier
+
+      def each
+        return enum_for(__method__) unless block_given?
+
+        @wordlist.each do |word|
+          yield word.upcase
+        end
+      end
+
+    end
+  end
+end
