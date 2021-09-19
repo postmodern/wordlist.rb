@@ -2,6 +2,7 @@ require 'wordlist/operators/concat'
 require 'wordlist/operators/product'
 require 'wordlist/operators/power'
 require 'wordlist/operators/intersect'
+require 'wordlist/operators/union'
 
 module Wordlist
   module Operations
@@ -28,6 +29,12 @@ module Wordlist
     end
 
     alias & intersect
+
+    def union(other)
+      Operators::Union.new(self,other)
+    end
+
+    alias | union
 
   end
 end
