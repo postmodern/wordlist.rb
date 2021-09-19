@@ -4,13 +4,13 @@ require 'wordlist/operators/product'
 module Wordlist
   module Operations
     def concat(other)
-      Operations::Concat.new(self,other)
+      Operators::Concat.new(self,other)
     end
 
     alias + concat
 
     def product(other)
-      Operations::Product.new(self,other)
+      Operators::Product.new(self,other)
     end
 
     alias * product
