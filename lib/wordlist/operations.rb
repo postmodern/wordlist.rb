@@ -4,6 +4,7 @@ require 'wordlist/operators/product'
 require 'wordlist/operators/power'
 require 'wordlist/operators/intersect'
 require 'wordlist/operators/union'
+require 'wordlist/operators/unique'
 
 module Wordlist
   module Operations
@@ -43,5 +44,8 @@ module Wordlist
 
     alias | union
 
+    def uniq
+      Operators::Unique.new(self)
+    end
   end
 end
