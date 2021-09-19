@@ -1,6 +1,7 @@
 require 'wordlist/operators/concat'
 require 'wordlist/operators/product'
 require 'wordlist/operators/power'
+require 'wordlist/operators/intersect'
 
 module Wordlist
   module Operations
@@ -21,6 +22,12 @@ module Wordlist
     end
 
     alias ** power
+
+    def intersect(other)
+      Operators::Intersect.new(self,exponent)
+    end
+
+    alias & intersect
 
   end
 end
