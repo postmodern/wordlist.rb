@@ -6,6 +6,8 @@ module Wordlist
     class Subtract < BinaryOperator
 
       def each
+        return enum_for(__method__) unless block_given?
+
         unique_filter = UniqueFilter.new
 
         @right.each { |word| unique_filter.add(word) }

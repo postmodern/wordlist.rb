@@ -4,6 +4,25 @@ module Wordlist
   module Operators
     class BinaryOperator < Operator
 
+      # The left operand.
+      #
+      # @return [Enumerable]
+      attr_reader :left
+
+      # The right operand.
+      #
+      # @return [Enumerable]
+      attr_reader :right
+
+      #
+      # Initializes the binary operator.
+      #
+      # @param [Enumerable] left
+      #   The left operand.
+      #
+      # @param [Enumerable] right
+      #   The right operand.
+      #
       def initialize(left,right)
         @left  = left
         @right = right
