@@ -1,12 +1,10 @@
-require 'wordlist/operations'
-require 'wordlist/modifiers'
+require 'wordlist/list_methods'
 
 module Wordlist
   class AbstractList
 
     include Enumerable
-    include Operations
-    include Modifiers
+    include ListMethods
 
     #
     # Place holder method.

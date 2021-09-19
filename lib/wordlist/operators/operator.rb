@@ -1,8 +1,11 @@
+require 'wordlist/list_methods'
+
 module Wordlist
   module Operators
     class Operator
 
       include Enumerable
+      include ListMethods
 
       def each(&block)
         raise(NotImplementedError,"#{self.class}#each was not implemented")
