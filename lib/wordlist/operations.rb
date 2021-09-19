@@ -1,5 +1,6 @@
 require 'wordlist/operators/concat'
 require 'wordlist/operators/product'
+require 'wordlist/operators/power'
 
 module Wordlist
   module Operations
@@ -14,5 +15,12 @@ module Wordlist
     end
 
     alias * product
+
+    def power(exponent)
+      Operators::Power.new(self,exponent)
+    end
+
+    alias ** power
+
   end
 end
