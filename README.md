@@ -67,6 +67,14 @@ Union two wordlists together:
 end
 ```
 
+Subtract one wordlist from the other:
+
+```ruby
+(wordlist1 - wordlist2).each do |word|
+  puts word
+end
+```
+
 Combine every word from `wordlist1` with the words from `wordlist2`:
 
 ```ruby
@@ -83,12 +91,28 @@ Combine the wordlist with itself multiple times:
 end
 ```
 
+Filter out duplicates from multiple wordlists:
+
+```ruby
+(wordlist1 + wordlist2 + wordlist3).uniq.each do |word|
+  puts word
+end
+```
+
 ### String Manipulation
 
 Convert every word in a wordlist to lowercase:
 
 ```ruby
 wordlist.downcase.each do |word|
+  puts word
+end
+```
+
+Convert every word in a wordlist to UPPERCASE:
+
+```ruby
+wordlist.upcase.each do |word|
   puts word
 end
 ```
@@ -101,10 +125,42 @@ wordlist.capitalize.each do |word|
 end
 ```
 
+Run `String#tr` on every word in a wordlist:
+
+```ruby
+wordlist.tr('_','-').each do |word|
+  puts word
+end
+```
+
+Run `String#sub` on every word in a wordlist:
+
+```ruby
+wordlist.sub("fish","phish").each do |word|
+  puts word
+end
+```
+
+Run `String#gsub` on every word in a wordlist:
+
+```ruby
+wordlist.gsub(/\d+/,"").each do |word|
+  puts word
+end
+```
+
 Performs every possible mutation of each word in a wordlist:
 
 ```ruby
 wordlist.mutate(/[oae]/, {'o' => '0', 'a' => '@', 'e' => '3'}).each do |word|
+  puts word
+end
+```
+
+Enumerates over every possible case variation of every word in a wordlist:
+
+```ruby
+wordlist.mutate_case.each do |word|
   puts word
 end
 ```
