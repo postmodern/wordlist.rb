@@ -54,6 +54,26 @@ module Wordlist
       end
 
       #
+      # Enumerates over every `sub`ed word in the wordlist.
+      #
+      # @yield [word]
+      #   The given block will be passed each `sub`ed word.
+      #
+      # @yieldparam [String] word
+      #   A `sub`ed word.
+      #
+      # @return [Enumerator]
+      #   If no block is given, an Enumerator object will be returned.
+      #
+      # @example
+      #   wordlist = Wordlist::List["foo", "bar", "baz"]
+      #   wordlist.sub(/o/, '0').each do |word|
+      #     puts word
+      #   end
+      #   # f0o
+      #   # bar
+      #   # baz
+      #
       # @api public
       #
       def each

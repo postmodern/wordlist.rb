@@ -3,8 +3,37 @@ require 'wordlist/unique_filter'
 
 module Wordlist
   module Operators
+    #
+    # Lazily enumerates over words from both wordlists, filtering out any
+    # duplicates.
+    #
     class Union < BinaryOperator
 
+      #
+      # Enumerates over the union of the two wordlists.
+      #
+      # @yield [word]
+      #   The given block will be passed each word from both wordlists,
+      #   without duplicates.
+      #
+      # @yieldparam [String] word
+      #   A word that belongs to one of the wordlists.
+      #
+      # @return [Enumerator]
+      #   If no block is given, an Enumerator object will be returned.
+      #
+      # @example
+      #   wordlist1 = Wordlist::List["foo", "bar", "baz", "qux"]
+      #   wordlist2 = Wordlist::List["xyz", "bar", "abc", "qux"]
+      #   (wordlist1 | wordlist2).each do |word|
+      #     puts word
+      #   end
+      #   # foo
+      #   # bar
+      #   # baz
+      #   # qux
+      #   # xyz
+      #   # abc
       #
       # @api public
       #

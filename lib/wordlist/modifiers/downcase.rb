@@ -8,6 +8,26 @@ module Wordlist
     class Downcase < Modifier
 
       #
+      # Enumerates over every `downcase`d word in the wordlist.
+      #
+      # @yield [word]
+      #   The given block will be passed each `downcase`d word.
+      #
+      # @yieldparam [String] word
+      #   A `downcase`d word.
+      #
+      # @return [Enumerator]
+      #   If no block is given, an Enumerator object will be returned.
+      #
+      # @example
+      #   wordlist = Wordlist::List["Foo", "BAR", "bAz"]
+      #   wordlist.downcase.each do |word|
+      #     puts word
+      #   end
+      #   # foo
+      #   # bar
+      #   # baz
+      #
       # @api public
       #
       def each

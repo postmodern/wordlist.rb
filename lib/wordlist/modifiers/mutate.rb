@@ -9,6 +9,31 @@ module Wordlist
     class Mutate < Sub
 
       #
+      # Enumerates over every mutation of every word in the wordlist.
+      #
+      # @yield [word]
+      #   The given block will be passed each mutation of each word.
+      #
+      # @yieldparam [String] word
+      #   A mutated word.
+      #
+      # @return [Enumerator]
+      #   If no block is given, an Enumerator object will be returned.
+      #
+      # @example
+      #   wordlist = Wordlist::List["foo", "bar", "baz"]
+      #   wordlist.mutate(/[oa]/, {'o' => '0', 'a' => '@'}).each do |word|
+      #     puts word
+      #   end
+      #   # foo
+      #   # f0o
+      #   # fo0
+      #   # f00
+      #   # bar
+      #   # b@r
+      #   # baz
+      #   # b@z
+      #
       # @api public
       #
       def each

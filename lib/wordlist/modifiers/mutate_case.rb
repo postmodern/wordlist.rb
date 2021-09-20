@@ -8,6 +8,12 @@ module Wordlist
     #
     class MutateCase < Mutate
 
+      #
+      # Initializes the case mutator.
+      #
+      # @param [Enumerable] wordlist
+      #   The wordlist to modify.
+      #
       def initialize(wordlist)
         super(wordlist,/[[:alpha:]]/) { |letter| letter.swapcase }
       end

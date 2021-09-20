@@ -3,6 +3,9 @@ require 'wordlist/operators/product'
 
 module Wordlist
   module Operators
+    #
+    # Lazily enumerates over every combination of words in the wordlist.
+    #
     class Power < BinaryOperator
 
       # The product of the wordlist with itself.
@@ -29,6 +32,32 @@ module Wordlist
         end
       end
 
+      #
+      # Enumerates over every combination of words from the wordlist.
+      #
+      # @yield [string]
+      #   The given block will be passed each combination of words from the
+      #   wordlist.
+      #
+      # @yieldparam [String] string
+      #   A combination of words from the wordlist.
+      #
+      # @return [Enumerator]
+      #   If no block is given, an Enumerator object will be returned.
+      #
+      # @example
+      #   wordlist = Wordlist::List["foo", "bar"]
+      #   (wordlist ** 3).each do |word|
+      #     puts word
+      #   end
+      #   # foofoofoo
+      #   # foofoobar
+      #   # foobarfoo
+      #   # foobarbar
+      #   # barfoofoo
+      #   # barfoobar
+      #   # barbarfoo
+      #   # barbarbar
       #
       # @api public
       #

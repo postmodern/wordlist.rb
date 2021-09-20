@@ -3,8 +3,33 @@ require 'wordlist/unique_filter'
 
 module Wordlist
   module Operators
+    #
+    # Lazily enumerates over only the unique words in the wordlist, filtering
+    # out duplicates.
+    #
     class Unique < UnaryOperator
 
+      #
+      # Enumerates over the unique words in the wordlist.
+      #
+      # @yield [word]
+      #   The given block will be passed each unique word from the wordlist.
+      #
+      # @yieldparam [String] word
+      #   A unique word from the wordlist.
+      #
+      # @return [Enumerator]
+      #   If no block is given, an Enumerator object will be returned.
+      #
+      # @example
+      #   wordlist= Wordlist::List["foo", "bar", "baz", "qux"]
+      #   (wordlist + wordlist).uniq.each do |word|
+      #     puts word
+      #   end
+      #   # foo
+      #   # bar
+      #   # baz
+      #   # qux
       #
       # @api public
       #

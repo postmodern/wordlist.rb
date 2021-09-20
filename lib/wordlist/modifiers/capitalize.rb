@@ -8,6 +8,26 @@ module Wordlist
     class Capitalize < Modifier
 
       #
+      # Enumerates over every capitalized word in the wordlist.
+      #
+      # @yield [word]
+      #   The given block will be passed each capitalized word.
+      #
+      # @yieldparam [String] word
+      #   A capitalized word from the wordlist.
+      #
+      # @return [Enumerator]
+      #   If no block is given, an Enumerator object will be returned.
+      #
+      # @example
+      #   wordlist = Wordlist::List["foo", "bar", "baz"]
+      #   wordlist.capitalize.each do |word|
+      #     puts word
+      #   end
+      #   # Foo
+      #   # Bar
+      #   # Baz
+      #
       # @api public
       #
       def each

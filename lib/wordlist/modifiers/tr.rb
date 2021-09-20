@@ -34,6 +34,26 @@ module Wordlist
       end
 
       #
+      # Enumerates over every `tr`ed word in the wordlist.
+      #
+      # @yield [word]
+      #   The given block will be passed each `tr`ed word.
+      #
+      # @yieldparam [String] word
+      #   A `tr`ed word.
+      #
+      # @return [Enumerator]
+      #   If no block is given, an Enumerator object will be returned.
+      #
+      # @example
+      #   wordlist = Wordlist::List["foo", "bar", "baz"]
+      #   wordlist.tr("oa", "0@").each do |word|
+      #     puts word
+      #   end
+      #   # f00
+      #   # b@r
+      #   # b@z
+      #
       # @api public
       #
       def each

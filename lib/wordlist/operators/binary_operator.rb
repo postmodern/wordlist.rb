@@ -2,6 +2,9 @@ require 'wordlist/operators/operator'
 
 module Wordlist
   module Operators
+    #
+    # Binary operator base class.
+    #
     class BinaryOperator < Operator
 
       # The left operand.

@@ -3,8 +3,32 @@ require 'wordlist/unique_filter'
 
 module Wordlist
   module Operators
+    #
+    # Lazily enumerates over every word that belongs to both wordlists.
+    #
     class Intersect < BinaryOperator
 
+      #
+      # Enumerates over the intersection between two wordlists.
+      #
+      # @yield [word]
+      #   The given block will be passed each word from the intersection between
+      #   the two wordlists.
+      #
+      # @yieldparam [String] word
+      #   A word that belongs to both wordlists.
+      #
+      # @return [Enumerator]
+      #   If no block is given, an Enumerator object will be returned.
+      #
+      # @example
+      #   wordlist1 = Wordlist::List["foo", "bar", "baz", "qux"]
+      #   wordlist2 = Wordlist::List["xyz", "bar", "abc", "qux"]
+      #   (wordlist1 & wordlist2).each do |word|
+      #     puts word
+      #   end
+      #   # bar
+      #   # qux
       #
       # @api public
       #
