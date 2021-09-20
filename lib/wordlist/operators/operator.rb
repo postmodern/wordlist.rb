@@ -4,6 +4,9 @@ module Wordlist
 
       include Enumerable
 
+      #
+      # @abstract
+      #
       def each(&block)
         raise(NotImplementedError,"#{self.class}#each was not implemented")
       end
