@@ -118,13 +118,13 @@ $ gem install wordlist
 ### gemspec
 
 ```ruby
-gem.add_dependency 'wordlist', '~> 0.1'
+gem.add_dependency 'wordlist', '~> 1.0'
 ```
 
 ### Gemfile
 
 ```ruby
-gem 'wordlist', '~> 0.1'
+gem 'wordlist', '~> 1.0'
 ```
 
 ## License
