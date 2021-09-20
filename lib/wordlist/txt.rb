@@ -22,9 +22,6 @@ module Wordlist
     # @param [String] path
     #   The path to the `.txt` file wordlist read from.
     #
-    # @param [Hash] options
-    #   Additional options.
-    #
     # @api public
     #
     def initialize(path)
