@@ -1,11 +1,8 @@
 name: wordlist
-summary: A Ruby library for generating and working with word-lists.
+summary: Ruby library for reading, manipulating, and creating wordlists.
 description:
-  A Ruby library for generating and working with word-lists. Wordlist
-  allows one to efficiently generate unique word-lists from arbitrary text
-  or other sources, such as website content. Wordlist can also quickly
-  enumerate through words within an existing word-list, applying multiple
-  mutation rules to each word in the list.
+  Wordlist is a Ruby library for reading, manipulating, and creating wordlists,
+  efficiently.
 
 license: MIT
 authors: Postmodern
