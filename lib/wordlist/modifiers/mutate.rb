@@ -3,8 +3,8 @@ require 'wordlist/modifiers/sub'
 module Wordlist
   module Modifiers
     #
-    # Lazily performs every combination of a string substitution on every word
-    # in the wordlist.
+    # Lazily enumerates through every combination of a string substitution
+    # on every word in the wordlist.
     #
     class Mutate < Sub
 

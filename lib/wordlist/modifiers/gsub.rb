@@ -3,7 +3,7 @@ require 'wordlist/modifiers/sub'
 module Wordlist
   module Modifiers
     #
-    # Calls `String#gsub` on every word in the wordlist.
+    # Lazily calls `String#gsub` on every word in the wordlist.
     #
     class Gsub < Sub
 

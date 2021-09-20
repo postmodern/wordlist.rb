@@ -3,9 +3,19 @@ require 'wordlist/modifiers/modifier'
 module Wordlist
   module Modifiers
     #
-    # Calls `String#tr` on every word in the wordlist.
+    # Lazily calls `String#tr` on every word in the wordlist.
     #
     class Tr < Modifier
+
+      # The characters or character range to translate.
+      #
+      # @return [String]
+      attr_reader :chars
+
+      # The characters or character range to translate to.
+      #
+      # @return [String]
+      attr_reader :replace
 
       #
       # Initializes the `String#tr` modifier.

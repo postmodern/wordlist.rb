@@ -1,8 +1,16 @@
 module Wordlist
   module Modifiers
+    #
+    # Modifier base class.
+    #
     class Modifier
 
       include Enumerable
+
+      # The wordlist to modify.
+      #
+      # @return [Enumerable]
+      attr_reader :wordlist
 
       #
       # Initializes the modifier.

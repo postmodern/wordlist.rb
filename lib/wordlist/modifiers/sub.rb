@@ -3,9 +3,24 @@ require 'wordlist/modifiers/modifier'
 module Wordlist
   module Modifiers
     #
-    # Calls `String#sub` on every word in the wordlist.
+    # Lazily calls `String#sub` on every word in the wordlist.
     #
     class Sub < Modifier
+
+      # The pattern to substitute.
+      #
+      # @return [Regexp, String]
+      attr_reader :pattern
+
+      # The replacement String or map of Strings.
+      #
+      # @return [String, Hash{String => String, nil}]
+      attr_reader :replace
+
+      # The optional block to call when replacing matched substrings.
+      #
+      # @return [Proc, nil]
+      attr_reader :block
 
       #
       # Initializes the `String#sub` modifier.

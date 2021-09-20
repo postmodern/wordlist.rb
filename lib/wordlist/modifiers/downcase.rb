@@ -3,7 +3,7 @@ require 'wordlist/modifiers/modifier'
 module Wordlist
   module Modifiers
     #
-    # Calls `String#downcase` on every word in the wordlist.
+    # Lazily calls `String#downcase` on every word in the wordlist.
     #
     class Downcase < Modifier
 

@@ -3,7 +3,7 @@ require 'wordlist/modifiers/modifier'
 module Wordlist
   module Modifiers
     #
-    # Calls `String#capitalize` on every word in the wordlist.
+    # Lazily calls `String#capitalize` on every word in the wordlist.
     #
     class Capitalize < Modifier
 
