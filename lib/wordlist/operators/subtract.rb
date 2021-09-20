@@ -5,6 +5,9 @@ module Wordlist
   module Operators
     class Subtract < BinaryOperator
 
+      #
+      # @api public
+      #
       def each
         return enum_for(__method__) unless block_given?
 

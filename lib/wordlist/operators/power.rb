@@ -29,6 +29,9 @@ module Wordlist
         end
       end
 
+      #
+      # @api public
+      #
       def each(&block)
         @wordlists.each(&block)
       end

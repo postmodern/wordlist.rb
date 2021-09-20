@@ -7,42 +7,63 @@ module Wordlist
     # @group Operators
     #
 
+    #
+    # @api public
+    #
     def concat(other)
       Operators::Concat.new(self,other)
     end
 
     alias + concat
 
+    #
+    # @api public
+    #
     def subtract(other)
       Operators::Subtract.new(self,other)
     end
 
     alias - subtract
 
+    #
+    # @api public
+    #
     def product(other)
       Operators::Product.new(self,other)
     end
 
     alias * product
 
+    #
+    # @api public
+    #
     def power(exponent)
       Operators::Power.new(self,exponent)
     end
 
     alias ** power
 
+    #
+    # @api public
+    #
     def intersect(other)
       Operators::Intersect.new(self,exponent)
     end
 
     alias & intersect
 
+    #
+    # @api public
+    #
     def union(other)
       Operators::Union.new(self,other)
     end
 
     alias | union
 
+    #
+    # @api public
+    #
     def uniq
       Operators::Unique.new(self)
     end
@@ -61,6 +82,8 @@ module Wordlist
     #   The characters or character range to use as the replacement.
     #
     # @return [Tr]
+    #
+    # @api public
     #
     def tr(pattern,replace)
       Modifiers::Tr.new(self,pattern,replace)
@@ -83,6 +106,8 @@ module Wordlist
     #   A matched substring.
     #
     # @return [Sub]
+    #
+    # @api public
     #
     def sub(pattern,replace=nil,&block)
       if replace
@@ -110,6 +135,8 @@ module Wordlist
     #
     # @return [Gsub]
     #
+    # @api public
+    #
     def gsub(pattern,replace=nil,&block)
       if replace
         Modifiers::Gsub.new(self,pattern,replace,&block)
@@ -123,6 +150,8 @@ module Wordlist
     #
     # @return [Capitalize]
     #
+    # @api public
+    #
     def capitalize
       Modifiers::Capitalize.new(self)
     end
@@ -132,6 +161,8 @@ module Wordlist
     #
     # @return [Upcase]
     #
+    # @api public
+    #
     def upcase
       Modifiers::Upcase.new(self)
     end
@@ -140,6 +171,8 @@ module Wordlist
     # Lazily calls `String#downcase` on each word in the wordlist.
     #
     # @return [Downcase]
+    #
+    # @api public
     #
     def downcase
       Modifiers::Downcase.new(self)
@@ -164,6 +197,8 @@ module Wordlist
     #
     # @return [Mutate]
     #
+    # @api public
+    #
     def mutate(pattern,replace=nil,&block)
       if replace
         Modifiers::Mutate.new(self,pattern,replace,&block)
@@ -176,6 +211,8 @@ module Wordlist
     # Lazily enumerates over every uppercase/lowercase variation of the word.
     #
     # @return [EachCase]
+    #
+    # @api public
     #
     def each_case
       MutateCase.new(self)

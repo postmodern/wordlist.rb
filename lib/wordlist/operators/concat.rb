@@ -16,6 +16,8 @@ module Wordlist
       # @return [Enumerator]
       #   If no block is given, an Enumerator object will be returned.
       #
+      # @api public
+      #
       def each(&block)
         return enum_for(__method__) unless block
 

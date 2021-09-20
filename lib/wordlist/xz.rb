@@ -11,6 +11,8 @@ module Wordlist
   #       puts word
   #     end
   #
+  # @api public
+  #
   class XZ < TXT
 
     #

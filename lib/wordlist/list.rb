@@ -6,6 +6,8 @@ module Wordlist
   #
   #     Wordlist::List["foo", "bar", "baz]
   #
+  # @api public
+  #
   class List < AbstractList
 
     # The words in the wordlist.
@@ -19,6 +21,8 @@ module Wordlist
     # @param [Array<String>, Enumerable] words
     #   The words for the wordlist.
     #
+    # @api public
+    #
     def initialize(words=[])
       @words = words
     end
@@ -31,6 +35,8 @@ module Wordlist
     #
     # @example
     #   Wordlist::List["foo", "bar", "baz]
+    #
+    # @api public
     #
     def self.[](*words)
       new(words)
@@ -52,6 +58,8 @@ module Wordlist
     #   list.each do |word|
     #     puts word
     #   end
+    #
+    # @api public
     #
     def each(&block)
       @words.each(&block)

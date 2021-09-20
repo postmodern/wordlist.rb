@@ -7,6 +7,9 @@ module Wordlist
     #
     class Upcase < Modifier
 
+      #
+      # @api public
+      #
       def each
         return enum_for(__method__) unless block_given?
 

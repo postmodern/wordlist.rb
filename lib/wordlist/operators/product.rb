@@ -4,6 +4,9 @@ module Wordlist
   module Operators
     class Product < BinaryOperator
 
+      #
+      # @api public
+      #
       def each
         return enum_for(__method__) unless block_given?
 

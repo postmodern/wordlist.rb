@@ -9,6 +9,8 @@ module Wordlist
   #       puts word
   #     end
   #
+  # @api public
+  #
   class TXT < AbstractList
 
     # The path to the `.txt` file
@@ -22,6 +24,8 @@ module Wordlist
     #
     # @param [Hash] options
     #   Additional options.
+    #
+    # @api public
     #
     def initialize(path)
       @path = File.expand_path(path)
@@ -37,6 +41,8 @@ module Wordlist
     #   The newly opened wordlist.
     #
     # @see #initialize
+    #
+    # @api public
     #
     def self.open(path)
       new(path)
@@ -77,6 +83,8 @@ module Wordlist
     #   wordlist.each do |word|
     #     puts word
     #   end
+    #
+    # @api public
     #
     def each
       return enum_for(__method__) unless block_given?
