@@ -24,10 +24,12 @@ describe Wordlist::TXT do
   end
 
   describe ".open" do
-    it "must call new with the given path" do
-      expect(described_class).to receive(:new).with(path)
+    subject { described_class.open(path) }
 
-      described_class.open(path)
+    it { expect(subject).to be_kind_of(described_class) }
+
+    it "must initialize #path" do
+      expect(subject.path).to eq(path)
     end
   end
 
