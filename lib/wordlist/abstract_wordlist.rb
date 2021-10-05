@@ -1,7 +1,7 @@
 require 'wordlist/list_methods'
 
 module Wordlist
-  class AbstractList
+  class AbstractWordlist
 
     include Enumerable
     include ListMethods

@@ -1,4 +1,4 @@
-require "wordlist/abstract_list"
+require "wordlist/abstract_wordlist"
 
 module Wordlist
   #
@@ -8,7 +8,7 @@ module Wordlist
   #
   # @api public
   #
-  class List < AbstractList
+  class List < AbstractWordlist
 
     # The words in the wordlist.
     #

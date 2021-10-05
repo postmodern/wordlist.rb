@@ -1,6 +1,4 @@
-require 'wordlist/txt'
-
-require 'shellwords'
+require 'wordlist/compressed_wordlist'
 
 module Wordlist
   #
@@ -11,32 +9,15 @@ module Wordlist
   #       puts word
   #     end
   #
+  # @note
+  #   The wordlist is read using the `zcat` utility, which is faster than
+  #   decompressing the file using Ruby.
+  #
   # @api public
   #
-  class GZip < TXT
+  class GZip < CompressedWordlist
 
-    #
-    # Enumerates over each line in the gziped wordlist.
-    #
-    # @yield [line]
-    #   The given block will be passed each line from the gziped wordlist.
-    #
-    # @yieldparam [String] line
-    #   A newline terminated line from the gziped wordlist.
-    #
-    # @note
-    #   The wordlist is read using the `zcat` utility, which is faster than
-    #   decompressing the file using Ruby.
-    #
-    # @api semipublic
-    #
-    def each_line(&block)
-      return enum_for(__method__) unless block
-
-      IO.popen("zcat #{Shellwords.shellescape(path)}") do |io|
-        io.each_line(&block)
-      end
-    end
+    command 'zcat'
 
   end
 end

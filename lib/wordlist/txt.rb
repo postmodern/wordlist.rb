@@ -1,4 +1,4 @@
-require 'wordlist/abstract_list'
+require 'wordlist/abstract_wordlist'
 
 module Wordlist
   #
@@ -11,10 +11,10 @@ module Wordlist
   #
   # @api public
   #
-  class TXT < AbstractList
+  class TXT < AbstractWordlist
 
     # The path to the `.txt` file
-    attr_accessor :path
+    attr_reader :path
 
     #
     # Opens a new `.txt` file wordlist.
