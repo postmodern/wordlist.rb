@@ -7,6 +7,18 @@ describe Wordlist::GZip do
 
   subject { described_class.new(path) }
 
+  describe ".command" do
+    subject { described_class }
+
+    it { expect(subject.command).to eq("zcat") }
+  end
+
+  describe "#command" do
+    it "must return the 'zcat' and the wordlist path" do
+      expect(subject.command).to eq("zcat #{Shellwords.shellescape(path)}")
+    end
+  end
+
   describe "#each_line" do
     let(:expected_lines) { `zcat #{Shellwords.shellescape(path)}`.lines }
 

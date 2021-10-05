@@ -19,7 +19,7 @@ module Wordlist
     def each_line(&block)
       return enum_for(__method__) unless block
 
-      IO.popen(Shellwords.shelljoin([command, path])) do |io|
+      IO.popen(command) do |io|
         io.each_line(&block)
       end
     end
@@ -28,24 +28,34 @@ module Wordlist
     # The command used to read the compressed wordlist.
     #
     # @return [String]
+    #   The command to run.
     #
-    # @abstract
+    # @raise [NotImplementedError]
+    #   The class did not define a {command}.
     #
     # @api private
     #
     def command
-      raise(NotImplementedError,"#{self.class} did not define a command")
+      if (command = self.class.command)
+        Shellwords.shelljoin([command, path])
+      else
+        raise(NotImplementedError,"#{self.class} did not define a command")
+      end
     end
 
     #
     # Defines the command used to read the compressed wordlist.
     #
-    # @param [String] new_command
+    # @param [String, nil] new_command
+    #
+    # @return [String]
     #
     # @api semipublic
     #
-    private def self.command(new_command)
-      define_method(:command) { new_command }
+    def self.command(new_command=nil)
+      if new_command then @command = new_command
+      else                @command
+      end
     end
 
   end
