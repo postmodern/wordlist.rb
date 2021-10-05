@@ -31,6 +31,18 @@ describe Wordlist::TXT do
     end
   end
 
+  let(:expected_words) { File.readlines(path).map(&:chomp) }
+
+  describe ".read" do
+    subject { described_class }
+
+    it "must open the wordlist and enumerate over each word" do
+      expect { |b|
+        subject.read(path,&b)
+      }.to yield_successive_args(*expected_words)
+    end
+  end
+
   describe "#each_line" do
     let(:expected_lines) { File.readlines(path) }
 
@@ -51,8 +63,6 @@ describe Wordlist::TXT do
   end
 
   describe "#each" do
-    let(:expected_words) { File.readlines(path).map(&:chomp) }
-
     it "must yield each word on each line" do
       expect { |b|
         subject.each(&b)

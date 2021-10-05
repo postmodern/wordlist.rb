@@ -46,6 +46,25 @@ module Wordlist
     end
 
     #
+    # Opens and reads the wordlist file.
+    #
+    # @param [String] path
+    #   The path to the `.txt` file wordlist read from.
+    #
+    # @yield [word]
+    #   The given block will be passed every word from the wordlist.
+    #
+    # @yieldparam [String] word
+    #   A word from the wordlist.
+    #
+    # @return [Enumerator]
+    #   If no block is given, an Enumerator object will be returned.
+    #
+    def self.read(path,&block)
+      open(path).each(&block)
+    end
+
+    #
     # Enumerates through each line in the `.txt` file wordlist.
     #
     # @yield [line]
@@ -53,6 +72,9 @@ module Wordlist
     #
     # @yieldparam [String] line
     #   A newline terminated line from the file.
+    #
+    # @return [Enumerator]
+    #   If no block is given, an Enumerator object will be returned.
     #
     # @api semipublic
     #
@@ -72,6 +94,9 @@ module Wordlist
     #
     # @yieldparam [String] word
     #   A word from the wordlist.
+    #
+    # @return [Enumerator]
+    #   If no block is given, an Enumerator object will be returned.
     #
     # @note
     #   Empty lines and lines betweening with `#` characters will be ignored.
