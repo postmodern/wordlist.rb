@@ -4,7 +4,7 @@ module Wordlist
   #
   # An in-memory wordlist of words.
   #
-  #     Wordlist::Words["foo", "bar", "baz]
+  #     Wordlist::Words["foo", "bar", "baz"]
   #
   # @api public
   #
@@ -34,7 +34,7 @@ module Wordlist
     #   The words for the wordlist.
     #
     # @example
-    #   Wordlist::Words["foo", "bar", "baz]
+    #   Wordlist::Words["foo", "bar", "baz"]
     #
     # @api public
     #
