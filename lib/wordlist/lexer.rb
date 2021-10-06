@@ -12,7 +12,7 @@ module Wordlist
     WORD = /[[:alpha:]][[:alnum:]_']+/
 
     # Skips whitespace, digits, punctuation, and symbols.
-    SKIP = /[^[:alpha]]+/
+    SKIP = /[^[:alpha:]]+/
 
     # The regexp for a word.
     #
