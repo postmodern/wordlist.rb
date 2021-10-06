@@ -88,21 +88,6 @@ module Wordlist
     end
 
     #
-    # Opens the wordlist for reading.
-    #
-    # @yield [io]
-    #
-    # @yieldparam [IO] io
-    #
-    def open(&block)
-      if @format == :txt
-        File.open(@path,&block)
-      else
-        Compression::Reader.open(@path, format: @format, &block)
-      end
-    end
-
-    #
     # Enumerates through each line in the `.txt` file wordlist.
     #
     # @yield [line]
@@ -153,6 +138,23 @@ module Wordlist
         unless (line.empty? || line.start_with?('#'))
           yield line
         end
+      end
+    end
+
+    private
+
+    #
+    # Opens the wordlist for reading.
+    #
+    # @yield [io]
+    #
+    # @yieldparam [IO] io
+    #
+    def open(&block)
+      if @format == :txt
+        File.open(@path,&block)
+      else
+        Compression::Reader.open(@path, format: @format, &block)
       end
     end
 
