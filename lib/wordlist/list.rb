@@ -1,68 +1,159 @@
-require "wordlist/abstract_wordlist"
+require 'wordlist/abstract_wordlist'
+require 'wordlist/format'
+require 'wordlist/compression/reader'
 
 module Wordlist
   #
-  # An in-memory wordlist of words.
+  # Represents a `.txt` file wordlist.
   #
-  #     Wordlist::List["foo", "bar", "baz]
+  #     wordlist = Wordlist::TXT.new("rockyou.txt")
+  #     wordlist.each do |word|
+  #       puts word
+  #     end
   #
   # @api public
   #
   class List < AbstractWordlist
 
-    # The words in the wordlist.
+    # The path to the `.txt` file
+    attr_reader :path
+
+    # The format of the wordlist file.
     #
-    # @return [Array<String>, Enumerable]
-    attr_reader :words
+    # @return [:txt, :gzip, :bzip2, :xz]
+    attr_reader :format
 
     #
-    # Creates a new wordlist object.
+    # Opens a wordlist file.
     #
-    # @param [Array<String>, Enumerable] words
-    #   The words for the wordlist.
+    # @param [String] path
+    #   The path to the `.txt` file wordlist read from.
+    #
+    # @param [:txt, :gz, :bzip2, :xz, nil] format
+    #   The format of the wordlist. If not given the format will be inferred
+    #   from the file extension.
+    #
+    # @raise [ArgumentError]
+    #   The format could not be inferred from the file extension.
     #
     # @api public
     #
-    def initialize(words=[])
-      @words = words
+    def initialize(path, format: Format.infer(path))
+      @path   = File.expand_path(path)
+      @format = format
     end
 
     #
-    # Creates a new wordlist from the given words.
+    # Opens a wordlist file.
     #
-    # @param [Array<String>] words
-    #   The words for the wordlist.
+    # @param [String] path
+    #   The path to the `.txt` file wordlist read from.
     #
-    # @example
-    #   Wordlist::List["foo", "bar", "baz]
+    # @yield [wordlist]
+    #   If a block is given, it will be passed the opened wordlist.
+    #
+    # @yieldparam [List] wordlist
+    #   The newly opened wordlist.
+    #
+    # @return [List]
+    #   The newly opened wordlist.
+    #
+    # @see #initialize
     #
     # @api public
     #
-    def self.[](*words)
-      new(words)
+    def self.open(path,**kwargs)
+      wordlist = new(path,**kwargs)
+      yield wordlist if block_given?
+      return wordlist
     end
 
     #
-    # Enumerate through every word in the in-memory wordlist.
+    # Opens and reads the wordlist file.
+    #
+    # @param [String] path
+    #   The path to the `.txt` file wordlist read from.
     #
     # @yield [word]
-    #   The given block will be passed each word in the list.
+    #   The given block will be passed every word from the wordlist.
     #
     # @yieldparam [String] word
-    #   A word from the in-memory wordlist.
+    #   A word from the wordlist.
     #
     # @return [Enumerator]
-    #   If no block is given, then an `Enumerator` object will be returned.
+    #   If no block is given, an Enumerator object will be returned.
+    #
+    def self.read(path,**kwargs,&block)
+      open(path,**kwargs).each(&block)
+    end
+
+    #
+    # Opens the wordlist for reading.
+    #
+    # @yield [io]
+    #
+    # @yieldparam [IO] io
+    #
+    def open(&block)
+      if @format == :txt
+        File.open(@path,&block)
+      else
+        Compression::Reader.open(@path, format: @format, &block)
+      end
+    end
+
+    #
+    # Enumerates through each line in the `.txt` file wordlist.
+    #
+    # @yield [line]
+    #   The given block will be passed each line from the `.txt` file.
+    #
+    # @yieldparam [String] line
+    #   A newline terminated line from the file.
+    #
+    # @return [Enumerator]
+    #   If no block is given, an Enumerator object will be returned.
+    #
+    # @api semipublic
+    #
+    def each_line(&block)
+      return enum_for(__method__) unless block
+
+      open { |io| io.each_line(&block) }
+    end
+
+    #
+    # Enumerates through every word in the `.txt` file.
+    #
+    # @yield [word]
+    #   The given block will be passed every word from the wordlist.
+    #
+    # @yieldparam [String] word
+    #   A word from the wordlist.
+    #
+    # @return [Enumerator]
+    #   If no block is given, an Enumerator object will be returned.
+    #
+    # @note
+    #   Empty lines and lines betweening with `#` characters will be ignored.
     #
     # @example
-    #   list.each do |word|
+    #   wordlist.each do |word|
     #     puts word
     #   end
     #
     # @api public
     #
-    def each(&block)
-      @words.each(&block)
+    def each
+      return enum_for(__method__) unless block_given?
+
+      each_line do |line|
+        line.chomp!
+
+        unless (line.empty? || line.start_with?('#'))
+          yield line
+        end
+      end
     end
 
   end

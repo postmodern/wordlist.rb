@@ -1,7 +1,7 @@
 require 'spec_helper'
-require 'wordlist/abstract_list'
+require 'wordlist/abstract_wordlist'
 
-describe Wordlist::AbstractList do
+describe Wordlist::AbstractWordlist do
   it do
     expect(described_class).to include(Enumerable)
   end

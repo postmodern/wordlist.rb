@@ -2,39 +2,236 @@ require 'spec_helper'
 require 'wordlist/list'
 
 describe Wordlist::List do
-  let(:words) { %w[foo bar baz] }
+  let(:fixtures_dir) { File.join(__dir__,'fixtures') }
+  let(:path) { File.join(fixtures_dir,'wordlist.txt') }
 
-  subject { described_class.new(words) }
+  subject { described_class.new(path) }
 
   describe "#initialize" do
-    it "must set #words" do
-      expect(subject.words).to eq(words)
+    it "must set #path" do
+      expect(subject.path).to eq(path)
+    end
+
+    context "when given a relative path" do
+      let(:relative_path) { "../fixtures/wordlist.txt" }
+      
+      subject { described_class.new(relative_path) }
+
+      it "must expand the given path" do
+        expect(subject.path).to eq(File.expand_path(relative_path))
+      end
+    end
+
+    context "when format: is not given" do
+      context "and the path ends in .txt" do
+        let(:path) { File.join(fixtures_dir,'wordlist.txt') }
+
+        it "must set #format to :txt" do
+          expect(subject.format).to eq(:txt)
+        end
+      end
+
+      context "and the path ends in .gz" do
+        let(:path) { File.join(fixtures_dir,'wordlist.gz') }
+
+        it "must set #format to :gzip" do
+          expect(subject.format).to eq(:gzip)
+        end
+      end
+
+      context "and the path ends in .bz2" do
+        let(:path) { File.join(fixtures_dir,'wordlist.bz2') }
+
+        it "must set #format to :bzip2" do
+          expect(subject.format).to eq(:bzip2)
+        end
+      end
+
+      context "and the path ends in .xz" do
+        let(:path) { File.join(fixtures_dir,'wordlist.xz') }
+
+        it "must set #format to :xz" do
+          expect(subject.format).to eq(:xz)
+        end
+      end
+    end
+
+    context "when format: is given" do
+      let(:format) { :gzip }
+
+      subject { described_class.new(path, format: format) }
+
+      it "must set #format" do
+        expect(subject.format).to eq(format)
+      end
     end
   end
 
-  describe ".[]" do
-    subject { described_class[*words] }
+  describe ".open" do
+    subject { described_class.open(path) }
 
-    it "must return a new #{described_class}" do
-      expect(subject).to be_kind_of(described_class)
+    it { expect(subject).to be_kind_of(described_class) }
+
+    it "must initialize #path" do
+      expect(subject.path).to eq(path)
+    end
+  end
+
+  let(:expected_contents) { File.read(path) }
+  let(:expected_lines)    { expected_contents.lines }
+  let(:expected_words)    { expected_lines.map(&:chomp) }
+
+  describe ".read" do
+    subject { described_class }
+
+    it "must open the wordlist and enumerate over each word" do
+      expect { |b|
+        subject.read(path,&b)
+      }.to yield_successive_args(*expected_words)
+    end
+  end
+
+  describe "#each_line" do
+    context "when given a block" do
+      it "must yield each read line of the file" do
+        expect { |b|
+          subject.each_line(&b)
+        }.to yield_successive_args(*expected_lines)
+      end
+
+      context "and the wordlist format is gzip" do
+        let(:path) { File.join(fixtures_dir,'wordlist.txt.gz') }
+        let(:expected_contents) { `zcat #{Shellwords.shellescape(path)}` }
+
+        it "must read the uncompressed gzip data" do
+          expect { |b|
+            subject.each_line(&b)
+          }.to yield_successive_args(*expected_lines)
+        end
+      end
+
+      context "and the wordlist format is bzip2" do
+        let(:path) { File.join(fixtures_dir,'wordlist.txt.bz2') }
+        let(:expected_contents) { `bzcat #{Shellwords.shellescape(path)}` }
+
+        it "must read the uncompressed gzip data" do
+          expect { |b|
+            subject.each_line(&b)
+          }.to yield_successive_args(*expected_lines)
+        end
+      end
+
+      context "and the wordlist format is xz" do
+        let(:path) { File.join(fixtures_dir,'wordlist.txt.xz') }
+        let(:expected_contents) { `xzcat #{Shellwords.shellescape(path)}` }
+
+        it "must read the uncompressed gzip data" do
+          expect { |b|
+            subject.each_line(&b)
+          }.to yield_successive_args(*expected_lines)
+        end
+      end
     end
 
-    it "must initialize the wordlist with the given words" do
-      expect(subject.words).to eq(words)
+    context "when not given a block" do
+      it "must return an Enumerator" do
+        expect(subject.each_line).to be_kind_of(Enumerator)
+        expect(subject.each_line.to_a).to eq(expected_lines)
+      end
+
+      context "and the wordlist format is gzip" do
+        let(:path) { File.join(fixtures_dir,'wordlist.txt.gz') }
+        let(:expected_contents) { `zcat #{Shellwords.shellescape(path)}` }
+
+        it "must return an Enumerator of the uncompressed gzip data" do
+          expect(subject.each_line).to be_kind_of(Enumerator)
+          expect(subject.each_line.to_a).to eq(expected_lines)
+        end
+      end
+
+      context "and the wordlist format is bzip2" do
+        let(:path) { File.join(fixtures_dir,'wordlist.txt.bz2') }
+        let(:expected_contents) { `bzcat #{Shellwords.shellescape(path)}` }
+
+        it "must return an Enumerator of the compressed gzip data" do
+          expect(subject.each_line).to be_kind_of(Enumerator)
+          expect(subject.each_line.to_a).to eq(expected_lines)
+        end
+      end
+
+      context "and the wordlist format is xz" do
+        let(:path) { File.join(fixtures_dir,'wordlist.txt.xz') }
+        let(:expected_contents) { `xzcat #{Shellwords.shellescape(path)}` }
+
+        it "must return an Enumerator of the compressed gzip data" do
+          expect(subject.each_line).to be_kind_of(Enumerator)
+          expect(subject.each_line.to_a).to eq(expected_lines)
+        end
+      end
     end
   end
 
   describe "#each" do
-    context "when a block is given" do
-      it "must yield each word" do
-        expect { |b| subject.each(&b) }.to yield_successive_args(*words)
+    it "must yield each word on each line" do
+      expect { |b|
+        subject.each(&b)
+      }.to yield_successive_args(*expected_words)
+    end
+
+    context "and the wordlist format is gzip" do
+      let(:path) { File.join(fixtures_dir,'wordlist.txt.gz') }
+      let(:expected_contents) { `zcat #{Shellwords.shellescape(path)}` }
+
+      it "must read the uncompressed gzip data" do
+        expect { |b|
+          subject.each_line(&b)
+        }.to yield_successive_args(*expected_lines)
       end
     end
 
-    context "when no block is given" do
-      it "must return an Enumerator for the words" do
-        expect(subject.each).to be_kind_of(Enumerator)
-        expect(subject.each.to_a).to eq(words)
+    context "and the wordlist format is bzip2" do
+      let(:path) { File.join(fixtures_dir,'wordlist.txt.bz2') }
+      let(:expected_contents) { `bzcat #{Shellwords.shellescape(path)}` }
+
+      it "must read the uncompressed gzip data" do
+        expect { |b|
+          subject.each_line(&b)
+        }.to yield_successive_args(*expected_lines)
+      end
+    end
+
+    context "and the wordlist format is xz" do
+      let(:path) { File.join(fixtures_dir,'wordlist.txt.xz') }
+      let(:expected_contents) { `xzcat #{Shellwords.shellescape(path)}` }
+
+      it "must read the uncompressed gzip data" do
+        expect { |b|
+          subject.each_line(&b)
+        }.to yield_successive_args(*expected_lines)
+      end
+    end
+
+    context "when the wordlist contains empty lines" do
+      let(:expected_words) do
+        super().reject { |w| w.empty? }
+      end
+
+      it "must omit empty lines" do
+        expect { |b|
+          subject.each(&b)
+        }.to yield_successive_args(*expected_words)
+      end
+    end
+
+    context "when the wordlist contains comment lines" do
+      let(:expected_words) do
+        super().reject { |w| w.start_with?('#') }
+      end
+
+      it "must omit lines beginning with a '#'" do
+        expect { |b|
+          subject.each(&b)
+        }.to yield_successive_args(*expected_words)
       end
     end
   end
