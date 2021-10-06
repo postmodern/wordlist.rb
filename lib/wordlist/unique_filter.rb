@@ -1,6 +1,9 @@
 require 'set'
 
 module Wordlist
+  #
+  # Acts as a filter to filter out duplicate words.
+  #
   class UniqueFilter
 
     # The seen String hashes
@@ -32,6 +35,7 @@ module Wordlist
     # Adds the word to the unique filter.
     #
     # @param [String] word
+    #   The word to add.
     #
     def add(word)
       @hashes.add(word.hash)
@@ -39,10 +43,25 @@ module Wordlist
 
     alias << add
 
+    #
+    # Attempts to add the word to the unique filter.
+    #
+    # @param [String] word
+    #   The word to add.
+    #
+    # @return [Boolean]
+    #   Returns `true` if the word does not yet exist in the unique filter.
+    #   Returns `false` if the word already exists in the unique filter.
+    #
     def add?(word)
       !@hashes.add?(word.hash).nil?
     end
 
+    #
+    # Determines if the unique filter is empty or not.
+    #
+    # @return [Boolean]
+    #
     def empty?
       @hashes.empty?
     end
