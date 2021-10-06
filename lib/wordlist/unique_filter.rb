@@ -43,5 +43,9 @@ module Wordlist
       !@hashes.add?(word.hash).nil?
     end
 
+    def empty?
+      @hashes.empty?
+    end
+
   end
 end
