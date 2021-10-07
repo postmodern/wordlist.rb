@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'wordlist/unique_filter'
 
-describe UniqueFilter do
+describe Wordlist::UniqueFilter do
   describe "#initialize" do
     it "must initialize #hashes to an empty Set" do
       expect(subject.hashes).to be_kind_of(Set)
