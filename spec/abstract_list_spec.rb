@@ -7,7 +7,7 @@ describe Wordlist::AbstractWordlist do
   end
 
   it do
-    expect(described_class).to include(Wordlist::Operators)
+    expect(described_class).to include(Wordlist::ListMethods)
   end
 
   describe "#each" do
