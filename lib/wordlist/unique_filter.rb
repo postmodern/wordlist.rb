@@ -66,5 +66,12 @@ module Wordlist
       @hashes.empty?
     end
 
+    #
+    # Clears the unique filter.
+    #
+    def clear
+      @hashes.clear
+    end
+
   end
 end
