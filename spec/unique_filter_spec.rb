@@ -10,34 +10,34 @@ describe Wordlist::UniqueFilter do
   end
 
   describe "#add" do
-    let(:string) { "foo" }
+    let(:word) { "foo" }
 
-    before { subject.add(string) }
+    before { subject.add(word) }
 
     it "must add the String's hash to #hashes" do
-      expect(subject.hashes.include?(string.hash)).to be(true)
+      expect(subject.hashes.include?(word.hash)).to be(true)
     end
 
-    context "when the same string is added twice" do
+    context "when the same word is added twice" do
       before do
-        subject.add(string)
-        subject.add(string)
+        subject.add(word)
+        subject.add(word)
       end
 
       it "must add the String's hash to #hashes only once" do
-        expect(subject.hashes).to eq(Set[string.hash])
+        expect(subject.hashes).to eq(Set[word.hash])
       end
     end
   end
 
   describe "#include?" do
-    let(:string) { "foo" }
+    let(:word) { "foo" }
 
-    before { subject.add(string) }
+    before { subject.add(word) }
 
     context "when the unique filter contains the String's hash" do
       it "must return true" do
-        expect(subject.include?(string)).to be(true)
+        expect(subject.include?(word)).to be(true)
       end
     end
 
@@ -49,21 +49,21 @@ describe Wordlist::UniqueFilter do
   end
 
   describe "#add?" do
-    let(:string) { "foo" }
+    let(:word) { "foo" }
 
-    before { subject.add(string) }
+    before { subject.add(word) }
 
     context "when the unique filter contains the String's hash" do
       it "must return nil" do
-        expect(subject.add?(string)).to be(false)
+        expect(subject.add?(word)).to be(false)
       end
     end
 
     context "when the unqiue filter does not contain the String's hash" do
-      let(:new_string) { "bar" }
+      let(:new_word) { "bar" }
 
       it "must return nil" do
-        expect(subject.add?(new_string)).to be(true)
+        expect(subject.add?(new_word)).to be(true)
       end
     end
   end
