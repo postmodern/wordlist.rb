@@ -67,4 +67,38 @@ describe Wordlist::UniqueFilter do
       end
     end
   end
+
+  describe "#empty?" do
+    context "when no words have been added to the unique filter" do
+      it "must return true" do
+        expect(subject.empty?).to be(true)
+      end
+    end
+
+    context "when words have been added to the unique filter" do
+      let(:word) { 'foo' }
+
+      before { subject.add(word) }
+
+      it "must return false" do
+        expect(subject.empty?).to be(false)
+      end
+    end
+  end
+
+  describe "#clear" do
+    let(:word1) { 'foo' }
+    let(:word2) { 'bar' }
+
+    before do
+      subject.add(word1)
+      subject.clear
+      subject.add(word2)
+    end
+
+    it "must clear the unique filter of any words" do
+      expect(subject.include?(word1)).to be(false)
+      expect(subject.include?(word2)).to be(true)
+    end
+  end
 end
