@@ -117,5 +117,21 @@ describe Wordlist::Compression::Reader do
         end
       end
     end
+
+    context "when the command is not installed" do
+      let(:format)  { :gzip  }
+      let(:command) { Shellwords.shelljoin(['zcat', path]) }
+      let(:path)    { 'path/to/wordlist.gz' }
+
+      before do
+        expect(IO).to receive(:popen).with(command).and_raise(Errno::ENOENT)
+      end
+
+      it do
+        expect {
+          described_class.open(path, format: format)
+        }.to raise_error(Wordlist::CommandNotFound,"No such file or directory - #{command.inspect} command not found")
+      end
+    end
   end
 end

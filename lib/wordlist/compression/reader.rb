@@ -1,3 +1,5 @@
+require 'wordlist/exceptions'
+
 require 'shellwords'
 
 module Wordlist
@@ -48,8 +50,17 @@ module Wordlist
       # @raise [ArgumentError]
       #   The given format was not `:gzip`, `:bzip2`, or `:xz`.
       #
+      # @raise [CommandNotFound]
+      #   The `zcat,` `bzcat`, or `xzcat` command could not be found.
+      #
       def self.open(path,**kwargs,&block)
-        IO.popen(command(path,**kwargs),&block)
+        command = self.command(path,**kwargs)
+
+        begin
+          IO.popen(command,&block)
+        rescue Errno::ENOENT
+          raise(CommandNotFound,"#{command.inspect} command not found")
+        end
       end
     end
   end

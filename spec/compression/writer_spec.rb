@@ -172,5 +172,23 @@ describe Wordlist::Compression::Writer do
 
       after { FileUtils.rm_f(path) }
     end
+
+    context "when the command is not installed" do
+      let(:format)  { :gzip  }
+      let(:command) { "gzip > #{Shellwords.shellescape(path)}" }
+      let(:path)    { File.join(fixtures_dir,'new_wordlist.txt.gz') }
+
+      before do
+        expect(IO).to receive(:popen).with(command,'w').and_raise(Errno::ENOENT)
+      end
+
+      it do
+        expect {
+          described_class.open(path, format: format)
+        }.to raise_error(Wordlist::CommandNotFound,"No such file or directory - #{command.inspect} command not found")
+      end
+
+      after { FileUtils.rm_f(path) }
+    end
   end
 end

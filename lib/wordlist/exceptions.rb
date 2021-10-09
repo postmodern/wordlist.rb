@@ -4,4 +4,7 @@ module Wordlist
 
   class UnknownFormat < ArgumentError
   end
+
+  class CommandNotFound < Errno::ENOENT
+  end
 end
