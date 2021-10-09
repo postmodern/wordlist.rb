@@ -337,7 +337,7 @@ module Wordlist
     #
     def print_backtrace(exception)
       $stderr.puts "Oops! Looks like you've found a bug!"
-      $stderr.puts "Please report the following to: #{BUG_REPORT_URL}"
+      $stderr.puts "Please report the following text to: #{BUG_REPORT_URL}"
       $stderr.puts
       $stderr.puts "```"
       $stderr.puts "#{exception.full_message}"
