@@ -7,10 +7,13 @@ require 'optparse'
 module Wordlist
   class CLI
 
+    # The program name.
     PROGRAM_NAME = "wordlist"
 
+    # The URL to report bugs to.
     BUG_REPORT_URL = "https://github.com/postmodern/wordlist.rb/issues/new"
 
+    # Mapping of `--format` option values and `format:` Symbols.
     FORMATS = {
       'txt'  => :txt,
       'gzip' => :gzip,
