@@ -133,10 +133,15 @@ module Wordlist
     #   Additional command-line arguments.
     #
     def build_mode(argv)
-      builder = if @format
-                  Builder.open(@output, format: @format)
-                else
-                  Builder.open(@output)
+      builder = begin
+                  if @format
+                    Builder.open(@output, format: @format)
+                  else
+                    Builder.open(@output)
+                  end
+                rescue UnknownFormat, CommandNotFound => error
+                  print_error(error.message)
+                  exit -1
                 end
 
       begin
@@ -152,9 +157,6 @@ module Wordlist
       ensure
         builder.close
       end
-    rescue UnknownFormat, CommandNotFound => error
-      print_error(error.message)
-      exit -1
     end
 
     #
