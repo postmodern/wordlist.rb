@@ -33,7 +33,7 @@ describe Wordlist::Format do
       it do
         expect {
           subject.infer(path)
-        }.to raise_error(ArgumentError,"could not infer the format of file: #{path.inspect}")
+        }.to raise_error(Wordlist::UnknownFormat,"could not infer the format of file: #{path.inspect}")
       end
     end
   end

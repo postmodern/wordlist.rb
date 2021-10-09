@@ -1,3 +1,5 @@
+require 'wordlist/exceptions'
+
 module Wordlist
   module Format
     # Mapping of file extensions to formats
@@ -8,6 +10,9 @@ module Wordlist
       '.xz'  => :xz
     }
 
+    # Valid formats.
+    FORMATS = FILE_FORMATS.values
+
     #
     # Infers the format from the given file name.
     #
@@ -16,9 +21,12 @@ module Wordlist
     #
     # @return [:txt, :gzip, :bzip2, :xz]
     #
+    # @raise [UnknownFormat]
+    #   The format could not be inferred from the file path.
+    #
     def self.infer(path)
       FILE_FORMATS.fetch(File.extname(path)) do
-        raise(ArgumentError,"could not infer the format of file: #{path.inspect}")
+        raise(UnknownFormat,"could not infer the format of file: #{path.inspect}")
       end
     end
   end

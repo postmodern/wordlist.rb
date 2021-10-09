@@ -74,6 +74,16 @@ describe Wordlist::List do
       it "must set #format" do
         expect(subject.format).to eq(format)
       end
+
+      context "but it's an unknown format" do
+        let(:format) { :foo }
+
+        it do
+          expect {
+            described_class.new(path, format: format)
+          }.to raise_error(Wordlist::UnknownFormat,"unknown format given: #{format.inspect}")
+        end
+      end
     end
   end
 

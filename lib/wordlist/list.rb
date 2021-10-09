@@ -34,11 +34,11 @@ module Wordlist
     #   The format of the wordlist. If not given the format will be inferred
     #   from the file extension.
     #
-    # @raise [ArgumentError]
-    #   The format could not be inferred from the file extension.
-    #
     # @raise [WordlistNotFound]
     #   The given path does not exist.
+    #
+    # @raise [UnknownFormat]
+    #   The format could not be inferred from the file extension.
     #
     # @api public
     #
@@ -48,6 +48,10 @@ module Wordlist
 
       unless File.file?(@path)
         raise(WordlistNotFound,"wordlist file does not exist: #{@path.inspect}")
+      end
+
+      unless Format::FORMATS.include?(@format)
+        raise(UnknownFormat,"unknown format given: #{@format.inspect}")
       end
     end
 
