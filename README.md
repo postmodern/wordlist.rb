@@ -46,7 +46,7 @@ end
 Create an in-memory list of literal words:
 
 ```ruby
-words = Wordlist::List["foo", "bar", "baz"]
+words = Wordlist::Words["foo", "bar", "baz"]
 ```
 
 ### List Operations
