@@ -28,12 +28,12 @@ module Wordlist
       # @return [String]
       #   The shellescaped command string.
       #
-      # @raise [ArgumentError]
+      # @raise [UnknownFormat]
       #   The given format was not `:gzip`, `:bzip2`, or `:xz`.
       #
       def self.command(path, format: , append: false)
         command  = COMMANDS.fetch(format) do
-          raise(ArgumentError,"unsupported format: #{format.inspect}")
+          raise(UnknownFormat,"unsupported format: #{format.inspect}")
         end
 
         redirect = if append then '>>'
