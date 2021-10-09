@@ -12,8 +12,18 @@ describe Wordlist::List do
       expect(subject.path).to eq(path)
     end
 
+    context "when initialized with non-existant path" do
+      let(:path) { '/does/not/exist.txt' }
+
+      it do
+        expect {
+          described_class.new(path)
+        }.to raise_error(Wordlist::WordlistNotFound,"No such file or directory - wordlist file does not exist: #{path.inspect}")
+      end
+    end
+
     context "when given a relative path" do
-      let(:relative_path) { "../fixtures/wordlist.txt" }
+      let(:relative_path) { File.join(__FILE__,"../fixtures/wordlist.txt") }
       
       subject { described_class.new(relative_path) }
 
@@ -32,7 +42,7 @@ describe Wordlist::List do
       end
 
       context "and the path ends in .gz" do
-        let(:path) { File.join(fixtures_dir,'wordlist.gz') }
+        let(:path) { File.join(fixtures_dir,'wordlist.txt.gz') }
 
         it "must set #format to :gzip" do
           expect(subject.format).to eq(:gzip)
@@ -40,7 +50,7 @@ describe Wordlist::List do
       end
 
       context "and the path ends in .bz2" do
-        let(:path) { File.join(fixtures_dir,'wordlist.bz2') }
+        let(:path) { File.join(fixtures_dir,'wordlist.txt.bz2') }
 
         it "must set #format to :bzip2" do
           expect(subject.format).to eq(:bzip2)
@@ -48,7 +58,7 @@ describe Wordlist::List do
       end
 
       context "and the path ends in .xz" do
-        let(:path) { File.join(fixtures_dir,'wordlist.xz') }
+        let(:path) { File.join(fixtures_dir,'wordlist.txt.xz') }
 
         it "must set #format to :xz" do
           expect(subject.format).to eq(:xz)

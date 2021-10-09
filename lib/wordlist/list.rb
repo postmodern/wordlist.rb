@@ -1,4 +1,5 @@
 require 'wordlist/abstract_wordlist'
+require 'wordlist/exceptions'
 require 'wordlist/format'
 require 'wordlist/compression/reader'
 
@@ -36,11 +37,18 @@ module Wordlist
     # @raise [ArgumentError]
     #   The format could not be inferred from the file extension.
     #
+    # @raise [WordlistNotFound]
+    #   The given path does not exist.
+    #
     # @api public
     #
     def initialize(path, format: Format.infer(path))
       @path   = File.expand_path(path)
       @format = format
+
+      unless File.file?(@path)
+        raise(WordlistNotFound,"wordlist file does not exist: #{@path.inspect}")
+      end
     end
 
     #
