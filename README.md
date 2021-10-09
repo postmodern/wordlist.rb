@@ -165,6 +165,38 @@ wordlist.mutate_case.each do |word|
 end
 ```
 
+### Building a Wordlist
+
+```ruby
+Wordlist::Builder.open('path/to/file.txt.gz') do |builder|
+  # ...
+end
+```
+
+Add individual words:
+
+```ruby
+builder.add(word)
+```
+
+Adding an Array of words:
+
+```ruby
+builder.append(words)
+```
+
+Parsing text:
+
+```ruby
+builder.parse(text)
+```
+
+Parsing a file's content:
+
+```ruby
+builder.parse_file(path)
+```
+
 ## Install
 
 ```shell
