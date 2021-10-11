@@ -169,6 +169,12 @@ module Wordlist
     #   Additional command-line arguments.
     #
     def read_mode(argv)
+      unless argv.length >= 1
+        print_error "too few arguments given, requires at least one WORDLIST argument"
+        print_error "usage: #{PROGRAM_NAME} [options] WORDLIST ..."
+        exit -1
+      end
+
       # open the first wodlist
       wordlist = open_wordlist(argv.first)
 
