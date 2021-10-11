@@ -215,6 +215,56 @@ gem.add_dependency 'wordlist', '~> 1.0'
 gem 'wordlist', '~> 1.0'
 ```
 
+### Synopsis
+
+Reading a wordlist:
+
+```shell
+$ wordlist rockyou.txt.gz
+```
+
+Reading multiple wordlists:
+
+```shell
+$ wordlist sport_teams.txt beers.txt
+```
+
+Combining every word from one wordlist with another:
+
+```shell
+$ wordlist sport_teams.txt -p beers.txt -p all_four_digits.txt
+```
+
+Combining every word from one wordlist with itself, N times:
+
+```shell
+$ wordlist shakespeare.txt -P 3
+```
+
+Mutating every word in a wordlist:
+
+```shell
+$ wordlist passwords.txt -m o:0 -m e:3 -m a:@
+```
+
+Executing a command on each word in the wordlist:
+
+```shell
+$ wordlist directories.txt --exec "curl -X POST -F 'user=joe&password={}' -o /dev/null -w '%{http_code} {}' https://$TARGET/login"
+```
+
+Building a wordlist from a directory of `.txt` files:
+
+```shell
+$ wordlist --build wordlist.txt dir/*.txt
+```
+
+Building a wordlist from STDIN:
+
+```shell
+$ cat *.txt | wordlist --build wordlist.txt
+```
+
 ## License
 
 Copyright (c) 2009-2021 Hal Brodigan
