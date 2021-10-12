@@ -91,12 +91,12 @@ describe Wordlist::Compression::Writer do
   end
 
   describe ".open" do
-    let(:fixtures_dir) { File.join(__dir__,'..','fixtures') }
+    let(:fixtures_dir) { ::File.join(__dir__,'..','fixtures') }
 
     let(:words) { %w[foo bar] }
 
     context "when given format: :gzip" do
-      let(:path) { File.join(fixtures_dir,'new_wordlist.txt.gz') }
+      let(:path) { ::File.join(fixtures_dir,'new_wordlist.txt.gz') }
 
       subject { described_class.open(path, format: :gzip) }
 
@@ -118,11 +118,11 @@ describe Wordlist::Compression::Writer do
         end
       end
 
-      after { FileUtils.rm_f(path) }
+      after { ::FileUtils.rm_f(path) }
     end
 
     context "when given format: :bzip2" do
-      let(:path) { File.join(fixtures_dir,'new_wordlist.txt.bz2') }
+      let(:path) { ::File.join(fixtures_dir,'new_wordlist.txt.bz2') }
 
       subject { described_class.open(path, format: :bzip2) }
 
@@ -144,11 +144,11 @@ describe Wordlist::Compression::Writer do
         end
       end
 
-      after { FileUtils.rm_f(path) }
+      after { ::FileUtils.rm_f(path) }
     end
 
     context "when given format: :xz" do
-      let(:path) { File.join(fixtures_dir,'new_wordlist.txt.xz') }
+      let(:path) { ::File.join(fixtures_dir,'new_wordlist.txt.xz') }
 
       subject { described_class.open(path, format: :xz) }
 
@@ -170,13 +170,13 @@ describe Wordlist::Compression::Writer do
         end
       end
 
-      after { FileUtils.rm_f(path) }
+      after { ::FileUtils.rm_f(path) }
     end
 
     context "when the command is not installed" do
       let(:format)  { :gzip  }
       let(:command) { "gzip > #{Shellwords.shellescape(path)}" }
-      let(:path)    { File.join(fixtures_dir,'new_wordlist.txt.gz') }
+      let(:path)    { ::File.join(fixtures_dir,'new_wordlist.txt.gz') }
 
       before do
         expect(IO).to receive(:popen).with(command,'w').and_raise(Errno::ENOENT)
@@ -188,7 +188,7 @@ describe Wordlist::Compression::Writer do
         }.to raise_error(Wordlist::CommandNotFound,"No such file or directory - #{command.inspect} command not found")
       end
 
-      after { FileUtils.rm_f(path) }
+      after { ::FileUtils.rm_f(path) }
     end
   end
 end

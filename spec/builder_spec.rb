@@ -4,8 +4,8 @@ require 'wordlist/builder'
 require 'fileutils'
 
 describe Wordlist::Builder do
-  let(:fixtures_dir) { File.join(__dir__,'fixtures') }
-  let(:path)         { File.join(fixtures_dir,'new_wordlis.txt') }
+  let(:fixtures_dir) { ::File.join(__dir__,'fixtures') }
+  let(:path)         { ::File.join(fixtures_dir,'new_wordlis.txt') }
 
   subject { described_class.new(path) }
 
@@ -15,7 +15,7 @@ describe Wordlist::Builder do
     end
 
     context "when the path ends in '.txt'" do
-      let(:path) { File.join(fixtures_dir,'new_wordlis.txt') }
+      let(:path) { ::File.join(fixtures_dir,'new_wordlis.txt') }
 
       it "must default #format to :txt" do
         expect(subject.format).to eq(:txt)
@@ -23,7 +23,7 @@ describe Wordlist::Builder do
     end
 
     context "when the path ends in '.gz'" do
-      let(:path) { File.join(fixtures_dir,'new_wordlis.gz') }
+      let(:path) { ::File.join(fixtures_dir,'new_wordlis.gz') }
 
       it "must default #format to :gzip" do
         expect(subject.format).to eq(:gzip)
@@ -31,7 +31,7 @@ describe Wordlist::Builder do
     end
 
     context "when the path ends in '.bz2'" do
-      let(:path) { File.join(fixtures_dir,'new_wordlis.bz2') }
+      let(:path) { ::File.join(fixtures_dir,'new_wordlis.bz2') }
 
       it "must default #format to :bzip2" do
         expect(subject.format).to eq(:bzip2)
@@ -39,7 +39,7 @@ describe Wordlist::Builder do
     end
 
     context "when the path ends in '.xz'" do
-      let(:path) { File.join(fixtures_dir,'new_wordlis.xz') }
+      let(:path) { ::File.join(fixtures_dir,'new_wordlis.xz') }
 
       it "must default #format to :xz" do
         expect(subject.format).to eq(:xz)
@@ -97,7 +97,7 @@ describe Wordlist::Builder do
         let(:pre_existing_words) { %w[foo bar] }
 
         before do
-          File.open(path,'w') do |file|
+          ::File.open(path,'w') do |file|
             file.puts pre_existing_words
           end
         end
@@ -123,7 +123,7 @@ describe Wordlist::Builder do
     end
   end
 
-  let(:added_words) { File.readlines(path).map(&:chomp) }
+  let(:added_words) { ::File.readlines(path).map(&:chomp) }
 
   describe "#add" do
     let(:word) { 'foo' }
@@ -198,13 +198,13 @@ describe Wordlist::Builder do
   end
 
   describe "#parse_file" do
-    let(:text_file) { File.join(fixtures_dir,'text_file.txt') }
+    let(:text_file) { ::File.join(fixtures_dir,'text_file.txt') }
 
     let(:words) { %w[foo bar baz] }
     let(:text)  { "foo bar, baz." }
 
     before do
-      File.write(text_file,text)
+      ::File.write(text_file,text)
 
       described_class.open(path) do |builder|
         builder.parse(text)
@@ -223,20 +223,20 @@ describe Wordlist::Builder do
       end
     end
 
-    after { FileUtils.rm_f(text_file) }
+    after { ::FileUtils.rm_f(text_file) }
   end
 
   describe "#close" do
     let(:word) { 'foo' }
 
     it "must close the wordlist file" do
-      expect(File.file?(path)).to be(false)
+      expect(::File.file?(path)).to be(false)
 
       subject.add(word)
       subject.close
 
-      expect(File.file?(path)).to be(true)
-      expect(File.size(path)).to be > 0
+      expect(::File.file?(path)).to be(true)
+      expect(::File.size(path)).to be > 0
     end
 
     it "must clear the unique filter" do
@@ -260,5 +260,5 @@ describe Wordlist::Builder do
     end
   end
 
-  after { FileUtils.rm_f(path) }
+  after { ::FileUtils.rm_f(path) }
 end

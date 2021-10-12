@@ -7,14 +7,14 @@ module Wordlist
   #
   # Represents a `.txt` file wordlist.
   #
-  #     wordlist = Wordlist::TXT.new("rockyou.txt")
+  #     wordlist = Wordlist::File.new("rockyou.txt")
   #     wordlist.each do |word|
   #       puts word
   #     end
   #
   # @api public
   #
-  class List < AbstractWordlist
+  class File < AbstractWordlist
 
     # The path to the `.txt` file
     attr_reader :path
@@ -43,10 +43,10 @@ module Wordlist
     # @api public
     #
     def initialize(path, format: Format.infer(path))
-      @path   = File.expand_path(path)
+      @path   = ::File.expand_path(path)
       @format = format
 
-      unless File.file?(@path)
+      unless ::File.file?(@path)
         raise(WordlistNotFound,"wordlist file does not exist: #{@path.inspect}")
       end
 
@@ -64,10 +64,10 @@ module Wordlist
     # @yield [wordlist]
     #   If a block is given, it will be passed the opened wordlist.
     #
-    # @yieldparam [List] wordlist
+    # @yieldparam [File] wordlist
     #   The newly opened wordlist.
     #
-    # @return [List]
+    # @return [File]
     #   The newly opened wordlist.
     #
     # @see #initialize
@@ -164,7 +164,7 @@ module Wordlist
     #
     def open(&block)
       if @format == :txt
-        File.open(@path,&block)
+        ::File.open(@path,&block)
       else
         Compression::Reader.open(@path, format: @format, &block)
       end

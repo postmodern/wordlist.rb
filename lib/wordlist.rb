@@ -1,4 +1,4 @@
-require 'wordlist/list'
+require 'wordlist/file'
 require 'wordlist/builder'
 require 'wordlist/version'
 
@@ -9,13 +9,13 @@ module Wordlist
   # @param [Array<String>] words
   #   The literal words for the list.
   #
-  # @return [List]
+  # @return [File]
   #   The in-memory wordlist.
   #
   # @api public
   #
   def self.[](*words)
-    List[*words]
+    File[*words]
   end
 
   #
@@ -25,7 +25,7 @@ module Wordlist
   #   The path to the file.
   #
   # @param [Hash{Symbol => Object}] kwargs
-  #   Additional keyword arguments for {List#initialize}.
+  #   Additional keyword arguments for {Wordlist::File#initialize}.
   #
   # @option [:txt, :bzip, :bzip2, :xz] :format
   #   Specifies the format of the wordlist. If no format is given, the format
@@ -34,10 +34,10 @@ module Wordlist
   # @yield [wordlist]
   #   If a block is given, it will be passed the newly opened wordlist.
   #
-  # @yieldparam [List] wordlist
+  # @yieldparam [Wordlist::File] wordlist
   #   The newly opened wordlist.
   #
-  # @return [List]
+  # @return [Wordlist::File]
   #   The opened wordlist.
   #
   # @raise [ArgumentError]
@@ -47,7 +47,7 @@ module Wordlist
   # @api public
   #
   def self.open(path,**kwargs)
-    List.open(path,**kwargs,&block)
+    File.open(path,**kwargs,&block)
   end
 
   #

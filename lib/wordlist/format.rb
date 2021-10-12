@@ -25,7 +25,7 @@ module Wordlist
     #   The format could not be inferred from the file path.
     #
     def self.infer(path)
-      FILE_FORMATS.fetch(File.extname(path)) do
+      FILE_FORMATS.fetch(::File.extname(path)) do
         raise(UnknownFormat,"could not infer the format of file: #{path.inspect}")
       end
     end

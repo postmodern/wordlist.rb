@@ -65,10 +65,10 @@ describe Wordlist::Compression::Reader do
   end
 
   describe ".open" do
-    let(:fixtures_dir) { File.join(__dir__,'..','fixtures') }
+    let(:fixtures_dir) { ::File.join(__dir__,'..','fixtures') }
 
     context "when given format: :gzip" do
-      let(:path) { File.join(fixtures_dir,'wordlist.txt.gz') }
+      let(:path) { ::File.join(fixtures_dir,'wordlist.txt.gz') }
       let(:expected_contents) { `zcat #{Shellwords.shellescape(path)}` }
 
       subject { described_class.open(path, format: :gzip) }
@@ -85,7 +85,7 @@ describe Wordlist::Compression::Reader do
     end
 
     context "when given format: :bzip2" do
-      let(:path) { File.join(fixtures_dir,'wordlist.txt.bz2') }
+      let(:path) { ::File.join(fixtures_dir,'wordlist.txt.bz2') }
       let(:expected_contents) { `bzcat #{Shellwords.shellescape(path)}` }
 
       subject { described_class.open(path, format: :bzip2) }
@@ -102,7 +102,7 @@ describe Wordlist::Compression::Reader do
     end
 
     context "when given format: :xz" do
-      let(:path) { File.join(fixtures_dir,'wordlist.txt.xz') }
+      let(:path) { ::File.join(fixtures_dir,'wordlist.txt.xz') }
       let(:expected_contents) { `xzcat #{Shellwords.shellescape(path)}` }
 
       subject { described_class.open(path, format: :xz) }

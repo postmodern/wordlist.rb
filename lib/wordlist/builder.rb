@@ -1,7 +1,7 @@
 require 'wordlist/format'
 require 'wordlist/lexer'
 require 'wordlist/unique_filter'
-require 'wordlist/list'
+require 'wordlist/file'
 require 'wordlist/compression/writer'
 
 module Wordlist
@@ -51,14 +51,14 @@ module Wordlist
     #   The format could not be inferred from the file extension.
     #
     def initialize(path, format: Format.infer(path), append: false, **kwargs)
-      @path   = File.expand_path(path)
+      @path   = ::File.expand_path(path)
       @format = format
       @append = append
 
       @lexer = Lexer.new(**kwargs)
       @unique_filter = UniqueFilter.new
 
-      load! if append? && File.file?(@path)
+      load! if append? && ::File.file?(@path)
       open!
     end
 
@@ -175,7 +175,7 @@ module Wordlist
     #   The path of the file to parse.
     #
     def parse_file(path)
-      File.open(path) do |file|
+      ::File.open(path) do |file|
         file.each_line do |line|
           parse(line)
         end
@@ -207,7 +207,7 @@ module Wordlist
     # Pre-populates the builder with the existing wordlist's content.
     #
     def load!
-      List.read(@path) do |word|
+      File.read(@path) do |word|
         @unique_filter << word
       end
     end
@@ -233,7 +233,7 @@ module Wordlist
                else            'w'
                end
 
-        @io = File.open(@path,mode)
+        @io = ::File.open(@path,mode)
       else
         @io = Compression::Writer.open(@path, format: @format, append: append?)
       end

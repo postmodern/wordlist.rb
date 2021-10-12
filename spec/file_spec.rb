@@ -1,9 +1,9 @@
 require 'spec_helper'
-require 'wordlist/list'
+require 'wordlist/file'
 
-describe Wordlist::List do
-  let(:fixtures_dir) { File.join(__dir__,'fixtures') }
-  let(:path) { File.join(fixtures_dir,'wordlist.txt') }
+describe Wordlist::File do
+  let(:fixtures_dir) { ::File.join(__dir__,'fixtures') }
+  let(:path) { ::File.join(fixtures_dir,'wordlist.txt') }
 
   subject { described_class.new(path) }
 
@@ -23,18 +23,18 @@ describe Wordlist::List do
     end
 
     context "when given a relative path" do
-      let(:relative_path) { File.join(__FILE__,"../fixtures/wordlist.txt") }
+      let(:relative_path) { ::File.join(__FILE__,"../fixtures/wordlist.txt") }
       
       subject { described_class.new(relative_path) }
 
       it "must expand the given path" do
-        expect(subject.path).to eq(File.expand_path(relative_path))
+        expect(subject.path).to eq(::File.expand_path(relative_path))
       end
     end
 
     context "when format: is not given" do
       context "and the path ends in .txt" do
-        let(:path) { File.join(fixtures_dir,'wordlist.txt') }
+        let(:path) { ::File.join(fixtures_dir,'wordlist.txt') }
 
         it "must set #format to :txt" do
           expect(subject.format).to eq(:txt)
@@ -42,7 +42,7 @@ describe Wordlist::List do
       end
 
       context "and the path ends in .gz" do
-        let(:path) { File.join(fixtures_dir,'wordlist.txt.gz') }
+        let(:path) { ::File.join(fixtures_dir,'wordlist.txt.gz') }
 
         it "must set #format to :gzip" do
           expect(subject.format).to eq(:gzip)
@@ -50,7 +50,7 @@ describe Wordlist::List do
       end
 
       context "and the path ends in .bz2" do
-        let(:path) { File.join(fixtures_dir,'wordlist.txt.bz2') }
+        let(:path) { ::File.join(fixtures_dir,'wordlist.txt.bz2') }
 
         it "must set #format to :bzip2" do
           expect(subject.format).to eq(:bzip2)
@@ -58,7 +58,7 @@ describe Wordlist::List do
       end
 
       context "and the path ends in .xz" do
-        let(:path) { File.join(fixtures_dir,'wordlist.txt.xz') }
+        let(:path) { ::File.join(fixtures_dir,'wordlist.txt.xz') }
 
         it "must set #format to :xz" do
           expect(subject.format).to eq(:xz)
@@ -97,7 +97,7 @@ describe Wordlist::List do
     end
   end
 
-  let(:expected_contents) { File.read(path) }
+  let(:expected_contents) { ::File.read(path) }
   let(:expected_lines)    { expected_contents.lines }
   let(:expected_words)    { expected_lines.map(&:chomp) }
 
@@ -120,7 +120,7 @@ describe Wordlist::List do
       end
 
       context "and the wordlist format is gzip" do
-        let(:path) { File.join(fixtures_dir,'wordlist.txt.gz') }
+        let(:path) { ::File.join(fixtures_dir,'wordlist.txt.gz') }
         let(:expected_contents) { `zcat #{Shellwords.shellescape(path)}` }
 
         it "must read the uncompressed gzip data" do
@@ -131,7 +131,7 @@ describe Wordlist::List do
       end
 
       context "and the wordlist format is bzip2" do
-        let(:path) { File.join(fixtures_dir,'wordlist.txt.bz2') }
+        let(:path) { ::File.join(fixtures_dir,'wordlist.txt.bz2') }
         let(:expected_contents) { `bzcat #{Shellwords.shellescape(path)}` }
 
         it "must read the uncompressed gzip data" do
@@ -142,7 +142,7 @@ describe Wordlist::List do
       end
 
       context "and the wordlist format is xz" do
-        let(:path) { File.join(fixtures_dir,'wordlist.txt.xz') }
+        let(:path) { ::File.join(fixtures_dir,'wordlist.txt.xz') }
         let(:expected_contents) { `xzcat #{Shellwords.shellescape(path)}` }
 
         it "must read the uncompressed gzip data" do
@@ -160,7 +160,7 @@ describe Wordlist::List do
       end
 
       context "and the wordlist format is gzip" do
-        let(:path) { File.join(fixtures_dir,'wordlist.txt.gz') }
+        let(:path) { ::File.join(fixtures_dir,'wordlist.txt.gz') }
         let(:expected_contents) { `zcat #{Shellwords.shellescape(path)}` }
 
         it "must return an Enumerator of the uncompressed gzip data" do
@@ -170,7 +170,7 @@ describe Wordlist::List do
       end
 
       context "and the wordlist format is bzip2" do
-        let(:path) { File.join(fixtures_dir,'wordlist.txt.bz2') }
+        let(:path) { ::File.join(fixtures_dir,'wordlist.txt.bz2') }
         let(:expected_contents) { `bzcat #{Shellwords.shellescape(path)}` }
 
         it "must return an Enumerator of the compressed gzip data" do
@@ -180,7 +180,7 @@ describe Wordlist::List do
       end
 
       context "and the wordlist format is xz" do
-        let(:path) { File.join(fixtures_dir,'wordlist.txt.xz') }
+        let(:path) { ::File.join(fixtures_dir,'wordlist.txt.xz') }
         let(:expected_contents) { `xzcat #{Shellwords.shellescape(path)}` }
 
         it "must return an Enumerator of the compressed gzip data" do
@@ -199,7 +199,7 @@ describe Wordlist::List do
     end
 
     context "and the wordlist format is gzip" do
-      let(:path) { File.join(fixtures_dir,'wordlist.txt.gz') }
+      let(:path) { ::File.join(fixtures_dir,'wordlist.txt.gz') }
       let(:expected_contents) { `zcat #{Shellwords.shellescape(path)}` }
 
       it "must read the uncompressed gzip data" do
@@ -210,7 +210,7 @@ describe Wordlist::List do
     end
 
     context "and the wordlist format is bzip2" do
-      let(:path) { File.join(fixtures_dir,'wordlist.txt.bz2') }
+      let(:path) { ::File.join(fixtures_dir,'wordlist.txt.bz2') }
       let(:expected_contents) { `bzcat #{Shellwords.shellescape(path)}` }
 
       it "must read the uncompressed gzip data" do
@@ -221,7 +221,7 @@ describe Wordlist::List do
     end
 
     context "and the wordlist format is xz" do
-      let(:path) { File.join(fixtures_dir,'wordlist.txt.xz') }
+      let(:path) { ::File.join(fixtures_dir,'wordlist.txt.xz') }
       let(:expected_contents) { `xzcat #{Shellwords.shellescape(path)}` }
 
       it "must read the uncompressed gzip data" do
