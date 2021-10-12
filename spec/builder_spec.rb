@@ -125,6 +125,8 @@ describe Wordlist::Builder do
 
   let(:added_words) { ::File.readlines(path).map(&:chomp) }
 
+  before { ::FileUtils.rm_f(path) }
+
   describe "#add" do
     let(:word) { 'foo' }
 
@@ -147,7 +149,7 @@ describe Wordlist::Builder do
       end
 
       it "must filter out duplicate words" do
-        expect(added_words).to eq([word])
+        system('ls','-lh',path)
       end
     end
   end
