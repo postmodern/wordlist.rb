@@ -1,4 +1,4 @@
-require 'wordlist/list'
+require 'wordlist/file'
 require 'wordlist/builder'
 require 'wordlist/version'
 
@@ -17,7 +17,7 @@ module Wordlist
     FORMATS = {
       'txt'  => :txt,
       'gzip' => :gzip,
-      'bz2'  => :bz2,
+      'bzip2'=> :bzip2,
       'xz'   => :xz
     }
 
@@ -31,19 +31,47 @@ module Wordlist
     # @return [:build, :read]
     attr_reader :mode
 
+    # The explicit wordlist format to use.
+    #
+    # @return [:txt, :gzip, :bzip2, :xz, nil]
+    attr_reader :format
+
+    # The path to the output wordlist file.
+    #
+    # @return [String, nil]
+    attr_reader :output
+
     # The command to run with each word from the wodlist.
     #
     # @return [String, nil]
     attr_reader :command
 
+    # Wordlist operators to apply.
+    #
+    # @return [Array<(Symbol, ...)>]
+    attr_reader :operators
+
+    # Wordlist modifiers to apply.
+    #
+    # @return [Array<(Symbol, ...)>]
+    attr_reader :modifiers
+
     #
     # Initializes the command.
     #
-    def initialize
+    # @param [:read, :build] mode
+    #
+    # @param [:txt, :gzip, :bzip2, :xz, nil] format
+    #
+    # @param [String, nil] command
+    #
+    def initialize(mode: :read, format: nil, command: nil)
       @option_parser = option_parser
 
-      @mode    = :read
-      @command = nil
+      @mode    = mode
+      @format  = format
+      @command = command
+      @output  = nil
 
       @operators = []
       @modifiers = []
@@ -81,16 +109,16 @@ module Wordlist
     # @param [String] path
     #   The path to the wordlist file.
     #
-    # @return [List]
+    # @return [Wordlist::File]
     #   The opened wordlist.
     #
     def open_wordlist(path)
       if @format
-        List.open(path, format: @format)
+        Wordlist::File.open(path, format: @format)
       else
-        List.open(path)
+        Wordlist::File.open(path)
       end
-    rescue WordlistNotFound, UnknownFormat
+    rescue WordlistNotFound, UnknownFormat => error
       print_error(error.message)
       exit -1
     end
@@ -102,16 +130,13 @@ module Wordlist
     #   Command-line arguments.
     #
     def self.run(argv=ARGV)
-      new().run(argv)
+      exit new().run(argv)
     rescue Interrupt
       # https://tldp.org/LDP/abs/html/exitcodes.html
       exit 130
     rescue Errno::EPIPE
       # STDOUT pipe broken
       exit 0
-    rescue => error
-      print_backrace(error)
-      exit -1
     end
 
     #
@@ -120,13 +145,24 @@ module Wordlist
     # @param [Array<String>] argv
     #   Command-line arguments.
     #
+    # @return [Integer]
+    #   The return status code.
+    #
     def run(argv=ARGV)
-      argv = @option_parser.parse(argv)
+      argv = begin
+               @option_parser.parse(argv)
+             rescue OptionParser::ParseError => error
+               print_error(error.message)
+               return -1
+             end
 
       case @mode
       when :build then build_mode(argv)
       else             read_mode(argv)
       end
+    rescue => error
+      print_backtrace(error)
+      return -1
     end
 
     #
@@ -144,7 +180,7 @@ module Wordlist
                   end
                 rescue UnknownFormat, CommandNotFound => error
                   print_error(error.message)
-                  exit -1
+                  return -1
                 end
 
       begin
@@ -160,6 +196,8 @@ module Wordlist
       ensure
         builder.close
       end
+
+      return 0
     end
 
     #
@@ -172,7 +210,7 @@ module Wordlist
       unless argv.length >= 1
         print_error "too few arguments given, requires at least one WORDLIST argument"
         print_error "usage: #{PROGRAM_NAME} [options] WORDLIST ..."
-        exit -1
+        return -1
       end
 
       # open the first wodlist
@@ -203,8 +241,10 @@ module Wordlist
         end
       rescue CommandNotFound => error
         print_error(error.message)
-        exit -1
+        return -1
       end
+
+      return 0
     end
 
     #
