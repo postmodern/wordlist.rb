@@ -47,11 +47,11 @@ module Wordlist
       @format = format
 
       unless ::File.file?(@path)
-        raise(WordlistNotFound,"wordlist file does not exist: #{@path.inspect}")
+        raise(WordlistNotFound,"wordlist file does not exist: #{path.inspect}")
       end
 
       unless Format::FORMATS.include?(@format)
-        raise(UnknownFormat,"unknown format given: #{@format.inspect}")
+        raise(UnknownFormat,"unknown format given: #{format.inspect}")
       end
     end
 
