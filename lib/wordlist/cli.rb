@@ -129,14 +129,17 @@ module Wordlist
     # @param [Array<String>] argv
     #   Command-line arguments.
     #
+    # @return [Integer]
+    #   The exit status of the command.
+    #
     def self.run(argv=ARGV)
-      exit new().run(argv)
+      new().run(argv)
     rescue Interrupt
       # https://tldp.org/LDP/abs/html/exitcodes.html
-      exit 130
+      return 130
     rescue Errno::EPIPE
       # STDOUT pipe broken
-      exit 0
+      return 0
     end
 
     #
