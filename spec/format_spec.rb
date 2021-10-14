@@ -36,5 +36,15 @@ describe Wordlist::Format do
         }.to raise_error(Wordlist::UnknownFormat,"could not infer the format of file: #{path.inspect}")
       end
     end
+
+    context "when given a path has no file extension" do
+      let(:path) { "path/to/file" }
+
+      it do
+        expect {
+          subject.infer(path)
+        }.to raise_error(Wordlist::UnknownFormat,"could not infer the format of file: #{path.inspect}")
+      end
+    end
   end
 end
