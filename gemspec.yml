@@ -10,9 +10,6 @@ email: postmodern.mod3@gmail.com
 homepage: https://github.com/postmodern/wordlist
 has_yard: true
 
-dependencies:
-  spidr: ~> 0.2
-
 development_dependencies:
   rubygems-tasks: ~> 0.1
   rspec: ~> 2.4
