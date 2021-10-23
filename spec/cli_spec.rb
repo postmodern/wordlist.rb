@@ -62,7 +62,7 @@ Please report the following text to: #{Regexp.escape(described_class::BUG_REPORT
   describe "#open_wordlist" do
     context "when #format is set" do
       let(:format) { :gzip }
-      let(:path)   { ::File.join(fixtures_dir,'ambiguous_wordlist_format') }
+      let(:path)   { ::File.join(fixtures_dir,'wordlist_with_ambiguous_format') }
 
       subject { described_class.new(format: format) }
 
@@ -83,7 +83,7 @@ Please report the following text to: #{Regexp.escape(described_class::BUG_REPORT
       end
 
       context "and the file's format cannot be inferred" do
-        let(:path) { ::File.join(fixtures_dir,'ambiguous_wordlist_format') }
+        let(:path)   { ::File.join(fixtures_dir,'wordlist_with_ambiguous_format') }
 
         it "must print an error and exit with -1" do
           expect(subject).to receive(:exit).with(-1)
