@@ -5,7 +5,7 @@ require 'fileutils'
 
 describe Wordlist::Builder do
   let(:fixtures_dir) { ::File.join(__dir__,'fixtures') }
-  let(:path)         { ::File.join(fixtures_dir,'new_wordlis.txt') }
+  let(:path)         { ::File.join(fixtures_dir,'new_wordlist.txt') }
 
   subject { described_class.new(path) }
 
@@ -15,7 +15,7 @@ describe Wordlist::Builder do
     end
 
     context "when the path ends in '.txt'" do
-      let(:path) { ::File.join(fixtures_dir,'new_wordlis.txt') }
+      let(:path) { ::File.join(fixtures_dir,'new_wordlist.txt') }
 
       it "must default #format to :txt" do
         expect(subject.format).to eq(:txt)
@@ -23,7 +23,7 @@ describe Wordlist::Builder do
     end
 
     context "when the path ends in '.gz'" do
-      let(:path) { ::File.join(fixtures_dir,'new_wordlis.gz') }
+      let(:path) { ::File.join(fixtures_dir,'new_wordlist.gz') }
 
       it "must default #format to :gzip" do
         expect(subject.format).to eq(:gzip)
@@ -31,7 +31,7 @@ describe Wordlist::Builder do
     end
 
     context "when the path ends in '.bz2'" do
-      let(:path) { ::File.join(fixtures_dir,'new_wordlis.bz2') }
+      let(:path) { ::File.join(fixtures_dir,'new_wordlist.bz2') }
 
       it "must default #format to :bzip2" do
         expect(subject.format).to eq(:bzip2)
@@ -39,7 +39,7 @@ describe Wordlist::Builder do
     end
 
     context "when the path ends in '.xz'" do
-      let(:path) { ::File.join(fixtures_dir,'new_wordlis.xz') }
+      let(:path) { ::File.join(fixtures_dir,'new_wordlist.xz') }
 
       it "must default #format to :xz" do
         expect(subject.format).to eq(:xz)
