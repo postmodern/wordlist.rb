@@ -11,7 +11,7 @@ module Wordlist
     include Enumerable
 
     # Default regexp to match a single word.
-    WORD = /[[:alpha:]][[:alnum:]_']+/
+    WORD = /[[:alpha:]][[:alnum:]_']*[[:alnum:]]/
 
     # Skips whitespace, digits, punctuation, and symbols.
     NOT_A_WORD = /[^[:alpha:]]+/
@@ -46,7 +46,7 @@ module Wordlist
                              Regexp.escape(word)
                            }.join('|')
 
-      @skip_regexp = /(?:(?:#{escaped_stop_words}|[A-Za-z]|\d+)(?:[^[:alnum:]]+|$))+/i
+      @skip_regexp = /(?:(?:#{escaped_stop_words}|[A-Za-z]|\d+)(?:[^[:alnum:]_']+|$))+/i
     end
 
     #

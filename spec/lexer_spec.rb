@@ -120,11 +120,76 @@ describe Wordlist::Lexer do
           }.to yield_successive_args(*expected_words)
         end
 
+        context "and the words start with a '\\'' characters" do
+          let(:expected_words) { %w[foo bar baz] }
+          let(:text)           { "foo 'bar baz"  }
+
+          it "must skip the leading '\\' character'" do
+            expect { |b|
+              subject.parse(text,&b)
+            }.to yield_successive_args(*expected_words)
+          end
+        end
+
+        context "and the words contain '\\'' characters" do
+          let(:expected_words) { super() + %w[O'Brian] }
+
+          it "must parse the words containing a '\\''" do
+            expect { |b|
+              subject.parse(text,&b)
+            }.to yield_successive_args(*expected_words)
+          end
+        end
+
+        context "and the words end with a '\\'' characters" do
+          let(:expected_words) { %w[foo bar baz] }
+          let(:text)           { "foo bar' baz"  }
+
+          it "must skip the trailing '\\' character'" do
+            expect { |b|
+              subject.parse(text,&b)
+            }.to yield_successive_args(*expected_words)
+          end
+        end
+
+        context "and the words start with a '-' characters" do
+          let(:expected_words) { %w[foo bar baz] }
+          let(:text)           { "foo -bar baz"  }
+
+          it "must skip the leading '-' character'" do
+            expect { |b|
+              subject.parse(text,&b)
+            }.to yield_successive_args(*expected_words)
+          end
+        end
+
         context "and the words contain '-' characters" do
           let(:expected_words) { %w[foo bar baz qux] }
-          let(:text) { "foo-bar baz-qux" }
+          let(:text)           { "foo-bar baz-qux"   }
 
           it "must split the words containing a '-'" do
+            expect { |b|
+              subject.parse(text,&b)
+            }.to yield_successive_args(*expected_words)
+          end
+        end
+
+        context "and the words end with a '-' characters" do
+          let(:expected_words) { %w[foo bar baz] }
+          let(:text)           { "foo bar- baz"  }
+
+          it "must skip the trailing '-' character'" do
+            expect { |b|
+              subject.parse(text,&b)
+            }.to yield_successive_args(*expected_words)
+          end
+        end
+
+        context "and the words start with a '_' characters" do
+          let(:expected_words) { %w[foo bar baz] }
+          let(:text)           { "foo _bar baz"  }
+
+          it "must skip the leading '_' character'" do
             expect { |b|
               subject.parse(text,&b)
             }.to yield_successive_args(*expected_words)
@@ -135,6 +200,17 @@ describe Wordlist::Lexer do
           let(:expected_words) { %w[foo_bar baz_qux] }
 
           it "must treat the words containing a '_' as a single word" do
+            expect { |b|
+              subject.parse(text,&b)
+            }.to yield_successive_args(*expected_words)
+          end
+        end
+
+        context "and the words end with a '_' characters" do
+          let(:expected_words) { %w[foo bar baz] }
+          let(:text)           { "foo bar_ baz"  }
+
+          it "must skip the trailing '_' character'" do
             expect { |b|
               subject.parse(text,&b)
             }.to yield_successive_args(*expected_words)
