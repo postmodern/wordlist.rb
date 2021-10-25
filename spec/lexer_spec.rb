@@ -192,6 +192,68 @@ describe Wordlist::Lexer do
           }.to yield_successive_args(*expected_words)
         end
 
+        context "when the stop words are capitlized" do
+          let(:stop_words) { super().map(&:capitalize) }
+
+          it "must ignore the capitlized stop-words" do
+            expect { |b|
+              subject.parse(text,&b)
+            }.to yield_successive_args(*expected_words)
+          end
+        end
+
+        context "when the stop words are uppercase" do
+          let(:stop_words) { super().map(&:upcase) }
+
+          it "must ignore the uppercase stop-words" do
+            expect { |b|
+              subject.parse(text,&b)
+            }.to yield_successive_args(*expected_words)
+          end
+        end
+
+        context "when the text ends with a stop word" do
+          let(:text) { "#{super()} is" }
+
+          it "must ignore the last stop word" do
+            expect { |b|
+              subject.parse(text,&b)
+            }.to yield_successive_args(*expected_words)
+          end
+        end
+
+        context "when a stop word is followed by other letters" do
+          let(:stop_word)      { "be" }
+          let(:expected_words) { super() + ["#{stop_word}tter"] }
+
+          it "must not ignore stop words followed by other letters" do
+            expect { |b|
+              subject.parse(text,&b)
+            }.to yield_successive_args(*expected_words)
+          end
+        end
+
+        context "when a stop word is followed by digits" do
+          let(:stop_word)      { "a" }
+          let(:expected_words) { super() + ["#{stop_word}1234"] }
+
+          it "must not ignore stop words followed by digits" do
+            expect { |b|
+              subject.parse(text,&b)
+            }.to yield_successive_args(*expected_words)
+          end
+        end
+
+        context "when a stop word is followed by punctuation" do
+          let(:stop_words) { %w[is. be, the?] }
+
+          it "must not ignore stop words followed by punctuation" do
+            expect { |b|
+              subject.parse(text,&b)
+            }.to yield_successive_args(*expected_words)
+          end
+        end
+
         context "when the text contains multiple successive stop-words" do
           let(:text) { (stop_words + expected_words).join(' ') }
         
