@@ -46,7 +46,7 @@ module Wordlist
                              Regexp.escape(word)
                            }.join('|')
 
-      @skip_regexp = /(?:(?:#{escaped_stop_words}|\d+)(?:[^[:alnum:]]+|$))+/i
+      @skip_regexp = /(?:(?:#{escaped_stop_words}|[A-Za-z]|\d+)(?:[^[:alnum:]]+|$))+/i
     end
 
     #
