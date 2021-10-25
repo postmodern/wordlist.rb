@@ -16,8 +16,8 @@ module Wordlist
     # Default regexp to match a single word.
     WORD = /#{ACRONYM}|[[:alpha:]][[:alnum:]_'\.-]*[[:alnum:]]/
 
-    # Skips whitespace, digits, punctuation, and symbols.
-    NOT_A_WORD = /[^[:alpha:]]+/
+    # Skips whitespace, digits, punctuation/symbols.
+    NOT_A_WORD = /[\s\d[:punct:]]+/
 
     # The regexp for a word.
     #
