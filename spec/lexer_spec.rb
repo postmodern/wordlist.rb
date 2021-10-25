@@ -91,6 +91,16 @@ describe Wordlist::Lexer do
         }.to yield_successive_args(*expected_words)
       end
 
+      context "when the text contains single letters" do
+        let(:text) { (%w[a b c] + expected_words + %w[x y z]).join(' ') }
+
+        it "must ignore single letters" do
+          expect { |b|
+            subject.parse(text,&b)
+          }.to yield_successive_args(*expected_words)
+        end
+      end
+
       context "when the text contains newlines" do
         let(:text) { expected_words.join("\n") }
 
