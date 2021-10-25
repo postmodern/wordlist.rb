@@ -14,7 +14,7 @@ module Wordlist
     ACRONYM = /[[:alpha:]](?:\.[[:alpha:]])+\./
 
     # Default regexp to match a single word.
-    WORD = /#{ACRONYM}|[[:alpha:]][[:alnum:]_'\.-]*[[:alnum:]]/
+    WORD = /#{ACRONYM}|[[:alpha:]](?:[[:alnum:]_'\.-]*[[:alnum:]])?/
 
     # Skips whitespace, digits, punctuation/symbols.
     NOT_A_WORD = /[\s\d[:punct:]]+/
@@ -49,7 +49,7 @@ module Wordlist
                              Regexp.escape(word)
                            }.join('|')
 
-      @skip_regexp = /(?:(?:#{escaped_stop_words}|[A-Za-z]|\d+)[[:punct:]]*(?:\s+|$))+/i
+      @skip_regexp = /(?:(?:#{escaped_stop_words}|\d+)[[:punct:]]*(?:\s+|$))+/i
     end
 
     #

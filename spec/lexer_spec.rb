@@ -92,12 +92,26 @@ describe Wordlist::Lexer do
       end
 
       context "when the text contains single letters" do
-        let(:text) { (%w[a b c] + expected_words + %w[x y z]).join(' ') }
+        let(:letters)        { %w[x y z]         }
+        let(:expected_words) { super() + letters }
 
-        it "must ignore single letters" do
+        it "must parse single letter words" do
           expect { |b|
             subject.parse(text,&b)
           }.to yield_successive_args(*expected_words)
+        end
+
+        context "when the text also contains single letter stop words" do
+          let(:letters)        { %w[a b c i j k] }
+          let(:stop_words)     { %w[a i]         }
+          let(:expected_words) { super() - stop_words }
+          let(:text)           { "#{super()} #{stop_words.join(' ')}" }
+
+          it "must parse single letter words" do
+            expect { |b|
+              subject.parse(text,&b)
+            }.to yield_successive_args(*expected_words)
+          end
         end
       end
 
