@@ -7,4 +7,7 @@ module Wordlist
 
   class CommandNotFound < Errno::ENOENT
   end
+
+  class UnsupportedLanguage < ArgumentError
+  end
 end
