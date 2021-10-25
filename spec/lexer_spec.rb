@@ -164,10 +164,9 @@ describe Wordlist::Lexer do
         end
 
         context "and the words contain '-' characters" do
-          let(:expected_words) { %w[foo bar baz qux] }
-          let(:text)           { "foo-bar baz-qux"   }
+          let(:expected_words) { %w[foo-bar baz-qux] }
 
-          it "must split the words containing a '-'" do
+          it "must parse words containing a '-'" do
             expect { |b|
               subject.parse(text,&b)
             }.to yield_successive_args(*expected_words)
@@ -214,6 +213,49 @@ describe Wordlist::Lexer do
             expect { |b|
               subject.parse(text,&b)
             }.to yield_successive_args(*expected_words)
+          end
+        end
+
+        context "and the words start with a '.' characters" do
+          let(:expected_words) { %w[foo bar baz] }
+          let(:text)           { "foo .bar baz"  }
+
+          it "must skip the leading '.' character'" do
+            expect { |b|
+              subject.parse(text,&b)
+            }.to yield_successive_args(*expected_words)
+          end
+        end
+
+        context "and the words contain '.' characters" do
+          let(:expected_words) { %w[foo.bar baz.qux] }
+
+          it "must treat the words containing a '.' as a single word" do
+            expect { |b|
+              subject.parse(text,&b)
+            }.to yield_successive_args(*expected_words)
+          end
+        end
+
+        context "and the words end with a '.' characters" do
+          let(:expected_words) { %w[foo bar baz] }
+          let(:text)           { "foo bar. baz"  }
+
+          it "must skip the trailing '.' character'" do
+            expect { |b|
+              subject.parse(text,&b)
+            }.to yield_successive_args(*expected_words)
+          end
+
+          context "but the word is an acronym" do
+            let(:expected_words) { %w[foo B.A.R. baz] }
+            let(:text)           { "foo B.A.R. baz"  }
+
+            it "must skip the trailing '.' character'" do
+              expect { |b|
+                subject.parse(text,&b)
+              }.to yield_successive_args(*expected_words)
+            end
           end
         end
       end
