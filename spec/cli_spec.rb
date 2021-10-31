@@ -681,21 +681,101 @@ Please report the following text to: #{Regexp.escape(described_class::BUG_REPORT
 
   describe "#run" do
     context "when given a wordlist file" do
-      it "must read each word from the file and print it to stdout"
+      let(:file) { ::File.join(fixtures_dir,'wordlist.txt') }
+      let(:argv) { [file] }
+
+      let(:expected_words) { File.readlines(file).map(&:chomp) }
+
+      it "must read each word from the file and print it to stdout" do
+        expect {
+          subject.run(argv)
+        }.to output(
+          expected_words.join($/) + $/
+        ).to_stdout
+      end
 
       context "when also given the --exec COMMAND option" do
-        it "must execute the command with each word from the wordlist"
+        let(:command) { 'echo "WORD: {}"' }
+        let(:argv)    { ["--exec", command, file] }
+
+        let(:expected_output) do
+          expected_words.map do |word|
+          end
+        end
+
+        it "must execute the command with each word from the wordlist" do
+          expected_words.each do |word|
+            expect(subject).to receive(:system).with(command.sub('{}',word))
+          end
+
+          subject.run(argv)
+        end
       end
     end
 
     context "when given the --build option" do
+      let(:expected_words) { %w[foo bar baz qux] }
+      let(:text) { (expected_words * 100).shuffle.join(' ') }
+
+      let(:output) { File.join(fixtures_dir,'new_wordlist.txt') }
+
+      context "and given one input file" do
+        let(:input) { File.join(fixtures_dir,"input_file.txt") }
+        let(:argv)  { ["--build", output, input] }
+
+        before { File.write(input,text) }
+
+        it "must build a new wordlist file based on the given file" do
+          subject.run(argv)
+
+          expect(File.readlines(output).map(&:chomp)).to match_array(expected_words)
+        end
+
+        after { FileUtils.rm_f(input) }
+      end
+
       context "and given multiple input files" do
-        it "must build a new wordlist file based on the given files"
+        let(:words) { (expected_words * 100).shuffle }
+        let(:text1) { words[0,50]  }
+        let(:text2) { words[50,50] }
+
+        let(:input1) { File.join(fixtures_dir,"input_file1.txt") }
+        let(:input2) { File.join(fixtures_dir,"input_file2.txt") }
+        let(:argv)   { ["--build", output, input1, input2] }
+
+        before do
+          File.write(input1,text1)
+          File.write(input2,text2)
+        end
+
+        it "must build a new wordlist file based on the given files" do
+        end
+
+        after do
+          FileUtils.rm_f(input1)
+          FileUtils.rm_f(input2)
+        end
       end
 
       context "and given no input files" do
-        it "must build a new wordlist file by reading stdin"
+        let(:argv) { ["--build", output] }
+
+        before do
+          $stdin = StringIO.new(text)
+        end
+
+        it "must build a new wordlist file by reading stdin" do
+          subject.run(argv)
+
+          expect(File.readlines(output).map(&:chomp)).to match_array(expected_words)
+        end
+
+        after do
+          $stdin = STDIN
+        end
       end
+
+      after { FileUtils.rm_f(output) }
     end
 
     context "when an invalid option is given" do
