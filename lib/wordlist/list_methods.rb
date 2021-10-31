@@ -143,7 +143,7 @@ module Wordlist
     # @api public
     #
     def intersect(other)
-      Operators::Intersect.new(self,exponent)
+      Operators::Intersect.new(self,other)
     end
 
     alias & intersect
@@ -306,7 +306,7 @@ module Wordlist
       if replace
         Modifiers::Gsub.new(self,pattern,replace,&block)
       else
-        Modifiers::Gusb.new(self,pattern,&block)
+        Modifiers::Gsub.new(self,pattern,&block)
       end
     end
 
