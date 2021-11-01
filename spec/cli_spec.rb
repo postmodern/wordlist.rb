@@ -197,473 +197,278 @@ Please report the following text to: #{Regexp.escape(described_class::BUG_REPORT
         end
       end
 
-      context "when given -U WORDLIST" do
-        let(:wordlist) { File.join(fixtures_dir,'wordlist.txt.gz') }
-        let(:argv)     { ['-U', wordlist] }
-
-        before { subject.option_parser.parse(argv) }
-
-        it "must append to #operators" do
-          expect(subject.operators.length).to be(1)
-          expect(subject.operators[0][0]).to be(:|)
-          expect(subject.operators[0][1].length).to be(1)
-          expect(subject.operators[0][1][0]).to be_kind_of(Wordlist::File)
-          expect(subject.operators[0][1][0].path).to eq(wordlist)
-        end
-      end
-
-      context "when given --union WORDLIST" do
-        let(:wordlist) { File.join(fixtures_dir,'wordlist.txt.gz') }
-        let(:argv)     { ['--union', wordlist] }
-
-        before { subject.option_parser.parse(argv) }
-
-        it "must append to #operators" do
-          expect(subject.operators.length).to be(1)
-          expect(subject.operators[0][0]).to be(:|)
-          expect(subject.operators[0][1].length).to be(1)
-          expect(subject.operators[0][1][0]).to be_kind_of(Wordlist::File)
-          expect(subject.operators[0][1][0].path).to eq(wordlist)
-        end
-      end
-
-      context "when given -I WORDLIST" do
-        let(:wordlist) { File.join(fixtures_dir,'wordlist.txt.gz') }
-        let(:argv)     { ['-I', wordlist] }
-
-        before { subject.option_parser.parse(argv) }
-
-        it "must append to #operators" do
-          expect(subject.operators.length).to be(1)
-          expect(subject.operators[0][0]).to be(:&)
-          expect(subject.operators[0][1].length).to be(1)
-          expect(subject.operators[0][1][0]).to be_kind_of(Wordlist::File)
-          expect(subject.operators[0][1][0].path).to eq(wordlist)
-        end
-      end
-
-      context "when given --intersect WORDLIST" do
-        let(:wordlist) { File.join(fixtures_dir,'wordlist.txt.gz') }
-        let(:argv)     { ['--intersect', wordlist] }
-
-        before { subject.option_parser.parse(argv) }
-
-        it "must append to #operators" do
-          expect(subject.operators.length).to be(1)
-          expect(subject.operators[0][0]).to be(:&)
-          expect(subject.operators[0][1].length).to be(1)
-          expect(subject.operators[0][1][0]).to be_kind_of(Wordlist::File)
-          expect(subject.operators[0][1][0].path).to eq(wordlist)
-        end
-      end
-
-      context "when given -S WORDLIST" do
-        let(:wordlist) { File.join(fixtures_dir,'wordlist.txt.gz') }
-        let(:argv)     { ['-S', wordlist] }
-
-        before { subject.option_parser.parse(argv) }
-
-        it "must append to #operators" do
-          expect(subject.operators.length).to be(1)
-          expect(subject.operators[0][0]).to be(:-)
-          expect(subject.operators[0][1].length).to be(1)
-          expect(subject.operators[0][1][0]).to be_kind_of(Wordlist::File)
-          expect(subject.operators[0][1][0].path).to eq(wordlist)
-        end
-      end
-
-      context "when given --subtract WORDLIST" do
-        let(:wordlist) { File.join(fixtures_dir,'wordlist.txt.gz') }
-        let(:argv)     { ['--subtract', wordlist] }
-
-        before { subject.option_parser.parse(argv) }
-
-        it "must append to #operators" do
-          expect(subject.operators.length).to be(1)
-          expect(subject.operators[0][0]).to be(:-)
-          expect(subject.operators[0][1].length).to be(1)
-          expect(subject.operators[0][1][0]).to be_kind_of(Wordlist::File)
-          expect(subject.operators[0][1][0].path).to eq(wordlist)
-        end
-      end
-
-      context "when given -p WORDLIST" do
-        let(:wordlist) { File.join(fixtures_dir,'wordlist.txt.gz') }
-        let(:argv)     { ['-p', wordlist] }
-
-        before { subject.option_parser.parse(argv) }
-
-        it "must append to #operators" do
-          expect(subject.operators.length).to be(1)
-          expect(subject.operators[0][0]).to be(:*)
-          expect(subject.operators[0][1].length).to be(1)
-          expect(subject.operators[0][1][0]).to be_kind_of(Wordlist::File)
-          expect(subject.operators[0][1][0].path).to eq(wordlist)
-        end
-      end
-
-      context "when given --product WORDLIST" do
-        let(:wordlist) { File.join(fixtures_dir,'wordlist.txt.gz') }
-        let(:argv)     { ['--product', wordlist] }
-
-        before { subject.option_parser.parse(argv) }
-
-        it "must append to #operators" do
-          expect(subject.operators.length).to be(1)
-          expect(subject.operators[0][0]).to be(:*)
-          expect(subject.operators[0][1].length).to be(1)
-          expect(subject.operators[0][1][0]).to be_kind_of(Wordlist::File)
-          expect(subject.operators[0][1][0].path).to eq(wordlist)
-        end
-      end
-
-      context "when given -P POWER" do
-        let(:power) { 3 }
-        let(:argv)  { ['-P', power.to_s] }
-
-        before { subject.option_parser.parse(argv) }
-
-        it "must append to #operators" do
-          expect(subject.operators.length).to be(1)
-          expect(subject.operators[0][0]).to be(:**)
-          expect(subject.operators[0][1].length).to be(1)
-          expect(subject.operators[0][1][0]).to be(power)
-        end
-      end
-
-      context "when given --power POWER" do
-        let(:power) { 3 }
-        let(:argv)  { ['--power', power.to_s] }
-
-        before { subject.option_parser.parse(argv) }
-
-        it "must append to #operators" do
-          expect(subject.operators.length).to be(1)
-          expect(subject.operators[0][0]).to be(:**)
-          expect(subject.operators[0][1].length).to be(1)
-          expect(subject.operators[0][1][0]).to be(power)
-        end
-      end
-
-      context "when given -u" do
-        let(:argv) { ['-u'] }
-
-        before { subject.option_parser.parse(argv) }
-
-        it "must append to #operators" do
-          expect(subject.operators.length).to be(1)
-          expect(subject.operators[0][0]).to be(:uniq)
-          expect(subject.operators[0][1].length).to be(0)
-        end
-      end
-
-      context "when given --unique" do
-        let(:argv) { ['--unique'] }
-
-        before { subject.option_parser.parse(argv) }
-
-        it "must append to #operators" do
-          expect(subject.operators.length).to be(1)
-          expect(subject.operators[0][0]).to be(:uniq)
-          expect(subject.operators[0][1].length).to be(0)
-        end
-      end
-
-      context "when given -C" do
-        let(:argv) { ['-C'] }
-
-        before { subject.option_parser.parse(argv) }
-
-        it "must append to #modifiers" do
-          expect(subject.modifiers.length).to be(1)
-          expect(subject.modifiers[0][0]).to be(:capitalize)
-          expect(subject.modifiers[0][1].length).to be(0)
-        end
-      end
-
-      context "when given --capitalize" do
-        let(:argv) { ['--capitalize'] }
-
-        before { subject.option_parser.parse(argv) }
-
-        it "must append to #modifiers" do
-          expect(subject.modifiers.length).to be(1)
-          expect(subject.modifiers[0][0]).to be(:capitalize)
-          expect(subject.modifiers[0][1].length).to be(0)
-        end
-      end
-
-      context "when given --uppercase WORDLIST" do
-        let(:wordlist) { File.join(fixtures_dir,'wordlist.txt.gz') }
-        let(:argv)     { ['--uppercase', wordlist] }
-
-        before { subject.option_parser.parse(argv) }
-
-        it "must append to #modifiers" do
-          expect(subject.modifiers.length).to be(1)
-          expect(subject.modifiers[0][0]).to be(:upcase)
-          expect(subject.modifiers[0][1].length).to be(0)
-        end
-      end
-
-      context "when given --upcase WORDLIST" do
-        let(:wordlist) { File.join(fixtures_dir,'wordlist.txt.gz') }
-        let(:argv)     { ['--upcase', wordlist] }
-
-        before { subject.option_parser.parse(argv) }
-
-        it "must append to #modifiers" do
-          expect(subject.modifiers.length).to be(1)
-          expect(subject.modifiers[0][0]).to be(:upcase)
-          expect(subject.modifiers[0][1].length).to be(0)
-        end
-      end
-
-      context "when given --lowercase WORDLIST" do
-        let(:wordlist) { File.join(fixtures_dir,'wordlist.txt.gz') }
-        let(:argv)     { ['--lowercase', wordlist] }
-
-        before { subject.option_parser.parse(argv) }
-
-        it "must append to #modifiers" do
-          expect(subject.modifiers.length).to be(1)
-          expect(subject.modifiers[0][0]).to be(:downcase)
-          expect(subject.modifiers[0][1].length).to be(0)
-        end
-      end
-
-      context "when given --downcase WORDLIST" do
-        let(:wordlist) { File.join(fixtures_dir,'wordlist.txt.gz') }
-        let(:argv)     { ['--downcase', wordlist] }
-
-        before { subject.option_parser.parse(argv) }
-
-        it "must append to #modifiers" do
-          expect(subject.modifiers.length).to be(1)
-          expect(subject.modifiers[0][0]).to be(:downcase)
-          expect(subject.modifiers[0][1].length).to be(0)
-        end
-      end
-
-      context "when given -t CHARS:REPLACE" do
-        let(:chars)   { 'e' }
-        let(:replace) { '3' }
-        let(:argv)    { ['-t', "#{chars}:#{replace}"] }
-
-        before { subject.option_parser.parse(argv) }
-
-        it "must append to #modifiers" do
-          expect(subject.modifiers.length).to be(1)
-          expect(subject.modifiers[0][0]).to be(:tr)
-          expect(subject.modifiers[0][1].length).to be(2)
-          expect(subject.modifiers[0][1][0]).to eq(chars)
-          expect(subject.modifiers[0][1][1]).to eq(replace)
-        end
-      end
-
-      context "when given --tr CHARS:REPLACE" do
-        let(:chars)   { 'e' }
-        let(:replace) { '3' }
-        let(:argv)    { ['--tr', "#{chars}:#{replace}"] }
-
-        before { subject.option_parser.parse(argv) }
-
-        it "must append to #modifiers" do
-          expect(subject.modifiers.length).to be(1)
-          expect(subject.modifiers[0][0]).to be(:tr)
-          expect(subject.modifiers[0][1].length).to be(2)
-          expect(subject.modifiers[0][1][0]).to eq(chars)
-          expect(subject.modifiers[0][1][1]).to eq(replace)
-        end
-      end
-
-      context "when given -s CHARS:REPLACE" do
-        let(:chars)   { 'e' }
-        let(:replace) { '3' }
-        let(:argv)    { ['-s', "#{chars}:#{replace}"] }
-
-        before { subject.option_parser.parse(argv) }
-
-        it "must append to #modifiers" do
-          expect(subject.modifiers.length).to be(1)
-          expect(subject.modifiers[0][0]).to be(:sub)
-          expect(subject.modifiers[0][1].length).to be(2)
-          expect(subject.modifiers[0][1][0]).to eq(chars)
-          expect(subject.modifiers[0][1][1]).to eq(replace)
-        end
-      end
-
-      context "when given --sub CHARS:REPLACE" do
-        let(:chars)   { 'e' }
-        let(:replace) { '3' }
-        let(:argv)    { ['--sub', "#{chars}:#{replace}"] }
-
-        before { subject.option_parser.parse(argv) }
-
-        it "must append to #modifiers" do
-          expect(subject.modifiers.length).to be(1)
-          expect(subject.modifiers[0][0]).to be(:sub)
-          expect(subject.modifiers[0][1].length).to be(2)
-          expect(subject.modifiers[0][1][0]).to eq(chars)
-          expect(subject.modifiers[0][1][1]).to eq(replace)
-        end
-      end
-
-      context "when given -g CHARS:REPLACE" do
-        let(:chars)   { 'e' }
-        let(:replace) { '3' }
-        let(:argv)    { ['-g', "#{chars}:#{replace}"] }
-
-        before { subject.option_parser.parse(argv) }
-
-        it "must append to #modifiers" do
-          expect(subject.modifiers.length).to be(1)
-          expect(subject.modifiers[0][0]).to be(:gsub)
-          expect(subject.modifiers[0][1].length).to be(2)
-          expect(subject.modifiers[0][1][0]).to eq(chars)
-          expect(subject.modifiers[0][1][1]).to eq(replace)
-        end
-      end
-
-      context "when given --gsub CHARS:REPLACE" do
-        let(:chars)   { 'e' }
-        let(:replace) { '3' }
-        let(:argv)    { ['--gsub', "#{chars}:#{replace}"] }
-
-        before { subject.option_parser.parse(argv) }
-
-        it "must append to #modifiers" do
-          expect(subject.modifiers.length).to be(1)
-          expect(subject.modifiers[0][0]).to be(:gsub)
-          expect(subject.modifiers[0][1].length).to be(2)
-          expect(subject.modifiers[0][1][0]).to eq(chars)
-          expect(subject.modifiers[0][1][1]).to eq(replace)
-        end
-      end
-
-      context "when given -m CHARS:REPLACE" do
-        let(:chars)   { 'e' }
-        let(:replace) { '3' }
-        let(:argv)    { ['-m', "#{chars}:#{replace}"] }
-
-        before { subject.option_parser.parse(argv) }
-
-        it "must append to #modifiers" do
-          expect(subject.modifiers.length).to be(1)
-          expect(subject.modifiers[0][0]).to be(:mutate)
-          expect(subject.modifiers[0][1].length).to be(2)
-          expect(subject.modifiers[0][1][0]).to eq(chars)
-          expect(subject.modifiers[0][1][1]).to eq(replace)
-        end
-      end
-
-      context "when given --mutate CHARS:REPLACE" do
-        let(:chars)   { 'e' }
-        let(:replace) { '3' }
-        let(:argv)    { ['--mutate', "#{chars}:#{replace}"] }
-
-        before { subject.option_parser.parse(argv) }
-
-        it "must append to #modifiers" do
-          expect(subject.modifiers.length).to be(1)
-          expect(subject.modifiers[0][0]).to be(:mutate)
-          expect(subject.modifiers[0][1].length).to be(2)
-          expect(subject.modifiers[0][1][0]).to eq(chars)
-          expect(subject.modifiers[0][1][1]).to eq(replace)
-        end
-      end
-
-      context "when given -M" do
-        let(:argv) { ['-M'] }
-
-        before { subject.option_parser.parse(argv) }
-
-        it "must append to #modifiers" do
-          expect(subject.modifiers.length).to be(1)
-          expect(subject.modifiers[0][0]).to be(:mutate_case)
-          expect(subject.modifiers[0][1].length).to be(0)
-        end
-      end
-
-      context "when given --mutate CHARS:REPLACE" do
-        let(:argv) { ['--mutate-case'] }
-
-        before { subject.option_parser.parse(argv) }
-
-        it "must append to #modifiers" do
-          expect(subject.modifiers.length).to be(1)
-          expect(subject.modifiers[0][0]).to be(:mutate_case)
-          expect(subject.modifiers[0][1].length).to be(0)
-        end
-      end
-
-      context "when given --build WORDLIST" do
-        let(:wordlist) { File.join(fixtures_dir,'new_wordlist.txt') }
-        let(:argv)     { ['--build', wordlist] }
-
-        before { subject.option_parser.parse(argv) }
-
-        it "must append to #modifiers" do
-          expect(subject.mode).to eq(:build)
-          expect(subject.output).to eq(wordlist)
-        end
-      end
-
-      context "when given -a" do
-        let(:argv) { ['-a'] }
-
-        before { subject.option_parser.parse(argv) }
-
-        it "must set #builder_options[:append] to true" do
-          expect(subject.builder_options[:append]).to be(true)
-        end
-
-        context "and when given --no-append" do
-          let(:argv) { ['--append', '--no-append'] }
-
-          it "must set #builder_options[:append] to false" do
-            expect(subject.builder_options[:append]).to be(false)
+      %w[-U --union].each do |flag|
+        context "when given #{flag} WORDLIST" do
+          let(:wordlist) { File.join(fixtures_dir,'wordlist.txt.gz') }
+          let(:argv)     { [flag, wordlist] }
+
+          before { subject.option_parser.parse(argv) }
+
+          it "must append to #operators" do
+            expect(subject.operators.length).to be(1)
+            expect(subject.operators[0][0]).to be(:|)
+            expect(subject.operators[0][1].length).to be(1)
+            expect(subject.operators[0][1][0]).to be_kind_of(Wordlist::File)
+            expect(subject.operators[0][1][0].path).to eq(wordlist)
           end
         end
       end
 
-      context "when given --append" do
-        let(:argv) { ['--append'] }
+      %w[-I --intersect].each do |flag|
+        context "when given #{flag} WORDLIST" do
+          let(:wordlist) { File.join(fixtures_dir,'wordlist.txt.gz') }
+          let(:argv)     { [flag, wordlist] }
 
-        before { subject.option_parser.parse(argv) }
+          before { subject.option_parser.parse(argv) }
 
-        it "must set #builder_options[:append] to true" do
-          expect(subject.builder_options[:append]).to be(true)
-        end
-
-        context "and when given --no-append" do
-          let(:argv) { ['--append', '--no-append'] }
-
-          it "must set #builder_options[:append] to false" do
-            expect(subject.builder_options[:append]).to be(false)
+          it "must append to #operators" do
+            expect(subject.operators.length).to be(1)
+            expect(subject.operators[0][0]).to be(:&)
+            expect(subject.operators[0][1].length).to be(1)
+            expect(subject.operators[0][1][0]).to be_kind_of(Wordlist::File)
+            expect(subject.operators[0][1][0].path).to eq(wordlist)
           end
         end
       end
 
-      context "when given -L LANG" do
-        let(:lang) { 'fr' }
-        let(:argv) { ['-L', lang] }
+      %w[-S --subtract].each do |flag|
+        context "when given #{flag} WORDLIST" do
+          let(:wordlist) { File.join(fixtures_dir,'wordlist.txt.gz') }
+          let(:argv)     { [flag, wordlist] }
 
-        before { subject.option_parser.parse(argv) }
+          before { subject.option_parser.parse(argv) }
 
-        it "must set #builder_options[:lang] to LANG" do
-          expect(subject.builder_options[:lang]).to eq(lang)
+          it "must append to #operators" do
+            expect(subject.operators.length).to be(1)
+            expect(subject.operators[0][0]).to be(:-)
+            expect(subject.operators[0][1].length).to be(1)
+            expect(subject.operators[0][1][0]).to be_kind_of(Wordlist::File)
+            expect(subject.operators[0][1][0].path).to eq(wordlist)
+          end
         end
       end
 
-      context "when given --lang LANG" do
-        let(:lang) { 'fr' }
-        let(:argv) { ['--lang', lang] }
+      %w[-p --product].each do |flag|
+        context "when given #{flag} WORDLIST" do
+          let(:wordlist) { File.join(fixtures_dir,'wordlist.txt.gz') }
+          let(:argv)     { [flag, wordlist] }
 
-        before { subject.option_parser.parse(argv) }
+          before { subject.option_parser.parse(argv) }
 
-        it "must set #builder_options[:lang] to LANG" do
-          expect(subject.builder_options[:lang]).to eq(lang)
+          it "must append to #operators" do
+            expect(subject.operators.length).to be(1)
+            expect(subject.operators[0][0]).to be(:*)
+            expect(subject.operators[0][1].length).to be(1)
+            expect(subject.operators[0][1][0]).to be_kind_of(Wordlist::File)
+            expect(subject.operators[0][1][0].path).to eq(wordlist)
+          end
+        end
+      end
+
+      %w[-P --power].each do |flag|
+        context "when given #{flag} POWER" do
+          let(:power) { 3 }
+          let(:argv)  { [flag, power.to_s] }
+
+          before { subject.option_parser.parse(argv) }
+
+          it "must append to #operators" do
+            expect(subject.operators.length).to be(1)
+            expect(subject.operators[0][0]).to be(:**)
+            expect(subject.operators[0][1].length).to be(1)
+            expect(subject.operators[0][1][0]).to be(power)
+          end
+        end
+      end
+
+      %w[-u --unique].each do |flag|
+        context "when given #{flag}" do
+          let(:argv) { [flag] }
+
+          before { subject.option_parser.parse(argv) }
+
+          it "must append to #operators" do
+            expect(subject.operators.length).to be(1)
+            expect(subject.operators[0][0]).to be(:uniq)
+            expect(subject.operators[0][1].length).to be(0)
+          end
+        end
+      end
+
+      %w[-C --capitalize].each do |flag|
+        context "when given #{flag}" do
+          let(:argv) { [flag] }
+
+          before { subject.option_parser.parse(argv) }
+
+          it "must append to #modifiers" do
+            expect(subject.modifiers.length).to be(1)
+            expect(subject.modifiers[0][0]).to be(:capitalize)
+            expect(subject.modifiers[0][1].length).to be(0)
+          end
+        end
+      end
+
+      %w[--uppercase --upcase].each do |flag|
+        context "when given #{flag} WORDLIST" do
+          let(:wordlist) { File.join(fixtures_dir,'wordlist.txt.gz') }
+          let(:argv)     { [flag, wordlist] }
+
+          before { subject.option_parser.parse(argv) }
+
+          it "must append to #modifiers" do
+            expect(subject.modifiers.length).to be(1)
+            expect(subject.modifiers[0][0]).to be(:upcase)
+            expect(subject.modifiers[0][1].length).to be(0)
+          end
+        end
+      end
+
+      %w[--lowercase --downcase].each do |flag|
+        context "when given #{flag} WORDLIST" do
+          let(:wordlist) { File.join(fixtures_dir,'wordlist.txt.gz') }
+          let(:argv)     { [flag, wordlist] }
+
+          before { subject.option_parser.parse(argv) }
+
+          it "must append to #modifiers" do
+            expect(subject.modifiers.length).to be(1)
+            expect(subject.modifiers[0][0]).to be(:downcase)
+            expect(subject.modifiers[0][1].length).to be(0)
+          end
+        end
+      end
+
+      %w[-t --tr].each do |flag|
+        context "when given #{flag} CHARS:REPLACE" do
+          let(:chars)   { 'e' }
+          let(:replace) { '3' }
+          let(:argv)    { [flag, "#{chars}:#{replace}"] }
+
+          before { subject.option_parser.parse(argv) }
+
+          it "must append to #modifiers" do
+            expect(subject.modifiers.length).to be(1)
+            expect(subject.modifiers[0][0]).to be(:tr)
+            expect(subject.modifiers[0][1].length).to be(2)
+            expect(subject.modifiers[0][1][0]).to eq(chars)
+            expect(subject.modifiers[0][1][1]).to eq(replace)
+          end
+        end
+      end
+
+      %w[-s --sub].each do |flag|
+        context "when given #{flag} CHARS:REPLACE" do
+          let(:chars)   { 'e' }
+          let(:replace) { '3' }
+          let(:argv)    { [flag, "#{chars}:#{replace}"] }
+
+          before { subject.option_parser.parse(argv) }
+
+          it "must append to #modifiers" do
+            expect(subject.modifiers.length).to be(1)
+            expect(subject.modifiers[0][0]).to be(:sub)
+            expect(subject.modifiers[0][1].length).to be(2)
+            expect(subject.modifiers[0][1][0]).to eq(chars)
+            expect(subject.modifiers[0][1][1]).to eq(replace)
+          end
+        end
+      end
+
+      %w[-g --gsub].each do |flag|
+        context "when given #{flag} CHARS:REPLACE" do
+          let(:chars)   { 'e' }
+          let(:replace) { '3' }
+          let(:argv)    { [flag, "#{chars}:#{replace}"] }
+
+          before { subject.option_parser.parse(argv) }
+
+          it "must append to #modifiers" do
+            expect(subject.modifiers.length).to be(1)
+            expect(subject.modifiers[0][0]).to be(:gsub)
+            expect(subject.modifiers[0][1].length).to be(2)
+            expect(subject.modifiers[0][1][0]).to eq(chars)
+            expect(subject.modifiers[0][1][1]).to eq(replace)
+          end
+        end
+      end
+
+      %w[-m --mutate].each do |flag|
+        context "when given #{flag} CHARS:REPLACE" do
+          let(:chars)   { 'e' }
+          let(:replace) { '3' }
+          let(:argv)    { [flag, "#{chars}:#{replace}"] }
+
+          before { subject.option_parser.parse(argv) }
+
+          it "must append to #modifiers" do
+            expect(subject.modifiers.length).to be(1)
+            expect(subject.modifiers[0][0]).to be(:mutate)
+            expect(subject.modifiers[0][1].length).to be(2)
+            expect(subject.modifiers[0][1][0]).to eq(chars)
+            expect(subject.modifiers[0][1][1]).to eq(replace)
+          end
+        end
+      end
+
+      %w[-M --mutate-case].each do |flag|
+        context "when given #{flag}" do
+          let(:argv) { [flag] }
+
+          before { subject.option_parser.parse(argv) }
+
+          it "must append to #modifiers" do
+            expect(subject.modifiers.length).to be(1)
+            expect(subject.modifiers[0][0]).to be(:mutate_case)
+            expect(subject.modifiers[0][1].length).to be(0)
+          end
+        end
+      end
+
+      %w[-b --build].each do |flag|
+        context "when given #{flag} WORDLIST" do
+          let(:wordlist) { File.join(fixtures_dir,'new_wordlist.txt') }
+          let(:argv)     { [flag, wordlist] }
+
+          before { subject.option_parser.parse(argv) }
+
+          it "must append to #modifiers" do
+            expect(subject.mode).to eq(:build)
+            expect(subject.output).to eq(wordlist)
+          end
+        end
+      end
+
+      %w[-a --append].each do |flag|
+        context "when given #{flag}" do
+          let(:argv) { [flag] }
+
+          before { subject.option_parser.parse(argv) }
+
+          it "must set #builder_options[:append] to true" do
+            expect(subject.builder_options[:append]).to be(true)
+          end
+
+          context "and when given --no-append" do
+            let(:argv) { ['--append', '--no-append'] }
+
+            it "must set #builder_options[:append] to false" do
+              expect(subject.builder_options[:append]).to be(false)
+            end
+          end
+        end
+      end
+
+      %w[-L --lang].each do |flag|
+        context "when given #{flag} LANG" do
+          let(:lang) { 'fr' }
+          let(:argv) { [flag, lang] }
+
+          before { subject.option_parser.parse(argv) }
+
+          it "must set #builder_options[:lang] to LANG" do
+            expect(subject.builder_options[:lang]).to eq(lang)
+          end
         end
       end
 
@@ -808,51 +613,31 @@ Please report the following text to: #{Regexp.escape(described_class::BUG_REPORT
         end
       end
 
-      context "when given -V" do
-        let(:argv) { ['-V'] }
+      %w[-V --version].each do |flag|
+        context "when given #{flag}" do
+          let(:argv) { [flag] }
 
-        it "must append to #modifiers" do
-          expect(subject).to receive(:exit)
+          it "must append to #modifiers" do
+            expect(subject).to receive(:exit)
 
-          expect {
-            subject.option_parser.parse(argv)
-          }.to output("#{described_class::PROGRAM_NAME} #{Wordlist::VERSION}#{$/}").to_stdout
+            expect {
+              subject.option_parser.parse(argv)
+            }.to output("#{described_class::PROGRAM_NAME} #{Wordlist::VERSION}#{$/}").to_stdout
+          end
         end
       end
 
-      context "when given --version" do
-        let(:argv) { ['--version'] }
+      %w[-h --help].each do |flag|
+        context "when given #{flag}" do
+          let(:argv) { [flag] }
 
-        it "must append to #modifiers" do
-          expect(subject).to receive(:exit)
+          it "must append to #modifiers" do
+            expect(subject).to receive(:exit)
 
-          expect {
-            subject.option_parser.parse(argv)
-          }.to output("#{described_class::PROGRAM_NAME} #{Wordlist::VERSION}#{$/}").to_stdout
-        end
-      end
-
-      context "when given -h" do
-        let(:argv) { ['-h'] }
-
-        it "must append to #modifiers" do
-          expect(subject).to receive(:exit)
-
-          expect {
-            subject.option_parser.parse(argv)
-          }.to output("#{subject.option_parser}").to_stdout
-        end
-      end
-
-      context "when given --help" do
-        let(:argv) { ['--help'] }
-
-        it "must append to #modifiers" do
-          expect(subject).to receive(:exit)
-
-          expect {
-            subject.option_parser.parse(argv)
-          }.to output("#{subject.option_parser}").to_stdout
+            expect {
+              subject.option_parser.parse(argv)
+            }.to output("#{subject.option_parser}").to_stdout
+          end
         end
       end
     end
