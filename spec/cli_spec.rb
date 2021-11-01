@@ -737,6 +737,9 @@ Please report the following text to: #{Regexp.escape(described_class::BUG_REPORT
         end
 
         it "must build a new wordlist file based on the given files" do
+          subject.run(argv)
+
+          expect(File.readlines(output).map(&:chomp)).to match_array(expected_words)
         end
 
         after do
