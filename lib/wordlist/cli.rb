@@ -280,70 +280,70 @@ module Wordlist
         opts.separator ""
         opts.separator "Wordlist Operations:"
 
-        opts.on('-U','--union WORDLIST') do |wordlist|
+        opts.on('-U','--union WORDLIST','Unions the wordlist with the other WORDLIST') do |wordlist|
           add_operator(:|, open_wordlist(wordlist))
         end
 
-        opts.on('-I','--intersect WORDLIST') do |wordlist|
+        opts.on('-I','--intersect WORDLIST','Intersects the wordlist with the other WORDLIST') do |wordlist|
           add_operator(:&, open_wordlist(wordlist))
         end
 
-        opts.on('-S','--subtract WORDLIST') do |wordlist|
+        opts.on('-S','--subtract WORDLIST','Subtracts the words from the WORDLIST') do |wordlist|
           add_operator(:-, open_wordlist(wordlist))
         end
 
-        opts.on('-p','--product WORDLIST', 'Combines every word from the wordlist with another wordlist') do |wordlist|
+        opts.on('-p','--product WORDLIST', 'Combines every word with the other words from WORDLIST') do |wordlist|
           add_operator(:*, open_wordlist(wordlist))
         end
 
-        opts.on('-P','--power NUM', Integer, 'Combines every word from the wordlist with another wordlist') do |power|
+        opts.on('-P','--power NUM', Integer, 'Combines every word with the other words from WORDLIST') do |power|
           add_operator(:**, power)
         end
 
-        opts.on('-u','--unique') do
+        opts.on('-u','--unique','Filters out duplicate words') do
           add_operator(:uniq)
         end
 
         opts.separator ""
         opts.separator "Wordlist Modifiers:"
 
-        opts.on('-C','--capitalize') do
+        opts.on('-C','--capitalize','Capitalize each word') do
           add_modifier(:capitalize)
         end
 
-        opts.on('--uppercase', '--upcase') do
+        opts.on('--uppercase', '--upcase','Converts each word to UPPERCASE') do
           add_modifier(:upcase)
         end
 
-        opts.on('--lowercase', '--downcase') do
+        opts.on('--lowercase', '--downcase','Converts each word to lowercase') do
           add_modifier(:downcase)
         end
 
-        opts.on('-t','--tr CHARS:REPLACE') do |string|
+        opts.on('-t','--tr CHARS:REPLACE','Translates the characters of each word') do |string|
           chars, replace = string.split(':',2)
 
           add_modifier(:tr, chars, replace)
         end
 
-        opts.on('-s','--sub PATTERN:SUB') do |string|
+        opts.on('-s','--sub PATTERN:SUB','Replaces PATTERN with SUB in each word') do |string|
           pattern, replace = string.split(':',2)
 
           add_modifier(:sub, pattern, replace)
         end
 
-        opts.on('-g','--gsub PATTERN:SUB') do |string|
+        opts.on('-g','--gsub PATTERN:SUB','Replaces all PATTERNs with SUB in each word') do |string|
           pattern, replace = string.split(':',2)
 
           add_modifier(:gsub, pattern, replace)
         end
 
-        opts.on('-m','--mutate PATTERN:SUB') do |string|
+        opts.on('-m','--mutate PATTERN:SUB','Performs every possible substitution on each word') do |string|
           pattern, replace = string.split(':',2)
 
           add_modifier(:mutate, pattern, replace)
         end
 
-        opts.on('-M','--mutate-case') do
+        opts.on('-M','--mutate-case','Switches the case of each letter in each word') do
           add_modifier(:mutate_case)
         end
 
