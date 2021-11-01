@@ -91,14 +91,17 @@ describe Wordlist::Builder do
     end
 
     context "when given append: true" do
-      subject { described_class.new(path, append: true) }
-
       context "and the wordlist file already exists" do
+        let(:path) { ::File.join(fixtures_dir,'pre_existing_wordlist.txt') }
         let(:pre_existing_words) { %w[foo bar] }
+
+        subject { described_class.new(path, append: true) }
 
         before do
           ::File.open(path,'w') do |file|
-            file.puts pre_existing_words
+            pre_existing_words.each do |word|
+              file.puts word
+            end
           end
         end
 
@@ -107,6 +110,8 @@ describe Wordlist::Builder do
             subject.unique_filter.include?(word)
           }).to be(true)
         end
+
+        after { ::FileUtils.rm_f(path) }
       end
     end
   end
@@ -149,7 +154,7 @@ describe Wordlist::Builder do
       end
 
       it "must filter out duplicate words" do
-        system('ls','-lh',path)
+        expect(File.readlines(path).map(&:chomp)).to eq([word])
       end
     end
   end

@@ -239,7 +239,7 @@ module Wordlist
     # Pre-populates the builder with the existing wordlist's content.
     #
     def load!
-      File.read(@path) do |word|
+      Wordlist::File.read(@path) do |word|
         @unique_filter << word
       end
     end
