@@ -47,8 +47,40 @@ module Wordlist
     # @param [Hash{Symbol => Object}] kwargs
     #   Additional keyword arguments for {Lexer#initialize}.
     #
+    # @option kwargs [Symbol] :lang
+    #   The language to use. Defaults to {Lexer.default_lang}.
+    #
+    # @option kwargs [Array<String>] :stop_words
+    #   The explicit stop-words to ignore. If not given, default stop words
+    #   will be loaded based on `lang` or {Lexer.default_lang}.
+    #
+    # @option kwargs [Array<String, Regexp>] :ignore_words
+    #   Optional list of words to ignore. Can contain Strings or Regexps.
+    #
+    # @option kwargs [Boolean] :digits
+    #   Controls whether parsed words may contain digits or not.
+    #
+    # @option kwargs [Array<String>] :symbols
+    #   The additional symbols characters allowed within words.
+    #
+    # @option kwargs [Boolean] :numbers
+    #   Controls whether whole numbers will be parsed as words.
+    #
+    # @option kwargs [Boolean] :acronyms
+    #   Controls whether acronyms will be parsed as words.
+    #
+    # @option kwargs [Boolean] :normalize_case
+    #   Controls whether to convert all words to lowercase.
+    #
+    # @option kwargs [Boolean] :normalize_apostrophes
+    #   Controls whether apostrophes will be removed from the end of words.
+    #
+    # @option kwargs [Boolean] :normalize_acronyms
+    #   Controls whether acronyms will have `.` characters removed.
+    #
     # @raise [ArgumentError]
-    #   The format could not be inferred from the file extension.
+    #   The format could not be inferred from the file extension, or the
+    #   `ignore_words` keyword contained a value other than a String or Regexp.
     #
     def initialize(path, format: Format.infer(path), append: false, **kwargs)
       @path   = ::File.expand_path(path)

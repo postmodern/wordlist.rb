@@ -35,11 +35,11 @@ module Wordlist
     # Initializes the lexer.
     #
     # @param [Symbol] lang
-    #   The language to use.
+    #   The language to use. Defaults to {Lexer.default_lang}.
     #
     # @param [Array<String>] stop_words
-    #   The stop-words to ignore. If not given, will lookup the stop-words
-    #   using {StopWords.[]} and the given `lang`.
+    #   The explicit stop-words to ignore. If not given, default stop words
+    #   will be loaded based on `lang` or {Lexer.default_lang}.
     #
     # @param [Array<String, Regexp>] ignore_words
     #   Optional list of words to ignore. Can contain Strings or Regexps.
