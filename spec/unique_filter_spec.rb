@@ -101,4 +101,24 @@ describe Wordlist::UniqueFilter do
       expect(subject.include?(word2)).to be(true)
     end
   end
+
+  describe "#size" do
+    it "must return 0 by default" do
+      expect(subject.size).to eq(0)
+    end
+
+    context "when the unique filter has been populated" do
+      let(:words) { %w[foo bar baz] }
+
+      before do
+        words.each do |word|
+          subject.add(word)
+        end
+      end
+
+      it "must return the number of unique words added to the filter" do
+        expect(subject.size).to eq(words.length)
+      end
+    end
+  end
 end

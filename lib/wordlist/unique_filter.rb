@@ -73,5 +73,15 @@ module Wordlist
       @hashes.clear
     end
 
+    #
+    # The size of the unique filter.
+    #
+    # @return [Integer]
+    #   The number of unique words seen by the unique filter.
+    #
+    def size
+      @hashes.size
+    end
+
   end
 end
