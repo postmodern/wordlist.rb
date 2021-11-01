@@ -355,7 +355,7 @@ module Wordlist
           @output = wordlist
         end
 
-        opts.on('-a', '--[no-]apend', TrueClass, 'Appends to the new wordlist instead of overwriting it') do |bool|
+        opts.on('-a', '--[no-]append', TrueClass, 'Appends to the new wordlist instead of overwriting it') do |bool|
           @builder_options[:append] = bool
         end
 
@@ -364,11 +364,11 @@ module Wordlist
         end
 
         opts.on('--stop-words WORDS...','Ignores the stop words') do |words|
-          @builder_options[:stop_words] = wors.split
+          @builder_options[:stop_words] = words.split
         end
 
         opts.on('--ignore-words WORDS...','Ignore the words') do |words|
-          @builder_options[:ignore_words] = wors.split
+          @builder_options[:ignore_words] = words.split
         end
 
         opts.on('--[no-]digits', TrueClass, 'Allow digits in the middle of words') do |bool|
@@ -396,7 +396,7 @@ module Wordlist
         end
 
         opts.on('--[no-]normalize-acronyms', TrueClass, 'Removes the dots from acronyms') do |bool|
-          @builder_options[:normalize_apostrophes] = bool
+          @builder_options[:normalize_acronyms] = bool
         end
 
         opts.separator ""

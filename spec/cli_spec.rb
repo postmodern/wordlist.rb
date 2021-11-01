@@ -30,6 +30,10 @@ describe Wordlist::CLI do
     it "must initialize #modifiers to []" do
       expect(subject.modifiers).to eq([])
     end
+
+    it "must initialize #build_options to {}" do
+      expect(subject.builder_options).to eq({})
+    end
   end
 
   describe "#print_error" do
@@ -602,6 +606,205 @@ Please report the following text to: #{Regexp.escape(described_class::BUG_REPORT
         it "must append to #modifiers" do
           expect(subject.mode).to eq(:build)
           expect(subject.output).to eq(wordlist)
+        end
+      end
+
+      context "when given -a" do
+        let(:argv) { ['-a'] }
+
+        before { subject.option_parser.parse(argv) }
+
+        it "must set #builder_options[:append] to true" do
+          expect(subject.builder_options[:append]).to be(true)
+        end
+
+        context "and when given --no-append" do
+          let(:argv) { ['--append', '--no-append'] }
+
+          it "must set #builder_options[:append] to false" do
+            expect(subject.builder_options[:append]).to be(false)
+          end
+        end
+      end
+
+      context "when given --append" do
+        let(:argv) { ['--append'] }
+
+        before { subject.option_parser.parse(argv) }
+
+        it "must set #builder_options[:append] to true" do
+          expect(subject.builder_options[:append]).to be(true)
+        end
+
+        context "and when given --no-append" do
+          let(:argv) { ['--append', '--no-append'] }
+
+          it "must set #builder_options[:append] to false" do
+            expect(subject.builder_options[:append]).to be(false)
+          end
+        end
+      end
+
+      context "when given -L LANG" do
+        let(:lang) { 'fr' }
+        let(:argv) { ['-L', lang] }
+
+        before { subject.option_parser.parse(argv) }
+
+        it "must set #builder_options[:lang] to LANG" do
+          expect(subject.builder_options[:lang]).to eq(lang)
+        end
+      end
+
+      context "when given --lang LANG" do
+        let(:lang) { 'fr' }
+        let(:argv) { ['--lang', lang] }
+
+        before { subject.option_parser.parse(argv) }
+
+        it "must set #builder_options[:lang] to LANG" do
+          expect(subject.builder_options[:lang]).to eq(lang)
+        end
+      end
+
+      context "when given --stop-words \"WORDS...\"" do
+        let(:words) { "foo bar baz" }
+        let(:argv)  { ['--stop-words', words] }
+
+        before { subject.option_parser.parse(argv) }
+
+        it "must set #builder_options[:stop_words] to the Array of WORDS" do
+          expect(subject.builder_options[:stop_words]).to eq(words.split)
+        end
+      end
+
+      context "when given --ignore-words \"WORDS...\"" do
+        let(:words) { "foo bar baz" }
+        let(:argv)  { ['--ignore-words', words] }
+
+        before { subject.option_parser.parse(argv) }
+
+        it "must set #builder_options[:ignore_words] to the Array of WORDS" do
+          expect(subject.builder_options[:ignore_words]).to eq(words.split)
+        end
+      end
+
+      context "when given --digits" do
+        let(:argv) { ['--digits'] }
+
+        before { subject.option_parser.parse(argv) }
+
+        it "must set #builder_options[:digits] to true" do
+          expect(subject.builder_options[:digits]).to be(true)
+        end
+
+        context "and when given --no-digits" do
+          let(:argv) { ['--digits', '--no-digits'] }
+
+          it "must set #builder_options[:digits] to false" do
+            expect(subject.builder_options[:digits]).to be(false)
+          end
+        end
+      end
+
+      context "when given --symbols \"CHARS...\"" do
+        let(:chars) { "!@#$%^&*()_-" }
+        let(:argv)  { ['--symbols', chars] }
+
+        before { subject.option_parser.parse(argv) }
+
+        it "must set #builder_options[:symbols] to the Array of CHARS" do
+          expect(subject.builder_options[:symbols]).to eq(chars.chars)
+        end
+      end
+
+      context "when given --numbers" do
+        let(:argv) { ['--numbers'] }
+
+        before { subject.option_parser.parse(argv) }
+
+        it "must set #builder_options[:numbers] to true" do
+          expect(subject.builder_options[:numbers]).to be(true)
+        end
+
+        context "and when given --no-numbers" do
+          let(:argv) { ['--numbers', '--no-numbers'] }
+
+          it "must set #builder_options[:numbers] to false" do
+            expect(subject.builder_options[:numbers]).to be(false)
+          end
+        end
+      end
+
+      context "when given --acronyms" do
+        let(:argv) { ['--acronyms'] }
+
+        before { subject.option_parser.parse(argv) }
+
+        it "must set #builder_options[:acronyms] to true" do
+          expect(subject.builder_options[:acronyms]).to be(true)
+        end
+
+        context "and when given --no-acronyms" do
+          let(:argv) { ['--acronyms', '--no-acronyms'] }
+
+          it "must set #builder_options[:acronyms] to false" do
+            expect(subject.builder_options[:acronyms]).to be(false)
+          end
+        end
+      end
+
+      context "when given --normalize-case" do
+        let(:argv) { ['--normalize-case'] }
+
+        before { subject.option_parser.parse(argv) }
+
+        it "must set #builder_options[:normalize_case] to true" do
+          expect(subject.builder_options[:normalize_case]).to be(true)
+        end
+
+        context "and when given --no-normalize-case" do
+          let(:argv) { ['--normalize-case', '--no-normalize-case'] }
+
+          it "must set #builder_options[:normalize_case] to false" do
+            expect(subject.builder_options[:normalize_case]).to be(false)
+          end
+        end
+      end
+
+      context "when given --normalize-apostrophes" do
+        let(:argv) { ['--normalize-apostrophes'] }
+
+        before { subject.option_parser.parse(argv) }
+
+        it "must set #builder_options[:normalize_apostrophes] to true" do
+          expect(subject.builder_options[:normalize_apostrophes]).to be(true)
+        end
+
+        context "and when given --no-normalize-apostrophes" do
+          let(:argv) { ['--normalize-apostrophes', '--no-normalize-apostrophes'] }
+
+          it "must set #builder_options[:normalize_apostrophes] to false" do
+            expect(subject.builder_options[:normalize_apostrophes]).to be(false)
+          end
+        end
+      end
+
+      context "when given --normalize-acronyms" do
+        let(:argv) { ['--normalize-acronyms'] }
+
+        before { subject.option_parser.parse(argv) }
+
+        it "must set #builder_options[:normalize_acronyms] to true" do
+          expect(subject.builder_options[:normalize_acronyms]).to be(true)
+        end
+
+        context "and when given --no-normalize-acronyms" do
+          let(:argv) { ['--normalize-acronyms', '--no-normalize-acronyms'] }
+
+          it "must set #builder_options[:normalize_acronyms] to false" do
+            expect(subject.builder_options[:normalize_acronyms]).to be(false)
+          end
         end
       end
 
