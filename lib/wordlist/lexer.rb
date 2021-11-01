@@ -13,9 +13,6 @@ module Wordlist
     # Regexp to match acronyms.
     ACRONYM = /[[:alpha:]](?:\.[[:alpha:]])+\./
 
-    # Skips whitespace, digits, punctuation/symbols.
-    NOT_A_WORD = /[\s\d[:punct:]]+/
-
     # Default set of punctuation characters allowed within words
     SYMBOLS = %w[_ - ']
 
