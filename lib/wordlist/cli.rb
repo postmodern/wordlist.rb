@@ -56,6 +56,11 @@ module Wordlist
     # @return [Array<(Symbol, ...)>]
     attr_reader :modifiers
 
+    # Additional options for {Builder#initialize}.
+    #
+    # @return [Hash{Symbol => Object}]
+    attr_reader :builder_options
+
     #
     # Initializes the command.
     #
@@ -75,6 +80,8 @@ module Wordlist
 
       @operators = []
       @modifiers = []
+
+      @builder_options = {}
     end
 
     #
@@ -177,9 +184,9 @@ module Wordlist
     def build_mode(argv)
       builder = begin
                   if @format
-                    Builder.open(@output, format: @format)
+                    Builder.open(@output, format: @format, **@builder_options)
                   else
-                    Builder.open(@output)
+                    Builder.open(@output, **@builder_options)
                   end
                 rescue UnknownFormat, CommandNotFound => error
                   print_error(error.message)
@@ -346,6 +353,50 @@ module Wordlist
         opts.on('-b','--build WORDLIST','Builds a wordlist') do |wordlist|
           @mode   = :build
           @output = wordlist
+        end
+
+        opts.on('-a', '--[no-]apend', TrueClass, 'Appends to the new wordlist instead of overwriting it') do |bool|
+          @builder_options[:append] = bool
+        end
+
+        opts.on('-L','--lang LANG','The language to expect') do |lang|
+          @builder_options[:lang] = lang
+        end
+
+        opts.on('--stop-words WORDS...','Ignores the stop words') do |words|
+          @builder_options[:stop_words] = wors.split
+        end
+
+        opts.on('--ignore-words WORDS...','Ignore the words') do |words|
+          @builder_options[:ignore_words] = wors.split
+        end
+
+        opts.on('--[no-]digits', TrueClass, 'Allow digits in the middle of words') do |bool|
+          @builder_options[:digits] = bool
+        end
+
+        opts.on('--symbols CHARS','Allows the given symbols inside of words') do |string|
+          @builder_options[:symbols] = string.chars
+        end
+
+        opts.on('--[no-]numbers', TrueClass, 'Parses whole numbers in addition to words') do |bool|
+          @builder_options[:numbers] = bool
+        end
+
+        opts.on('--[no-]acronyms', TrueClass, 'Parses acronyms in addition to words') do |bool|
+          @builder_options[:acronyms] = bool
+        end
+
+        opts.on('--[no-]normalize-case', TrueClass, 'Converts all words to lowercase') do |bool|
+          @builder_options[:normalize_case] = bool
+        end
+
+        opts.on('--[no-]normalize-apostrophes', TrueClass, 'Removes "\'s" from words') do |bool|
+          @builder_options[:normalize_apostrophes] = bool
+        end
+
+        opts.on('--[no-]normalize-acronyms', TrueClass, 'Removes the dots from acronyms') do |bool|
+          @builder_options[:normalize_apostrophes] = bool
         end
 
         opts.separator ""
