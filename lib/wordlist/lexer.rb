@@ -13,16 +13,11 @@ module Wordlist
     # Regexp to match acronyms.
     ACRONYM = /[[:alpha:]](?:\.[[:alpha:]])+\./
 
-    # Default regexp to match a single word.
-    WORD = /#{ACRONYM}|[[:alpha:]](?:[[:alnum:]_'\.-]*[[:alnum:]])?/
-
     # Skips whitespace, digits, punctuation/symbols.
     NOT_A_WORD = /[\s\d[:punct:]]+/
 
-    # The regexp for a word.
-    #
-    # @return [Regexp]
-    attr_reader :word
+    # Default set of punctuation characters allowed within words
+    SYMBOLS = %w[_ - ']
 
     # @return [Symbol]
     attr_reader :lang
@@ -30,26 +25,100 @@ module Wordlist
     # @return [Array<String>]
     attr_reader :stop_words
 
+    # @return [Array<String, Regexp>]
+    attr_reader :ignore_words
+
+    # @return [Array<String>]
+    attr_reader :symbols
+
     #
     # Initializes the lexer.
     #
     # @param [Symbol] lang
     #   The language to use.
     #
-    # @param [Array<String>, nil] stop_words
+    # @param [Array<String>] stop_words
     #   The stop-words to ignore. If not given, will lookup the stop-words
     #   using {StopWords.[]} and the given `lang`.
     #
-    def initialize(lang: self.class.default_lang, stop_words: nil)
-      @lang       = lang
-      @stop_words = stop_words || StopWords[lang]
+    # @param [Array<String, Regexp>] ignore_words
+    #   Optional list of words to ignore. Can contain Strings or Regexps.
+    #
+    # @param [Boolean] digits
+    #   Controls whether parsed words may contain digits or not.
+    #
+    # @param [Array<String>] symbols
+    #   The additional symbols characters allowed within words.
+    #
+    # @param [Boolean] numbers
+    #   Controls whether whole numbers will be parsed as words.
+    #
+    # @param [Boolean] acronyms
+    #   Controls whether acronyms will be parsed as words.
+    #
+    # @param [Boolean] normalize_case
+    #   Controls whether to convert all words to lowercase.
+    #
+    # @param [Boolean] normalize_apostrophes
+    #   Controls whether apostrophes will be removed from the end of words.
+    #
+    # @param [Boolean] normalize_acronyms
+    #   Controls whether acronyms will have `.` characters removed.
+    #
+    # @raise [ArgumentError]
+    #   The `ignore_words` keyword contained a value other than a String or
+    #   Regexp.
+    #
+    def initialize(lang:          self.class.default_lang,
+                   stop_words:    StopWords[lang],
+                   ignore_words:  [],
+                   digits:   true,
+                   symbols:  SYMBOLS,
+                   numbers:  false,
+                   acronyms: true,
+                   normalize_case:        false,
+                   normalize_apostrophes: false,
+                   normalize_acronyms:    false)
+      @lang         = lang
+      @stop_words   = stop_words
+      @ignore_words = ignore_words
 
-      sorted_stop_words  = @stop_words.sort_by { |s| -s.length }
-      escaped_stop_words = sorted_stop_words.map { |word|
-                             Regexp.escape(word)
-                           }.join('|')
+      @symbols  = symbols
+      @digits   = digits
+      @numbers  = numbers
+      @acronyms = acronyms
 
-      @skip_regexp = /(?:(?:#{escaped_stop_words}|\d+)[[:punct:]]*(?:\s+|$))+/i
+      @normalize_acronyms    = normalize_acronyms
+      @normalize_apostrophes = normalize_apostrophes
+      @normalize_case        = normalize_case
+
+      escaped_chars = Regexp.escape(@symbols.join)
+
+      @word = if @digits
+                /[[:alpha:]](?:[[:alnum:]#{escaped_chars}]*[[:alnum:]])?/
+              else
+                /[[:alpha:]](?:[[:alpha:]#{escaped_chars}]*[[:alpha:]])?/
+              end
+
+      skip_words = Regexp.union(
+        (@stop_words + @ignore_words).map { |pattern|
+          case pattern
+          when Regexp then pattern
+          when String then /#{Regexp.escape(pattern)}/i
+          else
+            raise(ArgumentError,"ignore_words: must contain only Strings or Regexps")
+          end
+        }
+      )
+
+      if @numbers
+        @skip_word   = /(?:#{skip_words}[[:punct:]]*(?:\s+|$))+/i
+        @word        = /#{@word}|\d+/
+        @not_a_word  = /[\s[:punct:]]+/
+      else
+        @skip_word   = /(?:(?:#{skip_words}|\d+)[[:punct:]]*(?:\s+|$))+/i
+        @not_a_word  = /[\s\d[:punct:]]+/
+      end
     end
 
     #
@@ -69,6 +138,60 @@ module Wordlist
     end
 
     #
+    # Determines whether parsed words may contain digits or not.
+    #
+    # @return [Boolean]
+    #
+    def digits?
+      @digits
+    end
+
+    #
+    # Determines whether numbers will be parsed or ignored.
+    #
+    # @return [Boolean]
+    #
+    def numbers?
+      @numbers
+    end
+
+    #
+    # Determines whether acronyms will be parsed or ignored.
+    #
+    # @return [Boolean]
+    #
+    def acronyms?
+      @acronyms
+    end
+
+    #
+    # Determines whether `.` characters will be removed from acronyms.
+    #
+    # @return [Boolean]
+    #
+    def normalize_acronyms?
+      @normalize_acronyms
+    end
+
+    #
+    # Determines whether apostrophes will be stripped from words.
+    #
+    # @return [Boolean]
+    #
+    def normalize_apostrophes?
+      @normalize_apostrophes
+    end
+
+    #
+    # Determines whether all words will be converted to loweercase.
+    #
+    # @return [Boolean]
+    #
+    def normalize_case?
+      @normalize_case
+    end
+
+    #
     # Enumerates over each word in the text.
     #
     # @yield [word]
@@ -81,16 +204,25 @@ module Wordlist
     #   If no block is given, an Array of the parsed words will be returned
     #   instead.
     #
-    def parse(text)
+    def parse(text,&block)
       return enum_for(__method__,text).to_a unless block_given?
 
       scanner = StringScanner.new(text)
 
       until scanner.eos?
-        scanner.skip(NOT_A_WORD)
-        scanner.skip(@skip_regexp)
+        scanner.skip(@not_a_word)
+        scanner.skip(@skip_word)
 
-        if (word = scanner.scan(WORD))
+        if (acronym = scanner.scan(ACRONYM))
+          if @acronyms
+            acronym.tr!('.','') if @normalize_acronyms
+
+            yield acronym
+          end
+        elsif (word = scanner.scan(@word))
+          word.downcase! if @normalize_case
+          word.chomp!("'s") if (@normalize_apostrophes && word.end_with?("'s"))
+
           yield word
         end
       end
