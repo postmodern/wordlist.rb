@@ -60,8 +60,8 @@ module Wordlist
     # @option kwargs [Boolean] :digits
     #   Controls whether parsed words may contain digits or not.
     #
-    # @option kwargs [Array<String>] :symbols
-    #   The additional symbols characters allowed within words.
+    # @option kwargs [Array<String>] :special_chars
+    #   The additional special characters allowed within words.
     #
     # @option kwargs [Boolean] :numbers
     #   Controls whether whole numbers will be parsed as words.

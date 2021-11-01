@@ -14,7 +14,7 @@ module Wordlist
     ACRONYM = /[[:alpha:]](?:\.[[:alpha:]])+\./
 
     # Default set of punctuation characters allowed within words
-    SYMBOLS = %w[_ - ']
+    SPECIAL_CHARS = %w[_ - ']
 
     # @return [Symbol]
     attr_reader :lang
@@ -26,7 +26,7 @@ module Wordlist
     attr_reader :ignore_words
 
     # @return [Array<String>]
-    attr_reader :symbols
+    attr_reader :special_chars
 
     #
     # Initializes the lexer.
@@ -44,8 +44,8 @@ module Wordlist
     # @param [Boolean] digits
     #   Controls whether parsed words may contain digits or not.
     #
-    # @param [Array<String>] symbols
-    #   The additional symbols characters allowed within words.
+    # @param [Array<String>] special_chars
+    #   The additional special characters allowed within words.
     #
     # @param [Boolean] numbers
     #   Controls whether whole numbers will be parsed as words.
@@ -70,17 +70,17 @@ module Wordlist
                    stop_words:    StopWords[lang],
                    ignore_words:  [],
                    digits:   true,
-                   symbols:  SYMBOLS,
+                   special_chars:  SPECIAL_CHARS,
                    numbers:  false,
                    acronyms: true,
                    normalize_case:        false,
                    normalize_apostrophes: false,
                    normalize_acronyms:    false)
-      @lang         = lang
-      @stop_words   = stop_words
-      @ignore_words = ignore_words
+      @lang          = lang
+      @stop_words    = stop_words
+      @ignore_words  = ignore_words
+      @special_chars = special_chars
 
-      @symbols  = symbols
       @digits   = digits
       @numbers  = numbers
       @acronyms = acronyms
@@ -89,7 +89,7 @@ module Wordlist
       @normalize_apostrophes = normalize_apostrophes
       @normalize_case        = normalize_case
 
-      escaped_chars = Regexp.escape(@symbols.join)
+      escaped_chars = Regexp.escape(@special_chars.join)
 
       @word = if @digits
                 /[[:alpha:]](?:[[:alnum:]#{escaped_chars}]*[[:alnum:]])?/

@@ -27,8 +27,8 @@ describe Wordlist::Lexer do
       expect(subject.digits?).to be(true)
     end
 
-    it "must default #symbols to SYMBOLS" do
-      expect(subject.symbols).to eq(described_class::SYMBOLS)
+    it "must default #special_chars to SPECIAL_CHARS" do
+      expect(subject.special_chars).to eq(described_class::SPECIAL_CHARS)
     end
 
     it "must default #numbers? to false" do
@@ -91,13 +91,13 @@ describe Wordlist::Lexer do
       end
     end
 
-    context "when symbols: keyword is given" do
-      let(:symbols) { %w[_ -] }
+    context "when special_chars: keyword is given" do
+      let(:special_chars) { %w[_ -] }
 
-      subject { described_class.new(symbols: symbols) }
+      subject { described_class.new(special_chars: special_chars) }
 
-      it "must set #symbols" do
-        expect(subject.symbols).to eq(symbols)
+      it "must set #special_chars" do
+        expect(subject.special_chars).to eq(special_chars)
       end
     end
 
@@ -335,7 +335,7 @@ describe Wordlist::Lexer do
               let(:text)           { "foo bar-baz qux"   }
               let(:expected_words) { %w[foo bar baz qux] }
 
-              subject { described_class.new(symbols: ['_']) }
+              subject { described_class.new(special_chars: ['_']) }
 
               it "must split hyphenated words into multiple words" do
                 expect { |b|
@@ -382,7 +382,7 @@ describe Wordlist::Lexer do
               let(:text)           { "foo bar_baz qux"   }
               let(:expected_words) { %w[foo bar baz qux] }
 
-              subject { described_class.new(symbols: ['-']) }
+              subject { described_class.new(special_chars: ['-']) }
 
               it "must split hyphenated words into multiple words" do
                 expect { |b|
@@ -429,7 +429,7 @@ describe Wordlist::Lexer do
             context "and it does include '.'" do
               let(:expected_words) { %w[foo.bar baz.qux] }
 
-              subject { described_class.new(symbols: ['.']) }
+              subject { described_class.new(special_chars: ['.']) }
 
               it "must treat words containing a '.' as a single word" do
                 expect { |b|
