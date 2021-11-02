@@ -124,7 +124,7 @@ module Wordlist
     # @return [Symbol]
     #
     def self.default_lang
-      if (lang = ENV['LANG'])
+      if (lang = ENV['LANG']) && (lang != 'C')
         lang, encoding = lang.split('.',2)
         lang, country = lang.split('_',2)
 

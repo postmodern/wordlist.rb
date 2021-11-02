@@ -177,12 +177,22 @@ describe Wordlist::Lexer do
       end
     end
 
+    context "when LANG is C" do
+      let(:env) { {'LANG' => 'C'} }
+
+      before { stub_const('ENV', env) }
+
+      it "must default to :en" do
+        expect(subject.default_lang).to be(:en)
+      end
+    end
+
     context "when LANG is not set" do
       let(:env) { {} }
 
       before { stub_const('ENV', env) }
 
-      it "must return :en" do
+      it "must default to :en" do
         expect(subject.default_lang).to be(:en)
       end
     end
