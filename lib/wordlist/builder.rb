@@ -8,6 +8,10 @@ module Wordlist
   #
   # Parses text and builds a wordlist file.
   #
+  # @api public
+  #
+  # @since 1.0.0
+  #
   class Builder
 
     # Path of the wordlist

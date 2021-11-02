@@ -7,6 +7,8 @@ module Wordlist
     #
     # Handles reading compressed files.
     #
+    # @since 1.0.0
+    #
     module Reader
       # Mapping of compression formats to the commands to read them.
       COMMANDS = {

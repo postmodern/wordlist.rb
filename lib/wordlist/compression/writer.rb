@@ -7,6 +7,8 @@ module Wordlist
     #
     # Handles writing compressed files.
     #
+    # @since 1.0.0
+    #
     module Writer
       # Mapping of compression formats to the commands to write to them.
       COMMANDS = {
