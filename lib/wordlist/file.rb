@@ -132,7 +132,7 @@ module Wordlist
     #   If no block is given, an Enumerator object will be returned.
     #
     # @note
-    #   Empty lines and lines betweening with `#` characters will be ignored.
+    #   Empty lines and lines beginning with `#` characters will be ignored.
     #
     # @example
     #   wordlist.each do |word|

@@ -14,7 +14,7 @@ module Wordlist
     #   The other wordlist to concat.
     #
     # @return [Operators::Concat]
-    #   The lazily concatinated wordlists.
+    #   The lazily concatenated wordlists.
     #
     # @example
     #   wordlist1 = Wordlist::List["foo", "bar", "baz"]

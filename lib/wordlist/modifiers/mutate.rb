@@ -68,7 +68,7 @@ module Wordlist
       private
 
       #
-      # Finds all matches of the {#pattenr} within a string.
+      # Finds all matches of the {#pattern} within a string.
       #
       # @param [String] string
       #   The given string.

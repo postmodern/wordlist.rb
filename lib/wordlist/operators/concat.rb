@@ -8,7 +8,7 @@ module Wordlist
     class Concat < BinaryOperator
 
       #
-      # Ennumerables over each word in both wordlists.
+      # Enumerates over each word in both wordlists.
       #
       # @yield [word]
       #   The given block will be passed each word from both wordlists.

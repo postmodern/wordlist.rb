@@ -106,7 +106,7 @@ module Wordlist
     #   If a block is given, it will be passed the new builder.
     #
     # @yieldparam [self] builder
-    #   The newly created builer object.
+    #   The newly created builder object.
     #
     # @return [Builder]
     #   The newly created builder object.
@@ -236,7 +236,7 @@ module Wordlist
     private
 
     # 
-    # Pre-populates the builder with the existing wordlist's content.
+    # Prepopulates the builder with the existing wordlist's content.
     #
     def load!
       Wordlist::File.read(@path) do |word|

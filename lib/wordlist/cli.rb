@@ -41,7 +41,7 @@ module Wordlist
     # @return [String, nil]
     attr_reader :output
 
-    # The command to run with each word from the wodlist.
+    # The command to run with each word from the wordlist.
     #
     # @return [String, nil]
     attr_reader :command

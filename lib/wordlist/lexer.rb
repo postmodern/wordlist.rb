@@ -180,7 +180,7 @@ module Wordlist
     end
 
     #
-    # Determines whether all words will be converted to loweercase.
+    # Determines whether all words will be converted to lowercase.
     #
     # @return [Boolean]
     #
