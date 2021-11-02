@@ -268,6 +268,29 @@ Building a wordlist from STDIN:
 $ cat *.txt | wordlist --build wordlist.txt
 ```
 
+## Benchmarks
+
+```
+                                               user     system      total        real
+Wordlist::Builder#parse_text (size=5.4M)   1.943605   0.003809   1.947414 (  1.955960)
+Wordlist::File#each (N=1000)               0.000544   0.000000   0.000544 (  0.000559)
+Wordlist::File#concat (N=1000)             0.001143   0.000000   0.001143 (  0.001153)
+Wordlist::File#subtract (N=1000)           0.001360   0.000000   0.001360 (  0.001375)
+Wordlist::File#product (N=1000)            0.536518   0.005959   0.542477 (  0.545536)
+Wordlist::File#power (N=1000)              0.000015   0.000001   0.000016 (  0.000014)
+Wordlist::File#intersect (N=1000)          0.001389   0.000000   0.001389 (  0.001407)
+Wordlist::File#union (N=1000)              0.001310   0.000000   0.001310 (  0.001317)
+Wordlist::File#uniq (N=1000)               0.000941   0.000000   0.000941 (  0.000948)
+Wordlist::File#tr (N=1000)                 0.000725   0.000000   0.000725 (  0.000736)
+Wordlist::File#sub (N=1000)                0.000863   0.000000   0.000863 (  0.000870)
+Wordlist::File#gsub (N=1000)               0.001240   0.000000   0.001240 (  0.001249)
+Wordlist::File#capittalize (N=1000)        0.000821   0.000000   0.000821 (  0.000828)
+Wordlist::File#upcase (N=1000)             0.000760   0.000000   0.000760 (  0.000769)
+Wordlist::File#downcase (N=1000)           0.000544   0.000001   0.000545 (  0.000545)
+Wordlist::File#mutate (N=1000)             0.004656   0.000000   0.004656 (  0.004692)
+Wordlist::File#mutate_case (N=1000)       24.178521   0.000000  24.178521 ( 24.294962)
+```
+
 ## License
 
 Copyright (c) 2009-2021 Hal Brodigan

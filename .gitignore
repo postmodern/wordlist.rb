@@ -1,4 +1,5 @@
 /Gemfile.lock
+/benchmarks
 /coverage
 /doc
 /pkg
