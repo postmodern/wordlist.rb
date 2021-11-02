@@ -4,6 +4,9 @@ require 'shellwords'
 
 module Wordlist
   module Compression
+    #
+    # Handles reading compressed files.
+    #
     module Reader
       # Mapping of compression formats to the commands to read them.
       COMMANDS = {

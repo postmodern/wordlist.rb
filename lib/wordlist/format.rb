@@ -2,6 +2,8 @@ require 'wordlist/exceptions'
 
 module Wordlist
   #
+  # Handles wordlist format detection.
+  #
   # @since 1.0.0
   #
   module Format

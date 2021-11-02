@@ -2,6 +2,8 @@ require 'wordlist/list_methods'
 
 module Wordlist
   #
+  # The base class for all wordlist classes.
+  #
   # @since 1.0.0
   #
   class AbstractWordlist

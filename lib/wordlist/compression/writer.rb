@@ -4,6 +4,9 @@ require 'shellwords'
 
 module Wordlist
   module Compression
+    #
+    # Handles writing compressed files.
+    #
     module Writer
       # Mapping of compression formats to the commands to write to them.
       COMMANDS = {

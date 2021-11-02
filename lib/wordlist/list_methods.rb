@@ -3,6 +3,8 @@ require 'wordlist/modifiers'
 
 module Wordlist
   #
+  # List operator and modifier methods.
+  #
   # @since 1.0.0
   #
   module ListMethods
