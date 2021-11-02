@@ -7,6 +7,8 @@ module Wordlist
   #
   # Parses arbitrary text and scans each word from it.
   #
+  # @api semipublic
+  #
   # @since 1.0.0
   #
   class Lexer

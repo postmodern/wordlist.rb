@@ -6,6 +6,10 @@ require 'optparse'
 
 module Wordlist
   #
+  # Represents the `wordlist` command's logic.
+  #
+  # @api private
+  #
   # @since 1.0.0
   #
   class CLI

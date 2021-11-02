@@ -4,6 +4,8 @@ module Wordlist
   #
   # Acts as a filter to filter out duplicate words.
   #
+  # @api semipublic
+  #
   # @since 1.0.0
   #
   class UniqueFilter

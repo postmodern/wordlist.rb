@@ -1,5 +1,12 @@
 module Wordlist
   class Lexer
+    #
+    # Detects the system's default language.
+    #
+    # @api semipublic
+    #
+    # @since 1.0.0
+    #
     module Lang
       #
       # The default language.

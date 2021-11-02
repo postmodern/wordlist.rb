@@ -3,6 +3,10 @@ require 'wordlist/exceptions'
 module Wordlist
   class Lexer
     #
+    # Stop words for various languages.
+    #
+    # @api semipublic
+    #
     # @since 1.0.0
     #
     module StopWords
