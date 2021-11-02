@@ -15,6 +15,8 @@ module Wordlist
   #
   # @api public
   #
+  # @since 1.0.0
+  #
   def self.[](*words)
     Words[*words]
   end
@@ -46,6 +48,8 @@ module Wordlist
   #   path's file extension.
   #
   # @api public
+  #
+  # @since 1.0.0
   #
   def self.open(path,**kwargs,&block)
     File.open(path,**kwargs,&block)
@@ -82,6 +86,8 @@ module Wordlist
   #   path's file extension.
   #
   # @api public
+  #
+  # @since 1.0.0
   #
   def self.build(path,**kwargs)
     builder = Builder.new(path,**kwargs)
