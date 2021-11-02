@@ -48,11 +48,11 @@ module Wordlist
     #   Additional keyword arguments for {Lexer#initialize}.
     #
     # @option kwargs [Symbol] :lang
-    #   The language to use. Defaults to {Lexer.default_lang}.
+    #   The language to use. Defaults to {Lexer::Lang.default}.
     #
     # @option kwargs [Array<String>] :stop_words
     #   The explicit stop-words to ignore. If not given, default stop words
-    #   will be loaded based on `lang` or {Lexer.default_lang}.
+    #   will be loaded based on `lang` or {Lexer::Lang.default}.
     #
     # @option kwargs [Array<String, Regexp>] :ignore_words
     #   Optional list of words to ignore. Can contain Strings or Regexps.

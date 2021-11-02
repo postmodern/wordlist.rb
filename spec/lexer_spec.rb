@@ -9,9 +9,9 @@ describe Wordlist::Lexer do
   end
 
   describe "#initialize" do
-    let(:default_lang) { described_class.default_lang }
+    let(:default_lang) { Wordlist::Lexer::Lang.default }
 
-    it "must default #lang to self.class.default_lang" do
+    it "must default #lang to Lang.default_lang" do
       expect(subject.lang).to eq(default_lang)
     end
 
@@ -138,72 +138,6 @@ describe Wordlist::Lexer do
 
       it "must set #normalize_acronyms? to true" do
         expect(subject.normalize_acronyms?).to be(true)
-      end
-    end
-  end
-
-  describe ".default_lang" do
-    subject { described_class }
-
-    context "when LANG is set" do
-      context "and is of the form xx" do
-        let(:env) { {'LANG' => 'xx'} }
-
-        before { stub_const('ENV', env) }
-
-        it "must return xx as a Symbol" do
-          expect(subject.default_lang).to be(:xx)
-        end
-      end
-
-      context "and is of the form xx_YY" do
-        let(:env) { {'LANG' => 'xx_YY'} }
-
-        before { stub_const('ENV', env) }
-
-        it "must return xx as a Symbol" do
-          expect(subject.default_lang).to be(:xx)
-        end
-      end
-
-      context "and is of the form xx_YY.UTF-8" do
-        let(:env) { {'LANG' => 'xx_YY.UTF-8'} }
-
-        before { stub_const('ENV', env) }
-
-        it "must return xx as a Symbol" do
-          expect(subject.default_lang).to be(:xx)
-        end
-      end
-
-      context "and is of the form C.UTF-8" do
-        let(:env) { {'LANG' => 'C.UTF-8'} }
-
-        before { stub_const('ENV', env) }
-
-        it "must return :en" do
-          expect(subject.default_lang).to be(:en)
-        end
-      end
-    end
-
-    context "when LANG is C" do
-      let(:env) { {'LANG' => 'C'} }
-
-      before { stub_const('ENV', env) }
-
-      it "must default to :en" do
-        expect(subject.default_lang).to be(:en)
-      end
-    end
-
-    context "when LANG is not set" do
-      let(:env) { {} }
-
-      before { stub_const('ENV', env) }
-
-      it "must default to :en" do
-        expect(subject.default_lang).to be(:en)
       end
     end
   end

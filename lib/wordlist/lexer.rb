@@ -1,3 +1,4 @@
+require 'wordlist/lexer/lang'
 require 'wordlist/lexer/stop_words'
 
 require 'strscan'
@@ -34,11 +35,11 @@ module Wordlist
     # Initializes the lexer.
     #
     # @param [Symbol] lang
-    #   The language to use. Defaults to {Lexer.default_lang}.
+    #   The language to use. Defaults to {Lang.default}.
     #
     # @param [Array<String>] stop_words
     #   The explicit stop-words to ignore. If not given, default stop words
-    #   will be loaded based on `lang` or {Lexer.default_lang}.
+    #   will be loaded based on `lang` or {Lang.default}.
     #
     # @param [Array<String, Regexp>] ignore_words
     #   Optional list of words to ignore. Can contain Strings or Regexps.
@@ -68,7 +69,7 @@ module Wordlist
     #   The `ignore_words` keyword contained a value other than a String or
     #   Regexp.
     #
-    def initialize(lang:          self.class.default_lang,
+    def initialize(lang:          Lang.default,
                    stop_words:    StopWords[lang],
                    ignore_words:  [],
                    digits:   true,
@@ -117,26 +118,6 @@ module Wordlist
       else
         @skip_word   = /(?:(?:#{skip_words}|\d+)[[:punct:]]*(?:\s+|$))+/i
         @not_a_word  = /[\s\d[:punct:]]+/
-      end
-    end
-
-    #
-    # The default language.
-    #
-    # @return [Symbol]
-    #
-    def self.default_lang
-      if (lang = ENV['LANG'])
-        lang, encoding = lang.split('.',2)
-        lang, country = lang.split('_',2)
-
-        unless lang == 'C'
-          lang.to_sym
-        else
-          :en
-        end
-      else
-        :en
       end
     end
 
