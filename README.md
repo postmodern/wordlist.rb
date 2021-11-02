@@ -6,97 +6,290 @@
 
 ## Description
 
-A Ruby library for generating and working with word-lists. Wordlist allows
-one to efficiently generate unique word-lists from arbitrary text or
-other sources, such as website content. Wordlist can also quickly enumerate
-through words within an existing word-list, applying multiple mutation
-rules to each word in the list.
+Wordlist is a Ruby library for reading, manipulating, and creating wordlists,
+efficiently.
 
 ## Features
 
-* Uses a bucket system of CRC32 hashes for efficient filtering of duplicate
-  words.
-* Can build wordlists containing multi-word phrases.
-* Can build wordlists containing phrases containing a minimum and maximum
-  number of words.
-* Supports adding mutation rules to a word-list, which are applied to
-  words as the list is enumerated.
-* Supports building word-lists from arbitrary text.
-* Supports custom word-list builders:
-  * Wordlist::Builders::Website: Build word-lists from website content.
-* Supports custom word-list formats:
-  * Wordlist::FlatFile: Enumerates through the words in a flat-file
-    word-list.
+* Supports reading `.txt` wordlists, and `.txt.gz`, `.txt.bz2`, and `.txt.xz`
+  compressed wordlists.
+* Supports building wordlists from arbitrary text. Also supports `.gz`, `.bz2,`
+  and `.xz` compression.
+* Provides an advanced lexer for parsing text into words.
+  * Can parse/skip digits, special characters, whole numbers, acronyms.
+  * Can normalize case, apostrophes, and acronyms.
+* Supports wordlist operations for combining multiple wordlists together.
+* Supports wordlist manipulating to modify the words in the wordlist on the fly.
+* Fast-ish
 
 ## Examples
 
-Build a word-list from arbitrary text:
+### Reading
 
-    Wordlist::Builder.build('list.txt') do |builder|
-      builder.parse(some_text)
-    end
+Open a wordlist for reading:
 
-Build a word-list from another file:
+```ruby
+wordlist = Wordlist.open("passwords.txt")
+```
 
-    Wordlist::Builder.build('list.txt') do |builder|
-      builder.parse_file('some/file.txt')
-    end
+Open a compressed wordlist for reading:
 
-Build a word-list of phrases containing at most three words, from the
-arbitrary text:
+```ruby
+wordlist = Wordlist.open("rockyou.txt.gz")
+```
 
-    Wordlist::Builder.build('list.txt', :max_words => 3) do |builder|
-      builder.parse(some_text)
-    end
+Enumerate through a wordlist:
 
-Build a word-list from content off a website:
+```ruby
+wordlist.each do |word|
+  puts word
+end
+```
 
-    require 'wordlist/builders/website'
+Create an in-memory list of literal words:
 
-    Wordlist::Builders::Website.build(
-      'list.txt',
-      :host => 'www.example.com'
-    )
+```ruby
+words = Wordlist::Words["foo", "bar", "baz"]
+```
 
-Enumerate through each word in a flat-file word-list:
+### List Operations
 
-    list = Wordlist::FlatFile.new('list.txt')
-    list.each_word do |word|
-      puts word
-    end
+Concat two wordlists together:
 
-Enumerate through each unique word in a flat-file word-list:
+```ruby
+(wordlist1 + wordlist2).each do |word|
+  puts word
+end
+```
 
-    list.each_unique do |word|
-      puts word
-    end
+Union two wordlists together:
 
-Define mutation rules, and enumerate through each unique mutation of each
-unique word in the word-list:
+```ruby
+(wordlist1 | wordlist2).each do |word|
+  puts word
+end
+```
 
-    list.mutate 'o', '0'
-    list.mutate '@', 0x41
-    list.mutate(/[hax]/i) { |match| match.swapcase }
+Subtract one wordlist from the other:
 
-    list.each_mutation do |word|
-      puts word
-    end
+```ruby
+(wordlist1 - wordlist2).each do |word|
+  puts word
+end
+```
 
-## Requirements
+Combine every word from `wordlist1` with the words from `wordlist2`:
 
-* [spidr](http://spidr.rubyforge.org) >= 0.1.9
+```ruby
+(wordlist1 * wordlist2).each do |word|
+  puts word
+end
+```
+
+Combine the wordlist with itself multiple times:
+
+```ruby
+(wordslist ** 3).each do |word|
+  puts word
+end
+```
+
+Filter out duplicates from multiple wordlists:
+
+```ruby
+(wordlist1 + wordlist2 + wordlist3).uniq.each do |word|
+  puts word
+end
+```
+
+### String Manipulation
+
+Convert every word in a wordlist to lowercase:
+
+```ruby
+wordlist.downcase.each do |word|
+  puts word
+end
+```
+
+Convert every word in a wordlist to UPPERCASE:
+
+```ruby
+wordlist.upcase.each do |word|
+  puts word
+end
+```
+
+Capitalize every word in a wordlist:
+
+```ruby
+wordlist.capitalize.each do |word|
+  puts word
+end
+```
+
+Run `String#tr` on every word in a wordlist:
+
+```ruby
+wordlist.tr('_','-').each do |word|
+  puts word
+end
+```
+
+Run `String#sub` on every word in a wordlist:
+
+```ruby
+wordlist.sub("fish","phish").each do |word|
+  puts word
+end
+```
+
+Run `String#gsub` on every word in a wordlist:
+
+```ruby
+wordlist.gsub(/\d+/,"").each do |word|
+  puts word
+end
+```
+
+Performs every possible mutation of each word in a wordlist:
+
+```ruby
+wordlist.mutate(/[oae]/, {'o' => '0', 'a' => '@', 'e' => '3'}).each do |word|
+  puts word
+end
+```
+
+Enumerates over every possible case variation of every word in a wordlist:
+
+```ruby
+wordlist.mutate_case.each do |word|
+  puts word
+end
+```
+
+### Building a Wordlist
+
+```ruby
+Wordlist::Builder.open('path/to/file.txt.gz') do |builder|
+  # ...
+end
+```
+
+Add individual words:
+
+```ruby
+builder.add(word)
+```
+
+Adding an Array of words:
+
+```ruby
+builder.append(words)
+```
+
+Parsing text:
+
+```ruby
+builder.parse(text)
+```
+
+Parsing a file's content:
+
+```ruby
+builder.parse_file(path)
+```
 
 ## Install
 
-    $ gem install wordlist
+```shell
+$ gem install wordlist
+```
 
 ### gemspec
 
-   gem.add_dependency 'wordlist', '~> 0.1'
+```ruby
+gem.add_dependency 'wordlist', '~> 1.0'
+```
 
 ### Gemfile
 
-    gem 'wordlist', '~> 0.1'
+```ruby
+gem 'wordlist', '~> 1.0'
+```
+
+### Synopsis
+
+Reading a wordlist:
+
+```shell
+$ wordlist rockyou.txt.gz
+```
+
+Reading multiple wordlists:
+
+```shell
+$ wordlist sport_teams.txt beers.txt
+```
+
+Combining every word from one wordlist with another:
+
+```shell
+$ wordlist sport_teams.txt -p beers.txt -p all_four_digits.txt
+```
+
+Combining every word from one wordlist with itself, N times:
+
+```shell
+$ wordlist shakespeare.txt -P 3
+```
+
+Mutating every word in a wordlist:
+
+```shell
+$ wordlist passwords.txt -m o:0 -m e:3 -m a:@
+```
+
+Executing a command on each word in the wordlist:
+
+```shell
+$ wordlist directories.txt --exec "curl -X POST -F 'user=joe&password={}' -o /dev/null -w '%{http_code} {}' https://$TARGET/login"
+```
+
+Building a wordlist from a directory of `.txt` files:
+
+```shell
+$ wordlist --build wordlist.txt dir/*.txt
+```
+
+Building a wordlist from STDIN:
+
+```shell
+$ cat *.txt | wordlist --build wordlist.txt
+```
+
+## Benchmarks
+
+```
+                                               user     system      total        real
+Wordlist::Builder#parse_text (size=5.4M)   1.943605   0.003809   1.947414 (  1.955960)
+Wordlist::File#each (N=1000)               0.000544   0.000000   0.000544 (  0.000559)
+Wordlist::File#concat (N=1000)             0.001143   0.000000   0.001143 (  0.001153)
+Wordlist::File#subtract (N=1000)           0.001360   0.000000   0.001360 (  0.001375)
+Wordlist::File#product (N=1000)            0.536518   0.005959   0.542477 (  0.545536)
+Wordlist::File#power (N=1000)              0.000015   0.000001   0.000016 (  0.000014)
+Wordlist::File#intersect (N=1000)          0.001389   0.000000   0.001389 (  0.001407)
+Wordlist::File#union (N=1000)              0.001310   0.000000   0.001310 (  0.001317)
+Wordlist::File#uniq (N=1000)               0.000941   0.000000   0.000941 (  0.000948)
+Wordlist::File#tr (N=1000)                 0.000725   0.000000   0.000725 (  0.000736)
+Wordlist::File#sub (N=1000)                0.000863   0.000000   0.000863 (  0.000870)
+Wordlist::File#gsub (N=1000)               0.001240   0.000000   0.001240 (  0.001249)
+Wordlist::File#capittalize (N=1000)        0.000821   0.000000   0.000821 (  0.000828)
+Wordlist::File#upcase (N=1000)             0.000760   0.000000   0.000760 (  0.000769)
+Wordlist::File#downcase (N=1000)           0.000544   0.000001   0.000545 (  0.000545)
+Wordlist::File#mutate (N=1000)             0.004656   0.000000   0.004656 (  0.004692)
+Wordlist::File#mutate_case (N=1000)       24.178521   0.000000  24.178521 ( 24.294962)
+```
 
 ## License
 

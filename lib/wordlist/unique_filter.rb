@@ -1,16 +1,21 @@
 require 'set'
 
 module Wordlist
+  #
+  # Acts as a filter to filter out duplicate words.
+  #
   class UniqueFilter
 
-    # CRC32 Hashes of words seen so far
-    attr_reader :seen
+    # The seen String hashes
+    #
+    # @return [Set<Integer>]
+    attr_reader :hashes
 
     #
-    # Creates a new UniqueFilter object.
+    # Creates a new unique filter.
     #
     def initialize
-      @seen = {}
+      @hashes = Set.new
     end
 
     #
@@ -22,90 +27,60 @@ module Wordlist
     # @return [Boolean]
     #   Specifies whether the word has been previously seen.
     #
-    def seen?(word)
-      length = word.length
-
-      (@seen.has_key?(length) && @seen[length].include?(crc32(word)))
+    def include?(word)
+      @hashes.include?(word.hash)
     end
 
     #
-    # Marks the given word as previously seen.
+    # Adds the word to the unique filter.
     #
     # @param [String] word
-    #   The word to mark as previously seen.
+    #   The word to add.
+    #
+    def add(word)
+      @hashes.add(word.hash)
+    end
+
+    alias << add
+
+    #
+    # Attempts to add the word to the unique filter.
+    #
+    # @param [String] word
+    #   The word to add.
     #
     # @return [Boolean]
-    #   Specifies whether or not the word has not been previously seen
-    #   until now.
+    #   Returns `true` if the word does not yet exist in the unique filter.
+    #   Returns `false` if the word already exists in the unique filter.
     #
-    def saw!(word)
-      length = word.length
-      crc    = crc32(word)
-
-      if @seen.has_key?(length)
-        return false if @seen[length].include?(crc)
-        @seen[length] << crc
-      else
-        @seen[length] = SortedSet[crc]
-      end
-
-      return true
+    def add?(word)
+      !@hashes.add?(word.hash).nil?
     end
 
     #
-    # Passes the given word through the unique filter.
+    # Determines if the unique filter is empty or not.
     #
-    # @param [String] word
-    #   The word to pass through the unique filter.
+    # @return [Boolean]
     #
-    # @yield [word]
-    #   The given block will be passed the word, if the word has not been
-    #   previously seen by the filter.
-    #
-    # @yieldparam [String] word
-    #   A unique word that has not been previously seen by the filter.
-    #
-    # @return [nil]
-    #
-    def pass(word)
-      if saw!(word)
-        yield word
-      end
-
-      return nil
+    def empty?
+      @hashes.empty?
     end
 
     #
     # Clears the unique filter.
     #
-    # @return [UniqueFilter]
-    #   The cleared filter.
-    #
     def clear
-      @seen.clear
-      return self
+      @hashes.clear
     end
 
-    protected
-
     #
-    # Returns the CRC32 checksum of the given word.
-    #
-    # @param [String] word
-    #   The word to calculate a CRC32 checksum for.
+    # The size of the unique filter.
     #
     # @return [Integer]
-    #   The CRC32 checksum for the given word.
+    #   The number of unique words seen by the unique filter.
     #
-    def crc32(word)
-      r = 0xffffffff
-
-      word.each_byte do |b|
-        r ^= b
-        8.times { r = ((r >> 1) ^ (0xEDB88320 * (r & 1))) }
-      end
-
-      r ^ 0xffffffff
+    def size
+      @hashes.size
     end
 
   end

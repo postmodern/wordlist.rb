@@ -1,58 +1,97 @@
+require 'wordlist/format'
+require 'wordlist/lexer'
 require 'wordlist/unique_filter'
-require 'wordlist/parsers'
+require 'wordlist/file'
+require 'wordlist/compression/writer'
 
 module Wordlist
+  #
+  # Parses text and builds a wordlist file.
+  #
   class Builder
 
-    include Parsers
-
-    # Path of the word-list
+    # Path of the wordlist
+    #
+    # @return [String]
     attr_reader :path
 
-    # Minimum number of words
-    attr_reader :min_words
+    # The format of the wordlist file.
+    #
+    # @return [:txt, :gzip, :bzip2, :xz]
+    attr_reader :format
 
-    # Maximum number of words
-    attr_reader :max_words
+    # The word lexer.
+    #
+    # @return [Lexer]
+    attr_reader :lexer
 
-    # File for the word-list
-    attr_reader :file
-
-    # The unique word filter
-    attr_reader :filter
-
-    # The queue of words awaiting processing
-    attr_reader :word_queue
+    # The unique filter.
+    #
+    # @return [UniqueFilter]
+    attr_reader :unique_filter
 
     #
     # Creates a new word-list Builder object.
     #
     # @param [String] path
-    #   The path of the word-list file.
+    #   The path of the wordlist file.
     #
-    # @param [Hash] options
-    #   Additional options.
+    # @param [:txt, :gz, :bzip2, :xz, nil] format
+    #   The format of the wordlist. If not given the format will be inferred
+    #   from the file extension.
     #
-    # @option options [Integer] :min_words (1)
-    #   The minimum number of words each line of the word-list must contain.
+    # @param [Boolean] append
+    #   Indicates whether new words will be appended to the wordlist or
+    #   overwrite the wordlist.
     #
-    # @option options [Integer] :max_words
-    #   The maximum number of words each line of the word-list may contain.
-    #   Defaults to the value of `:min_words`, if not given.
+    # @param [Hash{Symbol => Object}] kwargs
+    #   Additional keyword arguments for {Lexer#initialize}.
     #
-    def initialize(path,options={})
-      super()
+    # @option kwargs [Symbol] :lang
+    #   The language to use. Defaults to {Lexer.default_lang}.
+    #
+    # @option kwargs [Array<String>] :stop_words
+    #   The explicit stop-words to ignore. If not given, default stop words
+    #   will be loaded based on `lang` or {Lexer.default_lang}.
+    #
+    # @option kwargs [Array<String, Regexp>] :ignore_words
+    #   Optional list of words to ignore. Can contain Strings or Regexps.
+    #
+    # @option kwargs [Boolean] :digits
+    #   Controls whether parsed words may contain digits or not.
+    #
+    # @option kwargs [Array<String>] :special_chars
+    #   The additional special characters allowed within words.
+    #
+    # @option kwargs [Boolean] :numbers
+    #   Controls whether whole numbers will be parsed as words.
+    #
+    # @option kwargs [Boolean] :acronyms
+    #   Controls whether acronyms will be parsed as words.
+    #
+    # @option kwargs [Boolean] :normalize_case
+    #   Controls whether to convert all words to lowercase.
+    #
+    # @option kwargs [Boolean] :normalize_apostrophes
+    #   Controls whether apostrophes will be removed from the end of words.
+    #
+    # @option kwargs [Boolean] :normalize_acronyms
+    #   Controls whether acronyms will have `.` characters removed.
+    #
+    # @raise [ArgumentError]
+    #   The format could not be inferred from the file extension, or the
+    #   `ignore_words` keyword contained a value other than a String or Regexp.
+    #
+    def initialize(path, format: Format.infer(path), append: false, **kwargs)
+      @path   = ::File.expand_path(path)
+      @format = format
+      @append = append
 
-      @path = File.expand_path(path)
+      @lexer = Lexer.new(**kwargs)
+      @unique_filter = UniqueFilter.new
 
-      @min_words = options.fetch(:min_words,1)
-      @max_words = options.fetch(:max_words,@min_words)
-
-      @file       = nil
-      @filter     = UniqueFilter.new
-      @word_queue = []
-
-      yield self if block_given?
+      load! if append? && ::File.file?(@path)
+      open!
     end
 
     #
@@ -60,136 +99,77 @@ module Wordlist
     # word-list file, passes the builder object to the given block
     # then finally closes the word-list file.
     #
-    # @param [Array] arguments
-    #   Additional arguments to pass to {#initialize}.
+    # @param [String] path
+    #   The path of the wordlist file.
     #
     # @yield [builder]
     #   If a block is given, it will be passed the new builder.
     #
-    # @yieldparam [Builder] builder
-    #   The newly created builer object.
+    # @yieldparam [self] builder
+    #   The newly created builder object.
     #
     # @return [Builder]
     #   The newly created builder object.
     #
     # @example
-    #   Builder.build('some/path') do |builder|
-    #     builder.parse(readline)
+    #   Builder.open('path/to/file.txt') do |builder|
+    #     builder.parse(text)
     #   end
     #
-    def self.build(*arguments,&block)
-      self.new(*arguments) do |builder|
-        builder.open!
-        builder.build!(&block)
-        builder.close!
-      end
-    end
+    def self.open(path,**kwargs)
+      builder = new(path,**kwargs)
 
-    #
-    # Opens the word-list file for writing. If the file already exists, the
-    # previous words will be used to filter future duplicate words.
-    #
-    # @return [File]
-    #   The open word-list file.
-    #
-    def open!
-      if File.file?(@path)
-        File.open(@path) do |file|
-          file.each_line do |line|
-            @filter.saw!(line.chomp)
-          end
+      if block_given?
+        begin
+          yield builder
+        ensure
+          builder.close
         end
       end
 
-      @file = File.new(@path,File::RDWR | File::CREAT | File::APPEND)
+      return builder
     end
 
     #
-    # Default to be called when the word-list is to be built.
+    # Determines if the builder will append new words to the existing wordlist
+    # or overwrite it.
     #
-    # @yield [builder]
-    #   If a block is given, it will be passed the new builder object.
+    # @return [Boolean]
     #
-    def build!
-      yield self if block_given?
+    def append?
+      @append
     end
 
     #
-    # Enqueues a given word for processing.
+    # Writes a comment line to the wordlist file.
     #
-    # @param [String] word
-    #   The word to enqueue.
+    # @param [String] message
+    #   The comment message to write.
     #
-    # @return [String]
-    #   The enqueued word.
-    #
-    def enqueue(word)
-      # enqueue the word
-      if @max_words == 1
-        @word_queue[0] = word.to_s
-      else
-        @word_queue << word.to_s
-
-        # make sure the queue does not overflow
-        if @word_queue.length > @max_words
-          @word_queue.shift
-        end
-      end
-
-      return word
+    def comment(message)
+      write("# #{message}")
     end
 
     #
-    # Enumerates over the combinations of previously seen words.
-    #
-    # @yield [combination]
-    #   The given block will be passed the combinations of previously
-    #   seen words.
-    #
-    # @yieldparam [String] combination
-    #   A combination of one or more space-separated words.
-    #
-    def word_combinations
-      if @max_words == 1
-        yield @word_queue[0]
-      else
-        current_words = @word_queue.length
-
-        # we must have atleast the minimum amount of words
-        if current_words >= @min_words
-          upper_bound = (current_words - @min_words)
-
-          # combine the words
-          upper_bound.downto(0) do |i|
-            yield @word_queue[i..-1].join(' ')
-          end
-        end
-      end
-    end
-
-    #
-    # Appends the given word to the word-list file, only if it has not
-    # been previously seen.
+    # Appends the given word to the wordlist file, only if it has not
+    # been previously added.
     #
     # @param [String] word
     #   The word to append.
     #
-    # @return [Builder]
+    # @return [self]
     #   The builder object.
     #
-    def <<(word)
-      enqueue(word)
-
-      if @file
-        word_combinations do |words|
-          @filter.pass(words) do |unique|
-            @file.puts unique
-          end
-        end
+    def add(word)
+      if @unique_filter.add?(word)
+        write(word)
       end
 
       return self
     end
+
+    alias << add
+    alias push add
 
     #
     # Add the given words to the word-list.
@@ -197,13 +177,15 @@ module Wordlist
     # @param [Array<String>] words
     #   The words to add to the list.
     #
-    # @return [Builder]
+    # @return [self]
     #   The builder object.
     #
-    def +(words)
-      words.each { |word| self << word }
+    def append(words)
+      words.each { |word| add(word) }
       return self
     end
+
+    alias concat append
 
     #
     # Parses the given text, adding each unique word to the word-list file.
@@ -212,7 +194,9 @@ module Wordlist
     #   The text to parse.
     #
     def parse(text)
-      super(text).each { |word| self << word }
+      @lexer.parse(text) do |word|
+        add(word)
+      end
     end
 
     #
@@ -223,7 +207,7 @@ module Wordlist
     #   The path of the file to parse.
     #
     def parse_file(path)
-      File.open(path) do |file|
+      ::File.open(path) do |file|
         file.each_line do |line|
           parse(line)
         end
@@ -233,13 +217,57 @@ module Wordlist
     #
     # Closes the word-list file.
     #
-    def close!
-      if @file
-        @file.close
-        @file = nil
+    def close
+      unless @io.closed?
+        @io.close
+        @unique_filter.clear
+      end
+    end
 
-        @filter.clear
-        @word_queue.clear
+    #
+    # Indicates whether the wordlist builder has been closed.
+    #
+    # @return [Boolean]
+    #
+    def closed?
+      @io.closed?
+    end
+
+    private
+
+    # 
+    # Prepopulates the builder with the existing wordlist's content.
+    #
+    def load!
+      Wordlist::File.read(@path) do |word|
+        @unique_filter << word
+      end
+    end
+
+    #
+    # Writes a line to the wordlist file.
+    #
+    # @param [String] line
+    #   The line to write.
+    #
+    # @abstract
+    #
+    def write(line)
+      @io.puts(line)
+    end
+
+    #
+    # Opens the wordlist file.
+    #
+    def open!
+      if @format == :txt
+        mode = if append? then 'a'
+               else            'w'
+               end
+
+        @io = ::File.open(@path,mode)
+      else
+        @io = Compression::Writer.open(@path, format: @format, append: append?)
       end
     end
 

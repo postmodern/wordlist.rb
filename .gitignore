@@ -1,7 +1,9 @@
 /Gemfile.lock
-doc
-pkg
-tmp/*
+/benchmarks
+/coverage
+/doc
+/pkg
+/tmp
 scripts/*_wordlist.txt
 .DS_Store
 .bundle
