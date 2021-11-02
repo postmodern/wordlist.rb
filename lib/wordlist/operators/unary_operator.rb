@@ -5,6 +5,8 @@ module Wordlist
     #
     # Unary operator base class.
     #
+    # @since 1.0.0
+    #
     class UnaryOperator < Operator
 
       # The wordlist to operate on.

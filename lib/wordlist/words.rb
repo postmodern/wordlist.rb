@@ -8,6 +8,8 @@ module Wordlist
   #
   # @api public
   #
+  # @since 1.0.0
+  #
   class Words < AbstractWordlist
 
     # The words in the wordlist.

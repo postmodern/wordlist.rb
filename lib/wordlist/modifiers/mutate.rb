@@ -6,6 +6,8 @@ module Wordlist
     # Lazily enumerates through every combination of a string substitution
     # on every word in the wordlist.
     #
+    # @since 1.0.0
+    #
     class Mutate < Sub
 
       #

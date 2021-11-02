@@ -6,6 +6,8 @@ module Wordlist
     #
     # Lazily enumerates over every combination of words in the wordlist.
     #
+    # @since 1.0.0
+    #
     class Power < BinaryOperator
 
       # The product of the wordlist with itself.

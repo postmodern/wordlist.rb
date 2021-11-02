@@ -2,6 +2,9 @@ require 'wordlist/exceptions'
 
 module Wordlist
   class Lexer
+    #
+    # @since 1.0.0
+    #
     module StopWords
       # The directory containing the stop words `.txt` files.
       DIRECTORY = ::File.expand_path(::File.join(__dir__,'..','..','..','data','stop_words'))

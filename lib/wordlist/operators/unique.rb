@@ -7,6 +7,8 @@ module Wordlist
     # Lazily enumerates over only the unique words in the wordlist, filtering
     # out duplicates.
     #
+    # @since 1.0.0
+    #
     class Unique < UnaryOperator
 
       #

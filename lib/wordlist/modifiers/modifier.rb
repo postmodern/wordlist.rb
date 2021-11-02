@@ -3,6 +3,8 @@ module Wordlist
     #
     # Modifier base class.
     #
+    # @since 1.0.0
+    #
     class Modifier
 
       include Enumerable

@@ -7,6 +7,8 @@ module Wordlist
     # Lazily enumerates over every word in the first wordlist, that is not in
     # the second wordlist.
     #
+    # @since 1.0.0
+    #
     class Subtract < BinaryOperator
 
       #

@@ -5,6 +5,8 @@ module Wordlist
     #
     # Lazily calls `String#sub` on every word in the wordlist.
     #
+    # @since 1.0.0
+    #
     class Sub < Modifier
 
       # The pattern to substitute.

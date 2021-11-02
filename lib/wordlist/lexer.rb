@@ -6,6 +6,8 @@ module Wordlist
   #
   # Parses arbitrary text and scans each word from it.
   #
+  # @since 1.0.0
+  #
   class Lexer
 
     include Enumerable

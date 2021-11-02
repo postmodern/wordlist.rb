@@ -5,6 +5,8 @@ module Wordlist
     #
     # Lazily enumerates over the first wordlist, then the second.
     #
+    # @since 1.0.0
+    #
     class Concat < BinaryOperator
 
       #

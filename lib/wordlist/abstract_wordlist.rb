@@ -1,6 +1,9 @@
 require 'wordlist/list_methods'
 
 module Wordlist
+  #
+  # @since 1.0.0
+  #
   class AbstractWordlist
 
     include Enumerable

@@ -1,6 +1,9 @@
 require 'wordlist/exceptions'
 
 module Wordlist
+  #
+  # @since 1.0.0
+  #
   module Format
     # Mapping of file extensions to formats
     FILE_FORMATS = {

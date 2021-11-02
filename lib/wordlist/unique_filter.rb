@@ -4,6 +4,8 @@ module Wordlist
   #
   # Acts as a filter to filter out duplicate words.
   #
+  # @since 1.0.0
+  #
   class UniqueFilter
 
     # The seen String hashes

@@ -14,6 +14,8 @@ module Wordlist
   #
   # @api public
   #
+  # @since 1.0.0
+  #
   class File < AbstractWordlist
 
     # The path to the `.txt` file

@@ -5,6 +5,8 @@ module Wordlist
     #
     # Binary operator base class.
     #
+    # @since 1.0.0
+    #
     class BinaryOperator < Operator
 
       # The left operand.

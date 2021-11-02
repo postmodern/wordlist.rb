@@ -2,6 +2,9 @@ require 'wordlist/operators'
 require 'wordlist/modifiers'
 
 module Wordlist
+  #
+  # @since 1.0.0
+  #
   module ListMethods
     #
     # @group Operators

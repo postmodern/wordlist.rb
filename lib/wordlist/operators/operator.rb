@@ -3,6 +3,8 @@ module Wordlist
     #
     # Operator base class.
     #
+    # @since 1.0.0
+    #
     class Operator
 
       include Enumerable

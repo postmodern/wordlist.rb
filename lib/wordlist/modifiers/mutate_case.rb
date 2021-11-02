@@ -6,6 +6,8 @@ module Wordlist
     # Lazily enumerates through every possible upper/lower-case variation of
     # each word in the wordlist.
     #
+    # @since 1.0.0
+    #
     class MutateCase < Mutate
 
       #

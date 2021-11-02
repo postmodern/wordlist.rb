@@ -5,6 +5,8 @@ module Wordlist
     #
     # Lazily enumerates over the combination of the words from two wordlists.
     #
+    # @since 1.0.0
+    #
     class Product < BinaryOperator
 
       #

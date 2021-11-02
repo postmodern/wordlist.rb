@@ -5,6 +5,8 @@ module Wordlist
     #
     # Lazily calls `String#tr` on every word in the wordlist.
     #
+    # @since 1.0.0
+    #
     class Tr < Modifier
 
       # The characters or character range to translate.

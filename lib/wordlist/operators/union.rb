@@ -7,6 +7,8 @@ module Wordlist
     # Lazily enumerates over words from both wordlists, filtering out any
     # duplicates.
     #
+    # @since 1.0.0
+    #
     class Union < BinaryOperator
 
       #

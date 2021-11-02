@@ -6,6 +6,8 @@ module Wordlist
     #
     # Lazily enumerates over every word that belongs to both wordlists.
     #
+    # @since 1.0.0
+    #
     class Intersect < BinaryOperator
 
       #

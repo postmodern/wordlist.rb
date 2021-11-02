@@ -5,6 +5,9 @@ require 'wordlist/version'
 require 'optparse'
 
 module Wordlist
+  #
+  # @since 1.0.0
+  #
   class CLI
 
     # The program name.
