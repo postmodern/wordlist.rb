@@ -1,3 +1,4 @@
+require 'wordlist/words'
 require 'wordlist/file'
 require 'wordlist/builder'
 require 'wordlist/version'
@@ -15,7 +16,7 @@ module Wordlist
   # @api public
   #
   def self.[](*words)
-    File[*words]
+    Words[*words]
   end
 
   #
