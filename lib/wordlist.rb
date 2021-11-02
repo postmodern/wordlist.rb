@@ -46,7 +46,7 @@ module Wordlist
   #
   # @api public
   #
-  def self.open(path,**kwargs)
+  def self.open(path,**kwargs,&block)
     File.open(path,**kwargs,&block)
   end
 
