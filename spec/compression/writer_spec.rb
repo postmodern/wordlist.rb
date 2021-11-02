@@ -185,7 +185,7 @@ describe Wordlist::Compression::Writer do
       it do
         expect {
           described_class.open(path, format: format)
-        }.to raise_error(Wordlist::CommandNotFound,"No such file or directory - #{command.inspect} command not found")
+        }.to raise_error(Wordlist::CommandNotFound,"#{command.inspect} command not found")
       end
 
       after { ::FileUtils.rm_f(path) }

@@ -18,7 +18,7 @@ describe Wordlist::File do
       it do
         expect {
           described_class.new(path)
-        }.to raise_error(Wordlist::WordlistNotFound,"No such file or directory - wordlist file does not exist: #{path.inspect}")
+        }.to raise_error(Wordlist::WordlistNotFound,"wordlist file does not exist: #{path.inspect}")
       end
     end
 

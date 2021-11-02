@@ -1,13 +1,16 @@
 module Wordlist
-  class WordlistNotFound < Errno::ENOENT
+  class WordlistError < RuntimeError
   end
 
-  class UnknownFormat < ArgumentError
+  class WordlistNotFound < WordlistError
   end
 
-  class CommandNotFound < Errno::ENOENT
+  class UnknownFormat < WordlistError
   end
 
-  class UnsupportedLanguage < ArgumentError
+  class CommandNotFound < WordlistError
+  end
+
+  class UnsupportedLanguage < WordlistError
   end
 end

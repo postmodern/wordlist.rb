@@ -107,7 +107,7 @@ Please report the following text to: #{Regexp.escape(described_class::BUG_REPORT
 
         expect {
           subject.open_wordlist(path)
-        }.to output("#{described_class::PROGRAM_NAME}: No such file or directory - wordlist file does not exist: #{path.inspect}#{$/}").to_stderr
+        }.to output("#{described_class::PROGRAM_NAME}: wordlist file does not exist: #{path.inspect}#{$/}").to_stderr
       end
     end
   end
