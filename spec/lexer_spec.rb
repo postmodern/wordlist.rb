@@ -175,6 +175,16 @@ describe Wordlist::Lexer do
           expect(subject.default_lang).to be(:xx)
         end
       end
+
+      context "and is of the form C.UTF-8" do
+        let(:env) { {'LANG' => 'C.UTF-8'} }
+
+        before { stub_const('ENV', env) }
+
+        it "must return :en" do
+          expect(subject.default_lang).to be(:en)
+        end
+      end
     end
 
     context "when LANG is C" do
