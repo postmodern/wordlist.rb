@@ -14,11 +14,11 @@ N = 1_000
 FileUtils.mkdir_p(DIR)
 
 unless File.file?(TEXT_FILE)
-  require' net/https'
+  require 'net/https'
 
   uri = URI('https://www.gutenberg.org/files/100/old/shaks12.txt')
 
-  Net::HTTP.start(uri.host, uri.port) do |http|
+  Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
     request = Net::HTTP::Get.new(uri)
 
     http.request(request) do |response|
