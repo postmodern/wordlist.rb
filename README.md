@@ -9,8 +9,8 @@
 
 ## Description
 
-Wordlist is a Ruby library for reading, manipulating, and creating wordlists,
-efficiently.
+Wordlist is a Ruby library for reading, combining, manipulating, and building
+wordlists, efficiently.
 
 ## Features
 
