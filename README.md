@@ -22,7 +22,7 @@ wordlists, efficiently.
   * Can parse/skip digits, special characters, whole numbers, acronyms.
   * Can normalize case, apostrophes, and acronyms.
 * Supports wordlist operations for combining multiple wordlists together.
-* Supports wordlist manipulating to modify the words in the wordlist on the fly.
+* Supports wordlist modify or mutating the words in the wordlist on the fly.
 * Fast-ish
 
 ## Examples
@@ -161,6 +161,13 @@ Performs every possible mutation of each word in a wordlist:
 wordlist.mutate(/[oae]/, {'o' => '0', 'a' => '@', 'e' => '3'}).each do |word|
   puts word
 end
+# dog
+# d0g
+# firefox
+# fir3fox
+# firef0x
+# fir3f0x
+# ...
 ```
 
 Enumerates over every possible case variation of every word in a wordlist:
@@ -169,6 +176,15 @@ Enumerates over every possible case variation of every word in a wordlist:
 wordlist.mutate_case.each do |word|
   puts word
 end
+# cat
+# Cat
+# cAt
+# caT
+# CAt
+# CaT
+# cAT
+# CAT
+# ...
 ```
 
 ### Building a Wordlist
@@ -245,18 +261,30 @@ Combining every word from one wordlist with another:
 
 ```shell
 $ wordlist sport_teams.txt -p beers.txt -p all_four_digits.txt
+coors0000
+coors0001
+coors0002
+coors0003
+...
 ```
 
 Combining every word from one wordlist with itself, N times:
 
 ```shell
-$ wordlist shakespeare.txt -P 3
+$ wordlist words.txt -P 3
 ```
 
 Mutating every word in a wordlist:
 
 ```shell
 $ wordlist passwords.txt -m o:0 -m e:3 -m a:@
+dog
+d0g
+firefox
+fir3fox
+firef0x
+fir3f0x
+...
 ```
 
 Executing a command on each word in the wordlist:
