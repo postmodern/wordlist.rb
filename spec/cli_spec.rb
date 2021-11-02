@@ -512,14 +512,14 @@ Please report the following text to: #{Regexp.escape(described_class::BUG_REPORT
         end
       end
 
-      context "when given --symbols \"CHARS...\"" do
+      context "when given --special-chars \"CHARS...\"" do
         let(:chars) { "!@#$%^&*()_-" }
-        let(:argv)  { ['--symbols', chars] }
+        let(:argv)  { ['--special-chars', chars] }
 
         before { subject.option_parser.parse(argv) }
 
-        it "must set #builder_options[:symbols] to the Array of CHARS" do
-          expect(subject.builder_options[:symbols]).to eq(chars.chars)
+        it "must set #builder_options[:special_chars] to the Array of CHARS" do
+          expect(subject.builder_options[:special_chars]).to eq(chars.chars)
         end
       end
 

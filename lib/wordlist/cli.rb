@@ -375,8 +375,8 @@ module Wordlist
           @builder_options[:digits] = bool
         end
 
-        opts.on('--symbols CHARS','Allows the given symbols inside of words') do |string|
-          @builder_options[:symbols] = string.chars
+        opts.on('--special-chars CHARS','Allows the given special characters inside of words') do |string|
+          @builder_options[:special_chars] = string.chars
         end
 
         opts.on('--[no-]numbers', TrueClass, 'Parses whole numbers in addition to words') do |bool|
