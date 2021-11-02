@@ -1,5 +1,7 @@
 # Wordlist
 
+[![CI](https://github.com/postmodern/wordlist.rb/actions/workflows/ruby.yml/badge.svg)](https://github.com/postmodern/wordlist.rb/actions/workflows/ruby.yml)
+
 * [Source](https://github.com/postmodern/wordlist.rb#readme)
 * [Issues](https://github.com/postmodern/wordlist.rb/issues)
 * [Documentation](https://rubydoc.info/gems/wordlist/frames)
