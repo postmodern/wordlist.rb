@@ -13,8 +13,6 @@ module Wordlist
   #
   class Lexer
 
-    include Enumerable
-
     # Regexp to match acronyms.
     ACRONYM = /[[:alpha:]](?:\.[[:alpha:]])+\./
 

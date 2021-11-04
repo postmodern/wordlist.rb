@@ -4,10 +4,6 @@ require 'wordlist/lexer'
 describe Wordlist::Lexer do
   let(:text) { "foo bar baz qux" }
 
-  it do
-    expect(described_class).to include(Enumerable)
-  end
-
   describe "#initialize" do
     let(:default_lang) { Wordlist::Lexer::Lang.default }
 
