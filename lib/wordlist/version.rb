@@ -1,4 +1,4 @@
 module Wordlist
-  # Word version
+  # wordlist version
   VERSION = '1.0.0'
 end
