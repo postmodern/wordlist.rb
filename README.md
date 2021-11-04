@@ -24,6 +24,7 @@ wordlists, efficiently.
   * Can normalize case, apostrophes, and acronyms.
 * Supports wordlist operations for combining multiple wordlists together.
 * Supports wordlist modify or mutating the words in the wordlist on the fly.
+* Also provides a `wordlist` [command](#synopsis).
 * Fast-ish
 
 ## Examples
