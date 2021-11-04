@@ -25,7 +25,7 @@ wordlists, efficiently.
 * Supports wordlist operations for combining multiple wordlists together.
 * Supports wordlist modify or mutating the words in the wordlist on the fly.
 * Also provides a `wordlist` [command](#synopsis).
-* Fast-ish
+* [Fast-ish](#benchmarks)
 
 ## Examples
 
