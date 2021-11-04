@@ -185,7 +185,6 @@ module Wordlist
     alias | union
 
     #
-    #
     # Lazily enumerates over only the unique words in the wordlist, filtering
     # out duplicates.
     #
