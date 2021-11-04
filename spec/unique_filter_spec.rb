@@ -53,8 +53,8 @@ describe Wordlist::UniqueFilter do
 
     before { subject.add(word) }
 
-    context "when the unique filter contains the String's hash" do
-      it "must return nil" do
+    context "when the unique filter already contains the String's hash" do
+      it "must return false" do
         expect(subject.add?(word)).to be(false)
       end
     end
@@ -62,7 +62,7 @@ describe Wordlist::UniqueFilter do
     context "when the unqiue filter does not contain the String's hash" do
       let(:new_word) { "bar" }
 
-      it "must return nil" do
+      it "must return true" do
         expect(subject.add?(new_word)).to be(true)
       end
     end
