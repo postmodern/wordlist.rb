@@ -23,7 +23,7 @@ module Wordlist
       #   If no block is given, an Enumerator object will be returned.
       #
       # @example
-      #   wordlist = Wordlist::List["foo", "bar", "baz"]
+      #   wordlist = Wordlist::Words["foo", "bar", "baz"]
       #   wordlist.mutate(/[oa]/, {'o' => '0', 'a' => '@'}).each do |word|
       #     puts word
       #   end

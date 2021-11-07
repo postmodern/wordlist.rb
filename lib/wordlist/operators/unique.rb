@@ -24,7 +24,7 @@ module Wordlist
       #   If no block is given, an Enumerator object will be returned.
       #
       # @example
-      #   wordlist= Wordlist::List["foo", "bar", "baz", "qux"]
+      #   wordlist= Wordlist::Words["foo", "bar", "baz", "qux"]
       #   (wordlist + wordlist).uniq.each do |word|
       #     puts word
       #   end

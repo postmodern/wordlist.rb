@@ -48,7 +48,7 @@ module Wordlist
       #   If no block is given, an Enumerator object will be returned.
       #
       # @example
-      #   wordlist = Wordlist::List["foo", "bar"]
+      #   wordlist = Wordlist::Words["foo", "bar"]
       #   (wordlist ** 3).each do |word|
       #     puts word
       #   end

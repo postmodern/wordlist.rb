@@ -22,7 +22,7 @@ module Wordlist
       #   If no block is given, an Enumerator object will be returned.
       #
       # @example
-      #   wordlist = Wordlist::List["Foo", "BAR", "bAz"]
+      #   wordlist = Wordlist::Words["Foo", "BAR", "bAz"]
       #   wordlist.downcase.each do |word|
       #     puts word
       #   end

@@ -22,8 +22,8 @@ module Wordlist
     #   The lazily concatenated wordlists.
     #
     # @example
-    #   wordlist1 = Wordlist::List["foo", "bar", "baz"]
-    #   wordlist2 = Wordlist::List["abc", "xyz"]
+    #   wordlist1 = Wordlist::Words["foo", "bar", "baz"]
+    #   wordlist2 = Wordlist::Words["abc", "xyz"]
     #   (wordlist1 + wordlist2).each do |word|
     #     puts word
     #   end
@@ -52,8 +52,8 @@ module Wordlist
     #   The lazy subtraction of the two wordlists.
     #
     # @example
-    #   wordlist1 = Wordlist::List["foo", "bar", baz", "qux"]
-    #   wordlist2 = Wordlist::List["bar", "qux"]
+    #   wordlist1 = Wordlist::Words["foo", "bar", baz", "qux"]
+    #   wordlist2 = Wordlist::Words["bar", "qux"]
     #   (wordlist1 - wordlist2).each do |word|
     #     puts word
     #   end
@@ -78,8 +78,8 @@ module Wordlist
     #   The lazy product of the two wordlists.
     #
     # @example
-    #   wordlist1 = Wordlist::List["foo", "bar"]
-    #   wordlist2 = Wordlist::List["ABC", "XYZ"]
+    #   wordlist1 = Wordlist::Words["foo", "bar"]
+    #   wordlist2 = Wordlist::Words["ABC", "XYZ"]
     #   (wordlist1 * wordlist2).each do |word|
     #     puts word
     #   end
@@ -106,7 +106,7 @@ module Wordlist
     #   The lazy combination of the wordlist.
     #
     # @example
-    #   wordlist = Wordlist::List["foo", "bar"]
+    #   wordlist = Wordlist::Words["foo", "bar"]
     #   (wordlist ** 3).each do |word|
     #     puts word
     #   end
@@ -137,8 +137,8 @@ module Wordlist
     #   The lazy intersection of the two wordlists.
     #
     # @example
-    #   wordlist1 = Wordlist::List["foo", "bar", "baz", "qux"]
-    #   wordlist2 = Wordlist::List["xyz", "bar", "abc", "qux"]
+    #   wordlist1 = Wordlist::Words["foo", "bar", "baz", "qux"]
+    #   wordlist2 = Wordlist::Words["xyz", "bar", "abc", "qux"]
     #   (wordlist1 & wordlist2).each do |word|
     #     puts word
     #   end
@@ -164,8 +164,8 @@ module Wordlist
     #   The lazy union of the two wordlists.
     #
     # @example
-    #   wordlist1 = Wordlist::List["foo", "bar", "baz", "qux"]
-    #   wordlist2 = Wordlist::List["xyz", "bar", "abc", "qux"]
+    #   wordlist1 = Wordlist::Words["foo", "bar", "baz", "qux"]
+    #   wordlist2 = Wordlist::Words["xyz", "bar", "abc", "qux"]
     #   (wordlist1 | wordlist2).each do |word|
     #     puts word
     #   end
@@ -192,7 +192,7 @@ module Wordlist
     #   The lazy uniqueness of the wordlist.
     #
     # @example
-    #   wordlist= Wordlist::List["foo", "bar", "baz", "qux"]
+    #   wordlist= Wordlist::Words["foo", "bar", "baz", "qux"]
     #   (wordlist + wordlist).uniq.each do |word|
     #     puts word
     #   end
@@ -224,7 +224,7 @@ module Wordlist
     #   The lazy `String#tr` modification of the wordlist.
     #
     # @example
-    #   wordlist = Wordlist::List["foo", "bar", "baz"]
+    #   wordlist = Wordlist::Words["foo", "bar", "baz"]
     #   wordlist.capitalize.each do |word|
     #     puts word
     #   end
@@ -258,7 +258,7 @@ module Wordlist
     #   The lazy `String#sub` modification of the wordlist.
     #
     # @example
-    #   wordlist = Wordlist::List["foo", "bar", "baz"]
+    #   wordlist = Wordlist::Words["foo", "bar", "baz"]
     #   wordlist.sub(/o/, '0').each do |word|
     #     puts word
     #   end
@@ -296,7 +296,7 @@ module Wordlist
     #   The lazy `String#gsub` modification of the wordlist.
     #
     # @example
-    #   wordlist = Wordlist::List["Foo", "BAR", "bAz"]
+    #   wordlist = Wordlist::Words["Foo", "BAR", "bAz"]
     #   wordlist.gsub(/o/,'0').each do |word|
     #     puts word
     #   end
@@ -321,7 +321,7 @@ module Wordlist
     #   The lazy `String#gsub` modification of the wordlist.
     #
     # @example
-    #   wordlist = Wordlist::List["foo", "bar", "baz"]
+    #   wordlist = Wordlist::Words["foo", "bar", "baz"]
     #   wordlist.capitalize.each do |word|
     #     puts word
     #   end
@@ -342,7 +342,7 @@ module Wordlist
     #   The lazy `String#gsub` modification of the wordlist.
     #
     # @example
-    #   wordlist = Wordlist::List["foo", "bar", "baz"]
+    #   wordlist = Wordlist::Words["foo", "bar", "baz"]
     #   wordlist.upcase.each do |word|
     #     puts word
     #   end
@@ -363,7 +363,7 @@ module Wordlist
     #   The lazy `String#gsub` modification of the wordlist.
     #
     # @example
-    #   wordlist = Wordlist::List["Foo", "BAR", "bAz"]
+    #   wordlist = Wordlist::Words["Foo", "BAR", "bAz"]
     #   wordlist.downcase.each do |word|
     #     puts word
     #   end
@@ -398,7 +398,7 @@ module Wordlist
     #   The lazy `String#gsub` modification of the wordlist.
     #
     # @example
-    #   wordlist = Wordlist::List["foo", "bar", "baz"]
+    #   wordlist = Wordlist::Words["foo", "bar", "baz"]
     #   wordlist.mutate(/[oa]/, {'o' => '0', 'a' => '@'}).each do |word|
     #     puts word
     #   end
@@ -428,7 +428,7 @@ module Wordlist
     #   The lazy `String#gsub` modification of the wordlist.
     #
     # @example
-    #   wordlist = Wordlist::List["foo", "bar"]
+    #   wordlist = Wordlist::Words["foo", "bar"]
     #   wordlist.mutate_case.each do |word|
     #     puts word
     #   end

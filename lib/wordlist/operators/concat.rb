@@ -22,8 +22,8 @@ module Wordlist
       #   If no block is given, an Enumerator object will be returned.
       #
       # @example
-      #   wordlist1 = Wordlist::List["foo", "bar", "baz"]
-      #   wordlist2 = Wordlist::List["abc", "xyz"]
+      #   wordlist1 = Wordlist::Words["foo", "bar", "baz"]
+      #   wordlist2 = Wordlist::Words["abc", "xyz"]
       #   (wordlist1 + wordlist2).each do |word|
       #     puts word
       #   end
