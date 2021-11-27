@@ -53,7 +53,7 @@ describe Wordlist::Modifiers::Sub do
     end
 
     context "when a block is given" do
-      subject { described_class.new(wordlist,pattern,replace,&block) }
+      subject { described_class.new(wordlist,pattern,&block) }
 
       it "must set #block" do
         expect(subject.block).to eq(block)
