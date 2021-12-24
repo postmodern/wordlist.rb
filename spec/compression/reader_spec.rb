@@ -53,6 +53,17 @@ describe Wordlist::Compression::Reader do
       end
     end
 
+    context "when given format: :zip" do
+      let(:file_name) { 'file_name'                }
+      let(:path)      { "path/to/#{file_name}.zip" }
+
+      subject { described_class.command(path, format: :zip) }
+
+      it "must return 'unzip -p path/to/file_name.zip'" do
+        expect(subject).to eq("unzip -p #{path}")
+      end
+    end
+
     context "when given an unknown format: value" do
       let(:format) { :foo }
 
