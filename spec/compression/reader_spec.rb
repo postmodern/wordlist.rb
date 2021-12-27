@@ -81,7 +81,7 @@ describe Wordlist::Compression::Reader do
       it do
         expect {
           subject.command(path, format: format)
-        }.to raise_error(Wordlist::UnknownFormat,"unsupported format: #{format.inspect}")
+        }.to raise_error(Wordlist::UnknownFormat,"unsupported input format: #{format.inspect}")
       end
     end
   end

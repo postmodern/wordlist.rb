@@ -37,7 +37,7 @@ module Wordlist
       #
       def self.command(path, format: )
         command = COMMANDS.fetch(format) do
-          raise(UnknownFormat,"unsupported format: #{format.inspect}")
+          raise(UnknownFormat,"unsupported input format: #{format.inspect}")
         end
 
         command.call(path)

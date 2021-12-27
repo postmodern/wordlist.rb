@@ -38,7 +38,7 @@ module Wordlist
       #
       def self.command(path, format: , append: false)
         command  = COMMANDS.fetch(format) do
-          raise(UnknownFormat,"unsupported format: #{format.inspect}")
+          raise(UnknownFormat,"unsupported output format: #{format.inspect}")
         end
 
         redirect = if append then '>>'
