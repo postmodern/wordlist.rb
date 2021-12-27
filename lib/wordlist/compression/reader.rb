@@ -15,7 +15,9 @@ module Wordlist
         gzip:  ->(path) { "zcat < #{Shellwords.shellescape(path)}" },
         bzip2: ->(path) { "bzcat < #{Shellwords.shellescape(path)}"},
         xz:    ->(path) { "xzcat < #{Shellwords.shellescape(path)}"},
-        zip:   ->(path) { "unzip -p #{Shellwords.shellescape(path)}" }
+        zip:   ->(path) { "unzip -p #{Shellwords.shellescape(path)}" },
+
+        :"7zip" => ->(path) { "7za e -so #{Shellwords.shellescape(path)}" }
       }
 
       #
@@ -24,14 +26,14 @@ module Wordlist
       # @param [String] path
       #   The path to the file.
       #
-      # @param [:gzip, :bzip2, :xz, :zip] format
+      # @param [:gzip, :bzip2, :xz, :zip, :7zip] format
       #   The compression format of the file.
       #
       # @return [String]
       #   The shellescaped command string.
       #
       # @raise [UnknownFormat]
-      #   The given format was not `:gzip`, `:bzip2`, `:xz`, or `:zip`.
+      #   The given format was not `:gzip`, `:bzip2`, `:xz`, `:zip`, `:7zip`.
       #
       def self.command(path, format: )
         command = COMMANDS.fetch(format) do
@@ -54,7 +56,7 @@ module Wordlist
       #   The uncompressed IO stream.
       #
       # @raise [ArgumentError]
-      #   The given format was not `:gzip`, `:bzip2`, `:xz`, or `:zip`.
+      #   The given format was not `:gzip`, `:bzip2`, `:xz`, `:zip`, or `:7zip`.
       #
       # @raise [CommandNotFound]
       #   The `zcat,` `bzcat`, `xzcat`, or `unzip` command could not be found.

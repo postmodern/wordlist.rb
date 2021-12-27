@@ -83,6 +83,14 @@ describe Wordlist::File do
           expect(subject.format).to eq(:zip)
         end
       end
+
+      context "and the path ends in .7z" do
+        let(:path) { ::File.join(fixtures_dir,'wordlist.txt.7z') }
+
+        it "must set #format to :7zip" do
+          expect(subject.format).to eq(:"7zip")
+        end
+      end
     end
 
     context "when format: is given" do

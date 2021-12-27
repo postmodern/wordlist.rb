@@ -28,10 +28,10 @@ jobs:
           ruby-version: ${{ matrix.ruby }}
       - if: matrix.os == 'ubuntu-latest'
         name: Install external dependencies
-        run: sudo apt-get install -y xz-utils unzip
+        run: sudo apt-get install -y xz-utils unzip p7zip
       - if: matrix.os == 'macos-latest'
         name: Install external dependencies
-        run: brew install xz unzip
+        run: brew install xz unzip p7zip
       - name: Install Ruby dependencies
         run: bundle install --jobs 4 --retry 3
       - name: Run tests

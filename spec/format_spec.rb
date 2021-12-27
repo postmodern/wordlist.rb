@@ -33,6 +33,12 @@ describe Wordlist::Format do
       end
     end
 
+    context "when given a path ending in '.7z'" do
+      it "must return :7zip" do
+        expect(subject.infer("path/to/file.7z")).to eq(:"7zip")
+      end
+    end
+
     context "when given a path ending in another file extension" do
       let(:path) { "path/to/file.foo" }
 

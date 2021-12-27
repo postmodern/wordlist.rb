@@ -14,7 +14,8 @@ module Wordlist
       '.gz'  => :gzip,
       '.bz2' => :bzip2,
       '.xz'  => :xz,
-      '.zip' => :zip
+      '.zip' => :zip,
+      '.7z'  => :"7zip"
     }
 
     # Valid formats.
@@ -26,7 +27,7 @@ module Wordlist
     # @param [String] path
     #   The path to the file.
     #
-    # @return [:txt, :gzip, :bzip2, :xz, :zip]
+    # @return [:txt, :gzip, :bzip2, :xz, :zip, :7zip]
     #
     # @raise [UnknownFormat]
     #   The format could not be inferred from the file path.
