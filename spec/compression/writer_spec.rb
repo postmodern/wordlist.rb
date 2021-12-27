@@ -107,6 +107,7 @@ describe Wordlist::Compression::Writer do
       context "when written to" do
         before do
           subject.puts words
+          subject.flush
           subject.close
         end
 
@@ -133,6 +134,7 @@ describe Wordlist::Compression::Writer do
       context "when written to" do
         before do
           subject.puts words
+          subject.flush
           subject.close
         end
 
@@ -159,6 +161,7 @@ describe Wordlist::Compression::Writer do
       context "when written to" do
         before do
           subject.puts words
+          subject.flush
           subject.close
         end
 
