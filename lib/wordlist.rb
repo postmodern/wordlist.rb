@@ -30,7 +30,7 @@ module Wordlist
   # @param [Hash{Symbol => Object}] kwargs
   #   Additional keyword arguments for {Wordlist::File#initialize}.
   #
-  # @option [:txt, :bzip, :bzip2, :xz] :format
+  # @option kwargs [:txt, :bzip, :bzip2, :xz] :format
   #   Specifies the format of the wordlist. If no format is given, the format
   #   will be inferred from the path's file extension.
   #
