@@ -100,14 +100,15 @@ Please report the following text to: #{Regexp.escape(described_class::BUG_REPORT
     end
 
     context "when the file does not exist" do
-      let(:path) { 'does/not/exist.txt' }
+      let(:path)          { 'does/not/exist.txt'   }
+      let(:absolute_path) { File.expand_path(path) }
 
       it "must print an error and exit with -1" do
         expect(subject).to receive(:exit).with(-1)
 
         expect {
           subject.open_wordlist(path)
-        }.to output("#{described_class::PROGRAM_NAME}: wordlist file does not exist: #{path.inspect}#{$/}").to_stderr
+        }.to output("#{described_class::PROGRAM_NAME}: wordlist file does not exist: #{absolute_path.inspect}#{$/}").to_stderr
       end
     end
   end
