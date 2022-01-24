@@ -95,8 +95,10 @@ module Wordlist
       escaped_chars = Regexp.escape(@special_chars.join)
 
       @word = if @digits
+                # allows numeric characters
                 /[[:alpha:]](?:[[:alnum:]#{escaped_chars}]*[[:alnum:]])?/
               else
+                # only allows alpha characters
                 /[[:alpha:]](?:[[:alpha:]#{escaped_chars}]*[[:alpha:]])?/
               end
 
@@ -112,10 +114,12 @@ module Wordlist
       )
 
       if @numbers
+        # allows lexing whole numbers
         @skip_word   = /(?:#{skip_words}[[:punct:]]*(?:\s+|$))+/i
         @word        = /#{@word}|\d+/
         @not_a_word  = /[\s[:punct:]]+/
       else
+        # skips whole numbers
         @skip_word   = /(?:(?:#{skip_words}|\d+)[[:punct:]]*(?:\s+|$))+/i
         @not_a_word  = /[\s\d[:punct:]]+/
       end
