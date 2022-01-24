@@ -20,6 +20,17 @@ describe Wordlist::File do
           described_class.new(path)
         }.to raise_error(Wordlist::WordlistNotFound,"wordlist file does not exist: #{path.inspect}")
       end
+
+      context "and the path is relative" do
+        let(:path)          { 'does/not/exist.txt'   }
+        let(:absolute_path) { File.expand_path(path) }
+
+        it "must include the absolute path in the exception message" do
+          expect {
+            described_class.new(path)
+          }.to raise_error(Wordlist::WordlistNotFound,"wordlist file does not exist: #{absolute_path.inspect}")
+        end
+      end
     end
 
     context "when given a relative path" do
