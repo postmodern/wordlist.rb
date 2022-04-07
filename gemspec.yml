@@ -1,8 +1,9 @@
 name: wordlist
-summary: Ruby library for reading, combining, mutating, and building wordlists
+summary:
+  Ruby library and CLI for reading, combining, mutating, and building wordlists
 description:
-  Wordlist is a Ruby library for reading, combining, mutating, and building
-  wordlists, efficiently.
+  Wordlist is a Ruby library and CLI for reading, combining, mutating, and
+  building wordlists, efficiently.
 
 license: MIT
 authors: Postmodern

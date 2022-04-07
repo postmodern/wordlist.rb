@@ -10,8 +10,8 @@
 
 ## Description
 
-Wordlist is a Ruby library for reading, combining, mutating, and building
-wordlists, efficiently.
+Wordlist is a Ruby library and CLI for reading, combining, mutating, and
+building wordlists, efficiently.
 
 ## Features
 
