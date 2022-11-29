@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'wordlist/modifiers/sub'
 
 module Wordlist

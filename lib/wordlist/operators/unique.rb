@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'wordlist/operators/unary_operator'
 require 'wordlist/unique_filter'
 

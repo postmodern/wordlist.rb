@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'wordlist/abstract_wordlist'
 require 'wordlist/exceptions'
 require 'wordlist/format'

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'wordlist/list_methods'
 
 module Wordlist

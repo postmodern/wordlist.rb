@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'wordlist/words'
 require 'wordlist/file'
 require 'wordlist/builder'

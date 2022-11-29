@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'wordlist/modifiers/tr'
 require 'wordlist/modifiers/sub'
 require 'wordlist/modifiers/gsub'
