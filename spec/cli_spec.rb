@@ -618,7 +618,7 @@ Please report the following text to: #{Regexp.escape(described_class::BUG_REPORT
         context "when given #{flag}" do
           let(:argv) { [flag] }
 
-          it "must append to #modifiers" do
+          it "must print the program name and the Wordlist::VERSION" do
             expect(subject).to receive(:exit)
 
             expect {
@@ -632,7 +632,7 @@ Please report the following text to: #{Regexp.escape(described_class::BUG_REPORT
         context "when given #{flag}" do
           let(:argv) { [flag] }
 
-          it "must append to #modifiers" do
+          it "must print the option paresr --help output" do
             expect(subject).to receive(:exit)
 
             expect {
