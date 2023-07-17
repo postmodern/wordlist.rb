@@ -259,6 +259,7 @@ module Wordlist
     #
     def write(line)
       @io.puts(line)
+      @io.flush
     end
 
     #
