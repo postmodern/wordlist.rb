@@ -97,10 +97,10 @@ module Wordlist
 
       @word = if @digits
                 # allows numeric characters
-                /[[:alpha:]](?:[[:alnum:]#{escaped_chars}]*[[:alnum:]])?/
+                /\p{L}(?:[\p{L}\p{Nd}#{escaped_chars}]*[\p{L}\p{Nd}])?/
               else
                 # only allows alpha characters
-                /[[:alpha:]](?:[[:alpha:]#{escaped_chars}]*[[:alpha:]])?/
+                /\p{L}(?:[\p{L}#{escaped_chars}]*\p{L})?/
               end
 
       skip_words = Regexp.union(

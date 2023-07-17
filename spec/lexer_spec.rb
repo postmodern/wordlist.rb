@@ -219,6 +219,16 @@ describe Wordlist::Lexer do
         end
       end
 
+      context "when the words contain unicode letters" do
+        let(:expected_words) { %w[Hervé Schäfer Ålesund] }
+
+        it "must parse words containing unicode letters" do
+          expect { |b|
+            subject.parse(text,&b)
+          }.to yield_successive_args(*expected_words)
+        end
+      end
+
       context "when the words contain uppercase letters" do
         let(:expected_words) { %w[foo Bar baZ QUX] }
 
