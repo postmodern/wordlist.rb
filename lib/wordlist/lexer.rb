@@ -116,13 +116,13 @@ module Wordlist
 
       if @numbers
         # allows lexing whole numbers
-        @skip_word   = /(?:#{skip_words}[[:punct:]]*(?:\s+|$))+/i
+        @skip_word   = /(?:#{skip_words}[[:punct:]]*(?:[[:space:]]+|$))+/i
         @word        = /#{@word}|\d+/
-        @not_a_word  = /[\s[:punct:]]+/
+        @not_a_word  = /[[:space:][:punct:]]+/
       else
         # skips whole numbers
-        @skip_word   = /(?:(?:#{skip_words}|\d+)[[:punct:]]*(?:\s+|$))+/i
-        @not_a_word  = /[\s\d[:punct:]]+/
+        @skip_word   = /(?:(?:#{skip_words}|\d+)[[:punct:]]*(?:[[:space:]]+|$))+/i
+        @not_a_word  = /[[:space:]\d[:punct:]]+/
       end
     end
 
