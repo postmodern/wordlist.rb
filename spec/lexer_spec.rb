@@ -169,6 +169,16 @@ describe Wordlist::Lexer do
         end
       end
 
+      context "and when the text is only unicode whitespace" do
+        let(:text) { "\u{a0}" }
+
+        it "must not yield any words" do
+          expect { |b|
+            subject.parse(text,&b)
+          }.to_not yield_control
+        end
+      end
+
       context "when the words contain uppercase letters" do
         let(:expected_words) { %w[foo Bar baZ QUX] }
 
