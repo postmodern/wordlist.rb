@@ -62,25 +62,25 @@ module Wordlist
     # @option kwargs [Array<String, Regexp>] :ignore_words
     #   Optional list of words to ignore. Can contain Strings or Regexps.
     #
-    # @option kwargs [Boolean] :digits
+    # @option kwargs [Boolean] :digits (true)
     #   Controls whether parsed words may contain digits or not.
     #
-    # @option kwargs [Array<String>] :special_chars
+    # @option kwargs [Array<String>] :special_chars (Lexer::SPCIAL_CHARS)
     #   The additional special characters allowed within words.
     #
-    # @option kwargs [Boolean] :numbers
+    # @option kwargs [Boolean] :numbers (false)
     #   Controls whether whole numbers will be parsed as words.
     #
-    # @option kwargs [Boolean] :acronyms
+    # @option kwargs [Boolean] :acronyms (true)
     #   Controls whether acronyms will be parsed as words.
     #
-    # @option kwargs [Boolean] :normalize_case
+    # @option kwargs [Boolean] :normalize_case (false)
     #   Controls whether to convert all words to lowercase.
     #
-    # @option kwargs [Boolean] :normalize_apostrophes
+    # @option kwargs [Boolean] :normalize_apostrophes (false)
     #   Controls whether apostrophes will be removed from the end of words.
     #
-    # @option kwargs [Boolean] :normalize_acronyms
+    # @option kwargs [Boolean] :normalize_acronyms (false)
     #   Controls whether acronyms will have `.` characters removed.
     #
     # @raise [ArgumentError]
