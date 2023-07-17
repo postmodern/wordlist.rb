@@ -1,3 +1,13 @@
+### 1.0.1 / 2023-07-17
+
+* Require Ruby >= 2.0.0.
+* Added `frozen_string_literal: true` magic comments.
+* Flush the output after each line is written in {Wordlist::Builder}.
+  This allows for watching the wordlist file grow using `tail -f`.
+* Fixed a bug in {Wordlist::Lexer#parse} where Unicode whitespace or other
+  Unicode characters caused an infinite loop.
+* Various documentation fixes.
+
 ### 1.0.0 / 2021-11-01
 
 * Redesigned the API.
