@@ -179,6 +179,16 @@ describe Wordlist::Lexer do
         end
       end
 
+      context "and when the words are separated by unicode whitespace" do
+        let(:text) { expected_words.join("\u{a0}") }
+
+        it "must not yield any words" do
+          expect { |b|
+            subject.parse(text,&b)
+          }.to yield_successive_args(*expected_words)
+        end
+      end
+
       context "when the words contain uppercase letters" do
         let(:expected_words) { %w[foo Bar baZ QUX] }
 
