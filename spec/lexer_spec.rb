@@ -149,6 +149,16 @@ describe Wordlist::Lexer do
         }.to yield_successive_args(*expected_words)
       end
 
+      context "and when the text is empty" do
+        let(:text) { '' }
+
+        it "must not yield any words" do
+          expect { |b|
+            subject.parse(text,&b)
+          }.to_not yield_control
+        end
+      end
+
       context "when the words contain uppercase letters" do
         let(:expected_words) { %w[foo Bar baZ QUX] }
 
