@@ -189,6 +189,16 @@ describe Wordlist::Lexer do
         end
       end
 
+      context "and when the text is only unicode symbols" do
+        let(:text) { "©" }
+
+        it "must not yield any words" do
+          expect { |b|
+            subject.parse(text,&b)
+          }.to_not yield_control
+        end
+      end
+
       context "and when the words are separated by unicode whitespace" do
         let(:text) { expected_words.join("\u{a0}") }
 
