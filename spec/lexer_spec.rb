@@ -169,6 +169,16 @@ describe Wordlist::Lexer do
         end
       end
 
+      context "and when the text contains newlines" do
+        let(:text) { expected_words.join("\n") }
+
+        it "must parse each line" do
+          expect { |b|
+            subject.parse(text,&b)
+          }.to yield_successive_args(*expected_words)
+        end
+      end
+
       context "and when the text is only unicode whitespace" do
         let(:text) { "\u{a0}" }
 
@@ -182,7 +192,7 @@ describe Wordlist::Lexer do
       context "and when the words are separated by unicode whitespace" do
         let(:text) { expected_words.join("\u{a0}") }
 
-        it "must not yield any words" do
+        it "must skip the unicode whitespace and yield the words" do
           expect { |b|
             subject.parse(text,&b)
           }.to yield_successive_args(*expected_words)
@@ -233,16 +243,6 @@ describe Wordlist::Lexer do
               subject.parse(text,&b)
             }.to yield_successive_args(*expected_words)
           end
-        end
-      end
-
-      context "and when the text contains newlines" do
-        let(:text) { expected_words.join("\n") }
-
-        it "must parse each line" do
-          expect { |b|
-            subject.parse(text,&b)
-          }.to yield_successive_args(*expected_words)
         end
       end
 
