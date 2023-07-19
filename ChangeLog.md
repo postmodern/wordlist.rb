@@ -1,3 +1,10 @@
+### 1.0.2 / 2023-07-18
+
+#### CLI
+
+* Fixed a bug where operator options (ex: `--power 3`) were not being applied
+  to the wordlist.
+
 ### 1.0.1 / 2023-07-17
 
 * Require Ruby >= 2.0.0.
