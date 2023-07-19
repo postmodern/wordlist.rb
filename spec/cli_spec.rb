@@ -683,6 +683,35 @@ Please report the following text to: #{Regexp.escape(described_class::BUG_REPORT
         ).to_stdout
       end
 
+      context "when a modifier option is also given" do
+        let(:expected_words) { super().map(&:capitalize) }
+        let(:argv)           { ["--capitalize", file] }
+
+        it "must apply the modifier to each word in the wordist" do
+          expect {
+            subject.run(argv)
+          }.to output(
+            expected_words.join($/) + $/
+          ).to_stdout
+        end
+      end
+
+      context "when an operator option is also given" do
+        let(:expected_words) do
+          super().product(super()).map(&:join)
+        end
+
+        let(:argv) { ["--power",'2',  file] }
+
+        it "must apply the operator to the wordist" do
+          expect {
+            subject.run(argv)
+          }.to output(
+            expected_words.join($/) + $/
+          ).to_stdout
+        end
+      end
+
       context "when also given the --exec COMMAND option" do
         let(:command) { 'echo "WORD: {}"' }
         let(:argv)    { ["--exec", command, file] }
