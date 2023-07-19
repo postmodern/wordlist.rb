@@ -239,7 +239,7 @@ module Wordlist
 
       # apply operators first
       @operators.each do |(operator,args)|
-        wordlist.send(operator,*args)
+        wordlist = wordlist.send(operator,*args)
       end
 
       # then apply modifiers
