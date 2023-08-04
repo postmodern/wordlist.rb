@@ -132,7 +132,7 @@ describe Wordlist::File do
 
       context "and the wordlist format is gzip" do
         let(:path) { ::File.join(fixtures_dir,'wordlist.txt.gz') }
-        let(:expected_contents) { `zcat #{Shellwords.shellescape(path)}` }
+        let(:expected_contents) { `zcat < #{Shellwords.shellescape(path)}` }
 
         it "must read the uncompressed gzip data" do
           expect { |b|
@@ -143,7 +143,7 @@ describe Wordlist::File do
 
       context "and the wordlist format is bzip2" do
         let(:path) { ::File.join(fixtures_dir,'wordlist.txt.bz2') }
-        let(:expected_contents) { `bzcat #{Shellwords.shellescape(path)}` }
+        let(:expected_contents) { `bzcat < #{Shellwords.shellescape(path)}` }
 
         it "must read the uncompressed gzip data" do
           expect { |b|
@@ -154,7 +154,7 @@ describe Wordlist::File do
 
       context "and the wordlist format is xz" do
         let(:path) { ::File.join(fixtures_dir,'wordlist.txt.xz') }
-        let(:expected_contents) { `xzcat #{Shellwords.shellescape(path)}` }
+        let(:expected_contents) { `xzcat < #{Shellwords.shellescape(path)}` }
 
         it "must read the uncompressed gzip data" do
           expect { |b|
@@ -172,7 +172,7 @@ describe Wordlist::File do
 
       context "and the wordlist format is gzip" do
         let(:path) { ::File.join(fixtures_dir,'wordlist.txt.gz') }
-        let(:expected_contents) { `zcat #{Shellwords.shellescape(path)}` }
+        let(:expected_contents) { `zcat < #{Shellwords.shellescape(path)}` }
 
         it "must return an Enumerator of the uncompressed gzip data" do
           expect(subject.each_line).to be_kind_of(Enumerator)
@@ -182,7 +182,7 @@ describe Wordlist::File do
 
       context "and the wordlist format is bzip2" do
         let(:path) { ::File.join(fixtures_dir,'wordlist.txt.bz2') }
-        let(:expected_contents) { `bzcat #{Shellwords.shellescape(path)}` }
+        let(:expected_contents) { `bzcat < #{Shellwords.shellescape(path)}` }
 
         it "must return an Enumerator of the compressed gzip data" do
           expect(subject.each_line).to be_kind_of(Enumerator)
@@ -192,7 +192,7 @@ describe Wordlist::File do
 
       context "and the wordlist format is xz" do
         let(:path) { ::File.join(fixtures_dir,'wordlist.txt.xz') }
-        let(:expected_contents) { `xzcat #{Shellwords.shellescape(path)}` }
+        let(:expected_contents) { `xzcat < #{Shellwords.shellescape(path)}` }
 
         it "must return an Enumerator of the compressed gzip data" do
           expect(subject.each_line).to be_kind_of(Enumerator)
@@ -211,7 +211,7 @@ describe Wordlist::File do
 
     context "and the wordlist format is gzip" do
       let(:path) { ::File.join(fixtures_dir,'wordlist.txt.gz') }
-      let(:expected_contents) { `zcat #{Shellwords.shellescape(path)}` }
+      let(:expected_contents) { `zcat < #{Shellwords.shellescape(path)}` }
 
       it "must read the uncompressed gzip data" do
         expect { |b|
@@ -222,7 +222,7 @@ describe Wordlist::File do
 
     context "and the wordlist format is bzip2" do
       let(:path) { ::File.join(fixtures_dir,'wordlist.txt.bz2') }
-      let(:expected_contents) { `bzcat #{Shellwords.shellescape(path)}` }
+      let(:expected_contents) { `bzcat < #{Shellwords.shellescape(path)}` }
 
       it "must read the uncompressed gzip data" do
         expect { |b|
@@ -233,7 +233,7 @@ describe Wordlist::File do
 
     context "and the wordlist format is xz" do
       let(:path) { ::File.join(fixtures_dir,'wordlist.txt.xz') }
-      let(:expected_contents) { `xzcat #{Shellwords.shellescape(path)}` }
+      let(:expected_contents) { `xzcat < #{Shellwords.shellescape(path)}` }
 
       it "must read the uncompressed gzip data" do
         expect { |b|
