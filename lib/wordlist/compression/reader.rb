@@ -37,7 +37,7 @@ module Wordlist
           raise(UnknownFormat,"unsupported format: #{format.inspect}")
         end
 
-        Shellwords.shelljoin([command, path])
+        "#{command} < #{Shellwords.shellescape(path)}"
       end
 
       #

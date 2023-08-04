@@ -8,15 +8,15 @@ describe Wordlist::Compression::Reader do
     context "when given format: :gzip" do
       subject { described_class.command(path, format: :gzip) }
 
-      it "must return 'zcat path/to/file'" do
-        expect(subject).to eq("zcat #{path}")
+      it "must return 'zcat < path/to/file'" do
+        expect(subject).to eq("zcat < #{path}")
       end
 
       context "and the file contains special characters" do
         let(:path) { 'path/to/the file' }
 
         it "must shellescape them" do
-          expect(subject).to eq("zcat #{Shellwords.shellescape(path)}")
+          expect(subject).to eq("zcat < #{Shellwords.shellescape(path)}")
         end
       end
     end
@@ -24,15 +24,15 @@ describe Wordlist::Compression::Reader do
     context "when given format: :bzip2" do
       subject { described_class.command(path, format: :bzip2) }
 
-      it "must return 'bzcat path/to/file'" do
-        expect(subject).to eq("bzcat #{path}")
+      it "must return 'bzcat < path/to/file'" do
+        expect(subject).to eq("bzcat < #{path}")
       end
 
       context "and the file contains special characters" do
         let(:path) { 'path/to/the file' }
 
         it "must shellescape them" do
-          expect(subject).to eq("bzcat #{Shellwords.shellescape(path)}")
+          expect(subject).to eq("bzcat < #{Shellwords.shellescape(path)}")
         end
       end
     end
@@ -40,15 +40,15 @@ describe Wordlist::Compression::Reader do
     context "when given format: :xz" do
       subject { described_class.command(path, format: :xz) }
 
-      it "must return 'xzcat path/to/file'" do
-        expect(subject).to eq("xzcat #{path}")
+      it "must return 'xzcat < path/to/file'" do
+        expect(subject).to eq("xzcat < #{path}")
       end
 
       context "and the file contains special characters" do
         let(:path) { 'path/to/the file' }
 
         it "must shellescape them" do
-          expect(subject).to eq("xzcat #{Shellwords.shellescape(path)}")
+          expect(subject).to eq("xzcat < #{Shellwords.shellescape(path)}")
         end
       end
     end
@@ -69,7 +69,7 @@ describe Wordlist::Compression::Reader do
 
     context "when given format: :gzip" do
       let(:path) { ::File.join(fixtures_dir,'wordlist.txt.gz') }
-      let(:expected_contents) { `zcat #{Shellwords.shellescape(path)}` }
+      let(:expected_contents) { `zcat < #{Shellwords.shellescape(path)}` }
 
       subject { described_class.open(path, format: :gzip) }
 
@@ -86,7 +86,7 @@ describe Wordlist::Compression::Reader do
 
     context "when given format: :bzip2" do
       let(:path) { ::File.join(fixtures_dir,'wordlist.txt.bz2') }
-      let(:expected_contents) { `bzcat #{Shellwords.shellescape(path)}` }
+      let(:expected_contents) { `bzcat < #{Shellwords.shellescape(path)}` }
 
       subject { described_class.open(path, format: :bzip2) }
 
@@ -103,7 +103,7 @@ describe Wordlist::Compression::Reader do
 
     context "when given format: :xz" do
       let(:path) { ::File.join(fixtures_dir,'wordlist.txt.xz') }
-      let(:expected_contents) { `xzcat #{Shellwords.shellescape(path)}` }
+      let(:expected_contents) { `xzcat < #{Shellwords.shellescape(path)}` }
 
       subject { described_class.open(path, format: :xz) }
 
@@ -120,7 +120,7 @@ describe Wordlist::Compression::Reader do
 
     context "when the command is not installed" do
       let(:format)  { :gzip  }
-      let(:command) { Shellwords.shelljoin(['zcat', path]) }
+      let(:command) { "zcat < #{Shellwords.shellescape(path)}" }
       let(:path)    { 'path/to/wordlist.gz' }
 
       before do
