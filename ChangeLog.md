@@ -1,3 +1,10 @@
+### 1.0.3 / 2023-08-04
+
+* Fix reading of compressed wordlists on macOS.
+  * macOS's version of `zcat`, `bzcat`, and `xzcat` do not accept a file path
+    argument, but instead require the compressed input be piped or redirected
+    into them (ex: `zcat < path/to/file.gz`).
+
 ### 1.0.2 / 2023-07-18
 
 #### CLI
