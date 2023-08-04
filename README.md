@@ -332,6 +332,6 @@ Wordlist::File#mutate_case (N=1000)       24.178521   0.000000  24.178521 ( 24.2
 
 ## License
 
-Copyright (c) 2009-2021 Hal Brodigan
+Copyright (c) 2009-2023 Hal Brodigan
 
 See {file:LICENSE.txt} for details.
