@@ -4,10 +4,13 @@ on: [ push, pull_request ]
 
 jobs:
   tests:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
         ruby:
           - 2.6
           - 2.7
@@ -15,7 +18,7 @@ jobs:
           - 3.1
           - jruby
           - truffleruby
-    name: Ruby ${{ matrix.ruby }}
+    name: OS ${{ matrix.os }} / Ruby ${{ matrix.ruby }}
     steps:
       - uses: actions/checkout@v2
       - name: Set up Ruby
