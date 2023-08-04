@@ -110,7 +110,7 @@ describe Wordlist::Compression::Writer do
           subject.close
         end
 
-        let(:written_contents) { `zcat #{Shellwords.shellescape(path)}` }
+        let(:written_contents) { `zcat < #{Shellwords.shellescape(path)}` }
         let(:written_words)    { written_contents.lines.map(&:chomp)    }
 
         it "must writing gzip compressed data to the file" do
@@ -136,7 +136,7 @@ describe Wordlist::Compression::Writer do
           subject.close
         end
 
-        let(:written_contents) { `bzcat #{Shellwords.shellescape(path)}` }
+        let(:written_contents) { `bzcat < #{Shellwords.shellescape(path)}` }
         let(:written_words)    { written_contents.lines.map(&:chomp)    }
 
         it "must writing bzip2 compressed data to the file" do
@@ -162,7 +162,7 @@ describe Wordlist::Compression::Writer do
           subject.close
         end
 
-        let(:written_contents) { `xzcat #{Shellwords.shellescape(path)}` }
+        let(:written_contents) { `xzcat < #{Shellwords.shellescape(path)}` }
         let(:written_words)    { written_contents.lines.map(&:chomp)    }
 
         it "must writing xz compressed data to the file" do
