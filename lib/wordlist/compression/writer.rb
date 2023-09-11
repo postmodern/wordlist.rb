@@ -10,13 +10,6 @@ module Wordlist
     # @since 1.0.0
     #
     module Writer
-      # Mapping of compression formats to the commands to write to them.
-      COMMANDS = {
-        gzip:  'gzip',
-        bzip2: 'bzip2',
-        xz:    'xz'
-      }
-
       #
       # Returns the command to write to the compressed wordlist.
       #
@@ -37,15 +30,17 @@ module Wordlist
       #   The given format was not `:gzip`, `:bzip2`, or `:xz`.
       #
       def self.command(path, format: , append: false)
-        command  = COMMANDS.fetch(format) do
+        case format
+        when :gzip, :bzip2, :xz
+          command  = format.to_s
+          redirect = if append then '>>'
+                     else           '>'
+                     end
+
+          "#{command} #{redirect} #{Shellwords.shellescape(path)}"
+        else
           raise(UnknownFormat,"unsupported output format: #{format.inspect}")
         end
-
-        redirect = if append then '>>'
-                   else           '>'
-                   end
-
-        return "#{Shellwords.shellescape(command)} #{redirect} #{Shellwords.shellescape(path)}"
       end
 
       #
