@@ -247,6 +247,59 @@ gem 'wordlist', '~> 1.0'
 
 ### Synopsis
 
+```
+usage: wordlist { [options] WORDLIST ... | --build WORDLIST [FILE ...] }
+
+Wordlist Reading Options:
+    -f {txt|gzip|bz2|xz|zip|7zip},   Sets the desired wordlist format
+        --format
+        --exec COMMAND               Runs the command with each word from the wordlist.
+                                     The string "{}" will be replaced with each word.
+
+Wordlist Operations:
+    -U, --union WORDLIST             Unions the wordlist with the other WORDLIST
+    -I, --intersect WORDLIST         Intersects the wordlist with the other WORDLIST
+    -S, --subtract WORDLIST          Subtracts the words from the WORDLIST
+    -p, --product WORDLIST           Combines every word with the other words from WORDLIST
+    -P, --power NUM                  Combines every word with the other words from WORDLIST
+    -u, --unique                     Filters out duplicate words
+
+Wordlist Modifiers:
+    -C, --capitalize                 Capitalize each word
+        --uppercase, --upcase        Converts each word to UPPERCASE
+        --lowercase, --downcase      Converts each word to lowercase
+    -t, --tr CHARS:REPLACE           Translates the characters of each word
+    -s, --sub PATTERN:SUB            Replaces PATTERN with SUB in each word
+    -g, --gsub PATTERN:SUB           Replaces all PATTERNs with SUB in each word
+    -m, --mutate PATTERN:SUB         Performs every possible substitution on each word
+    -M, --mutate-case                Switches the case of each letter in each word
+
+Wordlist Building Options:
+    -b, --build WORDLIST             Builds a wordlist
+    -a, --[no-]append                Appends to the new wordlist instead of overwriting it
+    -L, --lang LANG                  The language to expect
+        --stop-words WORDS...        Ignores the stop words
+        --ignore-words WORDS...      Ignore the words
+        --[no-]digits                Allow digits in the middle of words
+        --special-chars CHARS        Allows the given special characters inside of words
+        --[no-]numbers               Parses whole numbers in addition to words
+        --[no-]acronyms              Parses acronyms in addition to words
+        --[no-]normalize-case        Converts all words to lowercase
+        --[no-]normalize-apostrophes Removes "'s" from words
+        --[no-]normalize-acronyms    Removes the dots from acronyms
+
+General Options:
+    -V, --version                    Print the version
+    -h, --help                       Print the help output
+
+Examples:
+    wordlist rockyou.txt.gz
+    wordlist passwords_short.txt passwords_long.txt
+    wordlist sport_teams.txt -p beers.txt -p digits.txt
+    cat *.txt | wordlist --build custom.txt
+
+```
+
 Reading a wordlist:
 
 ```shell
