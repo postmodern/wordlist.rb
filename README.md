@@ -15,8 +15,8 @@ building wordlists, efficiently.
 
 ## Features
 
-* Supports reading `.txt` wordlists, and `.gz`, `.bz2`, and `.xz` compressed
-  wordlists.
+* Supports reading `.txt` wordlists, and `.gz`, `.bz2`, `.xz`, `.zip`, and `.7z`
+  compressed wordlists.
 * Supports building wordlists from arbitrary text. Also supports `.gz`, `.bz2,`
   and `.xz` compression.
 * Provides an advanced lexer for parsing text into words.
