@@ -167,7 +167,10 @@ describe Wordlist::Compression::Writer do
         end
       end
 
-      after { ::FileUtils.rm_f(path) }
+      after do
+        subject.close
+        ::FileUtils.rm_f(path)
+      end
     end
 
     context "when given format: :bzip2" do
@@ -194,7 +197,10 @@ describe Wordlist::Compression::Writer do
         end
       end
 
-      after { ::FileUtils.rm_f(path) }
+      after do
+        subject.close
+        ::FileUtils.rm_f(path)
+      end
     end
 
     context "when given format: :xz" do
@@ -221,7 +227,10 @@ describe Wordlist::Compression::Writer do
         end
       end
 
-      after { ::FileUtils.rm_f(path) }
+      after do
+        subject.close
+        ::FileUtils.rm_f(path)
+      end
     end
 
     context "when given format: :zip" do
@@ -248,7 +257,40 @@ describe Wordlist::Compression::Writer do
         end
       end
 
-      after { ::FileUtils.rm_f(path) }
+      after do
+        subject.close
+        ::FileUtils.rm_f(path)
+      end
+    end
+
+    context "when given format: :7zip" do
+      let(:path) { ::File.join(fixtures_dir,'new_wordlist.txt.7z') }
+
+      subject { described_class.open(path, format: :"7zip") }
+
+      it "must return an IO object" do
+        expect(subject).to be_kind_of(IO)
+      end
+
+      context "when written to" do
+        before do
+          subject.puts words
+          subject.flush
+          subject.close
+        end
+
+        let(:written_contents) { `7za e -so #{Shellwords.shellescape(path)}` }
+        let(:written_words)    { written_contents.lines.map(&:chomp)    }
+
+        it "must writing xz compressed data to the file" do
+          expect(written_words).to eq(words)
+        end
+      end
+
+      after do
+        subject.close
+        ::FileUtils.rm_f(path)
+      end
     end
 
     context "when the command is not installed" do
