@@ -103,6 +103,30 @@ describe Wordlist::Compression::Writer do
       end
     end
 
+    context "when given format: :7zip" do
+      subject { described_class.command(path, format: :"7zip") }
+
+      it "must return '7za a -si path/to/file'" do
+        expect(subject).to eq("7za a -si #{path} >/dev/null")
+      end
+
+      context "and given append: true" do
+        it do
+          expect {
+            described_class.command(path, format: :"7zip", append: true)
+          }.to raise_error(Wordlist::AppendNotSupported,"7zip format does not support appending to files within pre-existing archives: #{path.inspect}")
+        end
+      end
+
+      context "and the file contains special characters" do
+        let(:path) { 'path/to/the file' }
+
+        it "must shellescape them" do
+          expect(subject).to eq("7za a -si #{Shellwords.shellescape(path)} >/dev/null")
+        end
+      end
+    end
+
     context "when given an unknown format: value" do
       let(:format) { :foo }
 

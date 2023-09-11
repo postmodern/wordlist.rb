@@ -47,6 +47,12 @@ module Wordlist
           end
 
           "zip -q #{Shellwords.shellescape(path)} -"
+        when :"7zip"
+          if append
+            raise(AppendNotSupported,"7zip format does not support appending to files within pre-existing archives: #{path.inspect}")
+          end
+
+          "7za a -si #{Shellwords.shellescape(path)} >/dev/null"
         else
           raise(UnknownFormat,"unsupported output format: #{format.inspect}")
         end
