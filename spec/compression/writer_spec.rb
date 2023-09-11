@@ -79,6 +79,30 @@ describe Wordlist::Compression::Writer do
       end
     end
 
+    context "when given format: :zip" do
+      subject { described_class.command(path, format: :zip) }
+
+      it "must return 'zip -q path/to/file -'" do
+        expect(subject).to eq("zip -q #{path} -")
+      end
+
+      context "and given append: true" do
+        it do
+          expect {
+            described_class.command(path, format: :zip, append: true)
+          }.to raise_error(Wordlist::AppendNotSupported,"zip format does not support appending to files within pre-existing archives: #{path.inspect}")
+        end
+      end
+
+      context "and the file contains special characters" do
+        let(:path) { 'path/to/the file' }
+
+        it "must shellescape them" do
+          expect(subject).to eq("zip -q #{Shellwords.shellescape(path)} -")
+        end
+      end
+    end
+
     context "when given an unknown format: value" do
       let(:format) { :foo }
 
@@ -166,6 +190,33 @@ describe Wordlist::Compression::Writer do
         end
 
         let(:written_contents) { `xzcat < #{Shellwords.shellescape(path)}` }
+        let(:written_words)    { written_contents.lines.map(&:chomp)    }
+
+        it "must writing xz compressed data to the file" do
+          expect(written_words).to eq(words)
+        end
+      end
+
+      after { ::FileUtils.rm_f(path) }
+    end
+
+    context "when given format: :zip" do
+      let(:path) { ::File.join(fixtures_dir,'new_wordlist.txt.zip') }
+
+      subject { described_class.open(path, format: :zip) }
+
+      it "must return an IO object" do
+        expect(subject).to be_kind_of(IO)
+      end
+
+      context "when written to" do
+        before do
+          subject.puts words
+          subject.flush
+          subject.close
+        end
+
+        let(:written_contents) { `unzip -p #{Shellwords.shellescape(path)}` }
         let(:written_words)    { written_contents.lines.map(&:chomp)    }
 
         it "must writing xz compressed data to the file" do

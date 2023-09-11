@@ -16,7 +16,7 @@ module Wordlist
       # @param [String] path
       #   The path to the file.
       #
-      # @param [:gzip, :bzip2, :xz] format
+      # @param [:gzip, :bzip2, :xz, :zip] format
       #   The compression format of the file.
       #
       # @param [Boolean] append
@@ -26,8 +26,11 @@ module Wordlist
       # @return [String]
       #   The shellescaped command string.
       #
-      # @raise [UnknownFormat]
-      #   The given format was not `:gzip`, `:bzip2`, or `:xz`.
+      # @raise [UnknownFormat, AppendNotSupported]
+      #   * {UnknownFormat} - the given format was not `:gzip`, `:bzip2`, `:xz`,
+      #     or `:zip`.
+      #   * {AppendNotSupported} - the `zip` archive format does not support
+      #     appending to existing files within existing archives.
       #
       def self.command(path, format: , append: false)
         case format
@@ -38,6 +41,12 @@ module Wordlist
                      end
 
           "#{command} #{redirect} #{Shellwords.shellescape(path)}"
+        when :zip
+          if append
+            raise(AppendNotSupported,"zip format does not support appending to files within pre-existing archives: #{path.inspect}")
+          end
+
+          "zip -q #{Shellwords.shellescape(path)} -"
         else
           raise(UnknownFormat,"unsupported output format: #{format.inspect}")
         end
@@ -56,10 +65,11 @@ module Wordlist
       #   The uncompressed IO stream.
       #
       # @raise [ArgumentError]
-      #   The given format was not `:gzip`, `:bzip2`, or `:xz`.
+      #   The given format was not `:gzip`, `:bzip2`, `:xz`, `:zip`.
       #
       # @raise [CommandNotFound]
-      #   The `gzip`, `bzip2,` or `xz` command was not found on the system.
+      #   The `gzip`, `bzip2,` `xz`, or `zip` command was not found on the
+      #   system.
       #
       def self.open(path,**kwargs)
         command = self.command(path,**kwargs)

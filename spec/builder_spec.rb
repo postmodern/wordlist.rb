@@ -46,6 +46,14 @@ describe Wordlist::Builder do
       end
     end
 
+    context "when the path ends in '.zip'" do
+      let(:path) { ::File.join(fixtures_dir,'new_wordlist.zip') }
+
+      it "must default #format to :zip" do
+        expect(subject.format).to eq(:zip)
+      end
+    end
+
     context "when format: :txt is given" do
       subject { described_class.new(path, format: :txt) }
 
@@ -75,6 +83,14 @@ describe Wordlist::Builder do
 
       it "must set #format to :xz" do
         expect(subject.format).to eq(:xz)
+      end
+    end
+
+    context "when format: :zip is given" do
+      subject { described_class.new(path, format: :zip) }
+
+      it "must set #format to :zip" do
+        expect(subject.format).to eq(:zip)
       end
     end
 

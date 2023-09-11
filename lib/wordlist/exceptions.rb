@@ -18,6 +18,12 @@ module Wordlist
   end
 
   #
+  # @since 1.1.0
+  #
+  class AppendNotSupported < WordlistError
+  end
+
+  #
   # @since 1.0.0
   #
   class CommandNotFound < WordlistError

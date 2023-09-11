@@ -22,7 +22,7 @@ module Wordlist
 
     # The format of the wordlist file.
     #
-    # @return [:txt, :gzip, :bzip2, :xz]
+    # @return [:txt, :gzip, :bzip2, :xz, :zip]
     attr_reader :format
 
     # The word lexer.
@@ -41,7 +41,7 @@ module Wordlist
     # @param [String] path
     #   The path of the wordlist file.
     #
-    # @param [:txt, :gz, :bzip2, :xz, nil] format
+    # @param [:txt, :gz, :bzip2, :xz, :zip, nil] format
     #   The format of the wordlist. If not given the format will be inferred
     #   from the file extension.
     #
