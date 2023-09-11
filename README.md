@@ -18,7 +18,7 @@ building wordlists, efficiently.
 * Supports reading `.txt` wordlists, and `.gz`, `.bz2`, `.xz`, `.zip`, and `.7z`
   compressed wordlists.
 * Supports building wordlists from arbitrary text. Also supports `.gz`, `.bz2,`
-  and `.xz` compression.
+  `.xz`, `.zip`, and `.7z` compression.
 * Provides an advanced lexer for parsing text into words.
   * Can parse/skip digits, special characters, whole numbers, acronyms.
   * Can normalize case, apostrophes, and acronyms.
