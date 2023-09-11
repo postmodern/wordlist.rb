@@ -10,16 +10,6 @@ module Wordlist
     # @since 1.0.0
     #
     module Reader
-      # Mapping of compression formats to the commands to read them.
-      COMMANDS = {
-        gzip:  ->(path) { "zcat < #{Shellwords.shellescape(path)}" },
-        bzip2: ->(path) { "bzcat < #{Shellwords.shellescape(path)}"},
-        xz:    ->(path) { "xzcat < #{Shellwords.shellescape(path)}"},
-        zip:   ->(path) { "unzip -p #{Shellwords.shellescape(path)}" },
-
-        :"7zip" => ->(path) { "7za e -so #{Shellwords.shellescape(path)}" }
-      }
-
       #
       # Returns the command to read the compressed wordlist.
       #
@@ -36,11 +26,15 @@ module Wordlist
       #   The given format was not `:gzip`, `:bzip2`, `:xz`, `:zip`, `:7zip`.
       #
       def self.command(path, format: )
-        command = COMMANDS.fetch(format) do
+        case format
+        when :gzip   then "zcat < #{Shellwords.shellescape(path)}"
+        when :bzip2  then "bzcat < #{Shellwords.shellescape(path)}"
+        when :xz     then "xzcat < #{Shellwords.shellescape(path)}"
+        when :zip    then "unzip -p #{Shellwords.shellescape(path)}"
+        when :"7zip" then "7za e -so #{Shellwords.shellescape(path)}"
+        else
           raise(UnknownFormat,"unsupported input format: #{format.inspect}")
         end
-
-        command.call(path)
       end
 
       #
