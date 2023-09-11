@@ -189,6 +189,17 @@ describe Wordlist::File do
           }.to yield_successive_args(*expected_lines)
         end
       end
+
+      context "and the wordlist format is 7zip" do
+        let(:path) { ::File.join(fixtures_dir,'wordlist.txt.7z') }
+        let(:expected_contents) { `7za e -so #{Shellwords.shellescape(path)}` }
+
+        it "must read the uncompressed 7zip data" do
+          expect { |b|
+            subject.each_line(&b)
+          }.to yield_successive_args(*expected_lines)
+        end
+      end
     end
 
     context "when not given a block" do
@@ -232,6 +243,16 @@ describe Wordlist::File do
         let(:expected_contents) { `unzip -p #{Shellwords.shellescape(path)}` }
 
         it "must return an Enumerator of the compressed zip data" do
+          expect(subject.each_line).to be_kind_of(Enumerator)
+          expect(subject.each_line.to_a).to eq(expected_lines)
+        end
+      end
+
+      context "and the wordlist format is 7zip" do
+        let(:path) { ::File.join(fixtures_dir,'wordlist.txt.7z') }
+        let(:expected_contents) { `7za e -so #{Shellwords.shellescape(path)}` }
+
+        it "must return an Enumerator of the compressed 7zip data" do
           expect(subject.each_line).to be_kind_of(Enumerator)
           expect(subject.each_line.to_a).to eq(expected_lines)
         end
@@ -284,6 +305,17 @@ describe Wordlist::File do
       let(:expected_contents) { `unzip -p #{Shellwords.shellescape(path)}` }
 
       it "must read the uncompressed zip data" do
+        expect { |b|
+          subject.each_line(&b)
+        }.to yield_successive_args(*expected_lines)
+      end
+    end
+
+    context "and the wordlist format is 7z" do
+      let(:path) { ::File.join(fixtures_dir,'wordlist.txt.7z') }
+      let(:expected_contents) { `7za e -so #{Shellwords.shellescape(path)}` }
+
+      it "must read the uncompressed 7zip data" do
         expect { |b|
           subject.each_line(&b)
         }.to yield_successive_args(*expected_lines)
