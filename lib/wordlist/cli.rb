@@ -76,7 +76,7 @@ module Wordlist
     #
     # @param [:read, :build] mode
     #
-    # @param [:txt, :gzip, :bzip2, :xz, nil] format
+    # @param [:txt, :gzip, :bzip2, :xz, :zip, :7zip, nil] format
     #
     # @param [String, nil] command
     #
@@ -279,7 +279,7 @@ module Wordlist
         opts.separator ""
         opts.separator "Wordlist Reading Options:"
 
-        opts.on('-f','--format {txt|gzip|bz2|xz}', FORMATS, 'Saves the output to FILE') do |format|
+        opts.on('-f','--format {txt|gzip|bz2|xz|zip|7zip}', FORMATS, 'Saves the output to FILE') do |format|
           @format = format
         end
 
