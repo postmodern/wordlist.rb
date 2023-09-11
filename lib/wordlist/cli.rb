@@ -26,7 +26,9 @@ module Wordlist
       'txt'  => :txt,
       'gzip' => :gzip,
       'bzip2'=> :bzip2,
-      'xz'   => :xz
+      'xz'   => :xz,
+      'zip'  => :zip,
+      '7zip' => :"7zip"
     }
 
     # The command's option parser.
