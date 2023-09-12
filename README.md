@@ -223,7 +223,7 @@ builder.parse_file(path)
 
 ## Requirements
 
-* [ruby] >= 2.0.0
+* [ruby] >= 3.0.0
 
 [ruby]: https://www.ruby-lang.org/
 
