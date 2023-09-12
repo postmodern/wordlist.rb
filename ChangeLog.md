@@ -1,3 +1,13 @@
+### 1.1.0 / 2023-09-12
+
+* Added support for reading zip (`.zip`) and 7zip (`.7z`) compressed wordlist
+  files.
+* Added support for building zip or 7zip compressed wordlist files.
+
+#### CLI
+
+* `-f,--format` now accepts `zip` and `7zip` format values.
+
 ### 1.0.3 / 2023-08-04
 
 * Fix reading of compressed wordlists on macOS.
