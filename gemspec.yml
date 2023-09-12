@@ -8,7 +8,7 @@ description:
 license: MIT
 authors: Postmodern
 email: postmodern.mod3@gmail.com
-homepage: https://github.com/postmodern/wordlist.rb
+homepage: https://github.com/postmodern/wordlist.rb#readme
 has_yard: true
 
 metadata:
