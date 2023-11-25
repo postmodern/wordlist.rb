@@ -224,6 +224,11 @@ builder.parse_file(path)
 ## Requirements
 
 * [ruby] >= 3.0.0
+* `zcat` (for reading `.gz` wordlists)
+* `bzcat` (for reading `.bz2` wordlists)
+* `xzcat` (for reading `.xz` wordlists)
+* `unzip` (for reading `.zip` wordlists)
+* `7za` (for reading `.7z` wordlists)
 
 [ruby]: https://www.ruby-lang.org/
 
