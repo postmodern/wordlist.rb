@@ -1,7 +1,7 @@
 # frozen_string_literal: true
-require 'wordlist/file'
-require 'wordlist/builder'
-require 'wordlist/version'
+require_relative 'file'
+require_relative 'builder'
+require_relative 'version'
 
 require 'optparse'
 

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
-require 'wordlist/lexer/lang'
-require 'wordlist/lexer/stop_words'
+require_relative 'lexer/lang'
+require_relative 'lexer/stop_words'
 
 require 'strscan'
 

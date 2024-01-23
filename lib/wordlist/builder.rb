@@ -1,9 +1,9 @@
 # frozen_string_literal: true
-require 'wordlist/format'
-require 'wordlist/lexer'
-require 'wordlist/unique_filter'
-require 'wordlist/file'
-require 'wordlist/compression/writer'
+require_relative 'format'
+require_relative 'lexer'
+require_relative 'unique_filter'
+require_relative 'file'
+require_relative 'compression/writer'
 
 module Wordlist
   #

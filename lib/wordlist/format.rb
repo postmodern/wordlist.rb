@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'wordlist/exceptions'
+require_relative 'exceptions'
 
 module Wordlist
   #

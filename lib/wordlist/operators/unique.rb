@@ -1,6 +1,6 @@
 # frozen_string_literal: true
-require 'wordlist/operators/unary_operator'
-require 'wordlist/unique_filter'
+require_relative 'unary_operator'
+require_relative '../unique_filter'
 
 module Wordlist
   module Operators

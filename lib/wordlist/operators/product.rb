@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'wordlist/operators/binary_operator'
+require_relative 'binary_operator'
 
 module Wordlist
   module Operators

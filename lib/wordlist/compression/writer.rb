@@ -1,4 +1,4 @@
-require 'wordlist/exceptions'
+require_relative '../exceptions'
 
 require 'shellwords'
 

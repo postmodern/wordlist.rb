@@ -1,6 +1,6 @@
 # frozen_string_literal: true
-require 'wordlist/operators/binary_operator'
-require 'wordlist/operators/product'
+require_relative 'binary_operator'
+require_relative 'product'
 
 module Wordlist
   module Operators

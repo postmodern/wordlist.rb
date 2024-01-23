@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'wordlist/modifiers/sub'
+require_relative 'sub'
 
 module Wordlist
   module Modifiers

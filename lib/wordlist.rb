@@ -1,8 +1,8 @@
 # frozen_string_literal: true
-require 'wordlist/words'
-require 'wordlist/file'
-require 'wordlist/builder'
-require 'wordlist/version'
+require_relative 'wordlist/words'
+require_relative 'wordlist/file'
+require_relative 'wordlist/builder'
+require_relative 'wordlist/version'
 
 module Wordlist
   # 

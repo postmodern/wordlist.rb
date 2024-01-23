@@ -1,8 +1,8 @@
 # frozen_string_literal: true
-require 'wordlist/abstract_wordlist'
-require 'wordlist/exceptions'
-require 'wordlist/format'
-require 'wordlist/compression/reader'
+require_relative 'abstract_wordlist'
+require_relative 'exceptions'
+require_relative 'format'
+require_relative 'compression/reader'
 
 module Wordlist
   #

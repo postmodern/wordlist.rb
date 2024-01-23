@@ -1,6 +1,6 @@
 # frozen_string_literal: true
-require 'wordlist/operators'
-require 'wordlist/modifiers'
+require_relative 'operators'
+require_relative 'modifiers'
 
 module Wordlist
   #
