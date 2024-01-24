@@ -15,7 +15,7 @@ metadata:
   documentation_uri: https://rubydoc.info/gems/wordlist
   source_code_uri:   https://github.com/postmodern/wordlist.rb
   bug_tracker_uri:   https://github.com/postmodern/wordlist.rb/issues
-  changelog_uri:     https://github.com/postmodern/wordlist.rb/blob/master/ChangeLog.md
+  changelog_uri:     https://github.com/postmodern/wordlist.rb/blob/main/ChangeLog.md
 
 required_ruby_version: ">= 3.0.0"
 
